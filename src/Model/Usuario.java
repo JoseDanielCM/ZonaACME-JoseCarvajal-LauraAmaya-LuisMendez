@@ -15,12 +15,12 @@ public abstract class Usuario {
         this.empresa = empresa;
     }
 
-    public int getId() {
-        return id;
+    public int getDocumento() {
+        return documento;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setdocumento(int documento) {
+        this.documento = documento;
     }
 
     public String getNombre() {

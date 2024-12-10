@@ -23,7 +23,7 @@ public class SuperUsuarioImpl implements SuperUsuarioDAO {
                 """;
         try (Connection conn = DataBaseConnection.getConnection()){
             PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setInt(1, supervisor.getId());
+            ps.setInt(1, supervisor.getDocumento());
             ps.setString(2, supervisor.getNombre());
             ps.setString(3, supervisor.getContrasenia());
             ps.setInt(4, supervisor.getEmpresa().getIdEmpresa());
@@ -104,7 +104,8 @@ public class SuperUsuarioImpl implements SuperUsuarioDAO {
             while (resultSet.next()){
                 int id = resultSet.getInt(1);
                 String nombre = resultSet.getString(2);
-                Empresa empresa = new Empresa(id, nombre);
+                Empresa empresa = new Empresa(nombre);
+                empresa.setIdEmpresa(id);
                 return empresa;
             }
 
@@ -122,7 +123,7 @@ public class SuperUsuarioImpl implements SuperUsuarioDAO {
                 """;
         try (Connection conn = DataBaseConnection.getConnection()){
             PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setInt(1, supervisor.getId());
+            ps.setInt(1, supervisor.getDocumento());
             ps.executeUpdate();
             System.out.println("Supervisor desactivado correctamente");
 

@@ -1,5 +1,6 @@
 package Repository.DAO;
 
+import Model.Anotacion;
 import Model.Funcionario;
 import Model.Guarda;
 
@@ -10,7 +11,7 @@ public interface SupervisorDAO {
     void crearGuarda(Guarda guarda);
     void desactivarGuarda(Guarda guarda);
     Guarda mostrarGuarda(int documentoGuarda);
-    void crearAnotaciones(int documentoPersona);
+    void crearAnotaciones(Anotacion anotacion);
     void levantarRestriccion(int documentoPersona);
 
 }
