@@ -97,4 +97,4 @@ CREATE TABLE IF NOT EXISTS Usuarios (
 /* INSERT INTO `Usuarios`(`Nombre`,`Contrasena`,`Activo`,`IdTipoUsuario`,`IdEmpresa`) VALUES
 ("juanito","123",TRUE,1,NULL); */
 
-DELETE FROM usuarios;
+DELETE FROM `Usuarios`;
