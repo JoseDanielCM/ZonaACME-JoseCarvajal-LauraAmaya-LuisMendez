@@ -2,8 +2,8 @@ package Model;
 
 public class Guarda extends Usuario{
 
-    public Guarda(String nombre, String contrasenia, boolean activo, Empresa empresa) {
-        super(nombre, contrasenia, activo, empresa);
-    }
 
+    public Guarda(int id, String nombre, String contrasenia, boolean activo, Empresa empresa) {
+        super(id, nombre, contrasenia, activo, empresa);
+    }
 }

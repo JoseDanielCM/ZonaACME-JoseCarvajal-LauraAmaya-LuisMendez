@@ -1,13 +1,14 @@
 package Model;
 
 public abstract class Usuario {
-    protected int id;
+    protected int documento;
     protected String nombre;
     protected String contrasenia;
     protected boolean activo;
     protected Empresa empresa;
 
-    public Usuario(String nombre, String contrasenia, boolean activo, Empresa empresa) {
+    public Usuario(int documento,String nombre, String contrasenia, boolean activo, Empresa empresa) {
+        this.documento = documento;
         this.nombre = nombre;
         this.contrasenia = contrasenia;
         this.activo = activo;

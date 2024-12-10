@@ -11,6 +11,10 @@ public class Empresa {
     private List<Persona> listaTrabajadores = new ArrayList<Persona>();
     private List<Usuario> usuarios = new ArrayList<Usuario>();
 
+    public Empresa(String nombre) {
+        this.nombre = nombre;
+    }
+
     public int getIdEmpresa() {
         return idEmpresa;
     }
