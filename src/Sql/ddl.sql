@@ -18,7 +18,8 @@ CREATE TABLE IF NOT EXISTS TipoUsuario (
 
 CREATE TABLE IF NOT EXISTS Empresa (
     IdEmpresa INTEGER PRIMARY KEY NOT NULL UNIQUE AUTO_INCREMENT,
-    Nombre VARCHAR(110) UNIQUE
+    Nombre VARCHAR(110) UNIQUE,
+    Activo BOOLEAN NOT NULL DEFAULT TRUE
 );
 
 CREATE TABLE IF NOT EXISTS Usuarios (
@@ -37,7 +38,7 @@ CREATE TABLE IF NOT EXISTS Persona (
     Nombre VARCHAR(100) NOT NULL,
     Activo BOOLEAN NOT NULL DEFAULT TRUE,
     Tipo ENUM("Trabajador", "Invitado") NOT NULL,
-    Estado ENUM("Activo", "Inactivo") NOT NULL,
+    Estado ENUM("Permitido", "Restringido") NOT NULL,
     IdEmpresa INTEGER NOT NULL,
     haSalido BOOLEAN DEFAULT FALSE,
     FOREIGN KEY (IdEmpresa) REFERENCES Empresa(IdEmpresa)
@@ -113,8 +114,19 @@ WHERE t.Nombre = 'Funcionario' ;
 
 SELECT U.*, E.Nombre FROM `Usuarios` U JOIN `Empresa` E ON `E`.`IdEmpresa` = `U`.`IdEmpresa`;
 
-
+/*
 SELECT U.Nombre, Documento, E.Nombre FROM `Usuarios` U
             JOIN `Empresa` E
             ON `E`.`IdEmpresa` = `U`.`IdEmpresa`
-            WHERE U.IdTipoUsuario = 4 AND u.Documento = ? ;
+            WHERE U.IdTipoUsuario = 4 AND u.Documento = ? ; 
+*/
+
+/* UPDATE `Persona` SET `Estado` = "Permitido" WHERE `Documento` = ?; */
+
+/*INSERT INTO `Empresa` VALUES 
+(?,TRUE);
+/*
+CREATE TABLE IF NOT EXISTS Empresa (
+    IdEmpresa INTEGER PRIMARY KEY NOT NULL UNIQUE AUTO_INCREMENT,
+    Nombre VARCHAR(110) UNIQUE
+); */

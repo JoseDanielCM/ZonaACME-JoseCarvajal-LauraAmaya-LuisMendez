@@ -55,7 +55,7 @@ public class SupervisorImpl implements SupervisorDAO {
             SELECT U.Nombre, Documento, E.Nombre FROM `Usuarios` U
             JOIN `Empresa` E
             ON `E`.`IdEmpresa` = `U`.`IdEmpresa`
-            WHERE U.IdTipoUsuario = 4 AND u.Documento = ? ;
+            WHERE U.IdTipoUsuario = 4 AND U.Documento = ? ;
         """;
         try (Connection conn = DataBaseConnection.getConnection()){
             PreparedStatement ps = conn.prepareStatement(sql);
@@ -160,7 +160,17 @@ public class SupervisorImpl implements SupervisorDAO {
 
     @Override
     public void levantarRestriccion(int documentoPersona) {
-
+        String sql = """
+                UPDATE `Persona` SET `Estado` = "Permitido" WHERE `Documento` = ?;
+                """;
+        try (Connection conn = DataBaseConnection.getConnection()) {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, documentoPersona);
+            ps.executeUpdate();
+            System.out.println("Restriccion levantada correctamente");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
 

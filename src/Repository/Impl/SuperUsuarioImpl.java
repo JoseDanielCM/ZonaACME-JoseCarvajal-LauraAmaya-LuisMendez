@@ -37,6 +37,22 @@ public class SuperUsuarioImpl implements SuperUsuarioDAO {
     }
 
     @Override
+    public void addEmpresa(Empresa empresa) {
+        String sql = """
+                INSERT INTO `Empresa` VALUES
+                (?,TRUE);
+                """;
+        try (Connection conn = DataBaseConnection.getConnection()){
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, empresa.getNombre());
+
+            System.out.println("Empresa creada correctamente");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
     public Supervisor getSupervisorById(int idSupervisor) {
         String sql = """
             SELECT *
@@ -130,5 +146,26 @@ public class SuperUsuarioImpl implements SuperUsuarioDAO {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public void desactivarEmpresa(Empresa empresa) {
+        String sql = """
+                UPDATE `Empresa` SET `Activo` = FALSE WHERE `IdEmpresa`= ?;
+                """;
+        try (Connection conn = DataBaseConnection.getConnection()){
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, empresa.getIdEmpresa());
+            ps.executeUpdate();
+            System.out.println("Empresa desactivada correctamente");
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void setIp(String ip) {
+        DataBaseConnection.setIp(ip);
     }
 }

@@ -7,12 +7,15 @@ public class Empresa {
     private int idEmpresa;
     private String nombre;
 
+    private boolean activo;
+
     private List<Persona> listaInvitados = new ArrayList<Persona>();
     private List<Persona> listaTrabajadores = new ArrayList<Persona>();
     private List<Usuario> usuarios = new ArrayList<Usuario>();
 
     public Empresa(String nombre) {
         this.nombre = nombre;
+        this.activo = true;
     }
 
     public int getIdEmpresa() {
