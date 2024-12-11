@@ -143,7 +143,7 @@ CREATE TABLE IF NOT EXISTS Persona (
     FOREIGN KEY (IdEmpresa) REFERENCES Empresa(IdEmpresa)
 );
 */
-
+/*
 INSERT INTO `Persona`(`Documento`,`Nombre`,`Activo`,`Tipo`,`Estado`,`IdEmpresa`,`haSalido`) VALUES
 (?,?,TRUE,"Trabajador","Permitido",?,FALSE);
 
@@ -152,3 +152,11 @@ JOIN `Empresa` ON `Empresa`.`IdEmpresa` = `Persona`.`IdEmpresa`
 WHERE `Persona`.`Activo` = TRUE;
 
 SELECT * FROM `Persona` WHERE `Activo` = TRUE;
+*/
+SELECT `Persona`.*, empresa.`Nombre` FROM `Persona`
+JOIN empresa ON empresa.`IdEmpresa` = `Persona`.`IdEmpresa`
+WHERE `Persona`.`Activo` = TRUE;
+
+SELECT persona.*, empresa.`Nombre` from persona
+JOIN empresa ON empresa.`IdEmpresa` = persona.`IdEmpresa`
+WHERE `Documento` !=1;

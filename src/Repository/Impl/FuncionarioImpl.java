@@ -53,7 +53,7 @@ public class FuncionarioImpl implements FuncionarioDAO {
     @Override
     public void desactivarPersona(Persona persona) {
         String sql = """
-                UPDATE `Persona` SET `Activo` = FALSE WHERE `IdUsuario`= ?;
+                UPDATE `Persona` SET `Activo` = FALSE WHERE `Documento`= ?;
                 """;
         try (Connection conn = DataBaseConnection.getConnection()){
             PreparedStatement ps = conn.prepareStatement(sql);
@@ -69,7 +69,9 @@ public class FuncionarioImpl implements FuncionarioDAO {
     @Override
     public List<Persona> mostrarActivos() {
         String sql = """
-                SELECT * FROM `Persona` WHERE `Activo` = TRUE;
+                    SELECT `Persona`.*, empresa.`Nombre` FROM `Persona`
+                    JOIN empresa ON empresa.`IdEmpresa` = `Persona`.`IdEmpresa`
+                    WHERE `Persona`.`Activo` = TRUE;
                 """;
         List<Persona> persons = new ArrayList<Persona>();
         try (Connection conn = DataBaseConnection.getConnection()){
@@ -103,7 +105,7 @@ public class FuncionarioImpl implements FuncionarioDAO {
     @Override
     public String estadoActualPersona(Persona persona) {
         String sql = """
-                SELECT * FROM `Persona` WHERE `IdPersona` = ?;
+                SELECT * FROM `Persona` WHERE `Documento` = ?;
                 """;
         try (Connection conn = DataBaseConnection.getConnection()){
             PreparedStatement ps = conn.prepareStatement(sql);
@@ -113,5 +115,41 @@ public class FuncionarioImpl implements FuncionarioDAO {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public Persona getPersonaById(int id) {
+        String sql = """
+                SELECT persona.*, empresa.`Nombre` from persona
+                JOIN empresa ON empresa.`IdEmpresa` = persona.`IdEmpresa`
+                WHERE `Documento` = ?;
+
+                """;
+        try (Connection conn = DataBaseConnection.getConnection()){
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, id);
+            ResultSet resultSet= ps.executeQuery();
+            while (resultSet.next()) {
+                int documento = resultSet.getInt(1);
+                String nombre = resultSet.getString(2);
+                boolean activo = resultSet.getBoolean(3);
+                String tipo = resultSet.getString(4);
+                String estado = resultSet.getString(5);
+                String nombreEmpresa = resultSet.getString(8);
+                boolean haSalido = resultSet.getBoolean(7);
+                Empresa empresa = new Empresa(nombreEmpresa);
+                if (tipo.equals("Invitado")){
+                    Invitado invitado = new Invitado(documento, nombre, activo, estado, empresa, haSalido);
+                    return invitado;
+                }else{
+                    Trabajador trabajador = new Trabajador(documento, nombre, activo, estado, empresa, haSalido);
+                    return trabajador;
+                }
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return null;
     }
 }

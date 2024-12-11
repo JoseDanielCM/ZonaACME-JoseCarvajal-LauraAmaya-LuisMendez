@@ -64,4 +64,16 @@ public abstract class Persona {
     public void setHaSalido(boolean haSalido) {
         this.haSalido = haSalido;
     }
+
+    @Override
+    public String toString() {
+        return "Persona{" +
+                "documento=" + documento +
+                ", nombre='" + nombre + '\'' +
+                ", activo=" + activo +
+                ", estado='" + estado + '\'' +
+                ", empresa=" + empresa +
+                ", haSalido=" + haSalido +
+                '}';
+    }
 }

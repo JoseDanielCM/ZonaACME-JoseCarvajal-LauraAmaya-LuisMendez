@@ -14,6 +14,7 @@ public interface SuperUsuarioDAO {
     Empresa getEmpresaById(int idEmpresa);                  // READ
     void desactivarSupervisor(Supervisor supervisor);       // UPDATE
     void desactivarEmpresa(String nombreEmpresa);           // UPDATE
-    void setIp(String ip);                                  //UPDATE
+    void activarEmpresa(String nombreEmpresa);              // UPDATE
+    void setIp(String ip);                                  // UPDATE
 
 }

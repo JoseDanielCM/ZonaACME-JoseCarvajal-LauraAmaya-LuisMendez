@@ -165,6 +165,22 @@ public class SuperUsuarioImpl implements SuperUsuarioDAO {
     }
 
     @Override
+    public void activarEmpresa(String nombreEmpresa) {
+        String sql = """
+                UPDATE `Empresa` SET `Activo` = TRUE WHERE `Nombre`= ?;
+                """;
+        try (Connection conn = DataBaseConnection.getConnection()){
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, nombreEmpresa);
+            ps.executeUpdate();
+            System.out.println("Empresa activada correctamente");
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
     public void setIp(String ip) {
         DataBaseConnection.setIp(ip);
     }

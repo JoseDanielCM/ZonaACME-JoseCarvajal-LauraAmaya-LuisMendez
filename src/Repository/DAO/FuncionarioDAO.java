@@ -9,7 +9,8 @@ import java.util.List;
 public interface FuncionarioDAO {
     void crearTrabajador(Trabajador trabajador);
     void crearInvitado(Invitado invitado);
-    void desactivarPersona(Persona persona);
     List<Persona> mostrarActivos();
     String estadoActualPersona(Persona persona);
+    Persona getPersonaById(int id);
+    void desactivarPersona(Persona persona);
 }
