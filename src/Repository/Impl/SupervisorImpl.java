@@ -49,40 +49,35 @@ public class SupervisorImpl implements SupervisorDAO {
         }
     }
 
+
     @Override
     public Funcionario mostrarFuncionario(int documentoSupervisor) {
+        String sql = """
+            SELECT U.Nombre, Documento, E.Nombre, E.IdEmpresa FROM `Usuarios` U
+            JOIN `Empresa` E
+            ON `E`.`IdEmpresa` = `U`.`IdEmpresa`
+            WHERE U.IdTipoUsuario = 4 AND U.Documento = ? ;
+        """;
+        try (Connection conn = DataBaseConnection.getConnection()){
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, documentoSupervisor);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()){
+                Empresa empresa = new Empresa(rs.getString("IdEmpresa"),rs.getString("Nombre"));
+                return new Funcionario(
+                        rs.getInt(1),
+                        rs.getString("Nombre"),
+                        rs.getString("Contrasena"),
+                        rs.getBoolean("Activo"),
+                        empresa
+                );
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
         return null;
     }
 
-    /*
-        @Override
-        public Funcionario mostrarFuncionario(int documentoSupervisor) {
-            String sql = """
-                SELECT U.Nombre, Documento, E.Nombre FROM `Usuarios` U
-                JOIN `Empresa` E
-                ON `E`.`IdEmpresa` = `U`.`IdEmpresa`
-                WHERE U.IdTipoUsuario = 4 AND U.Documento = ? ;
-            """;
-            try (Connection conn = DataBaseConnection.getConnection()){
-                PreparedStatement ps = conn.prepareStatement(sql);
-                ps.setInt(1, documentoSupervisor);
-                ResultSet rs = ps.executeQuery();
-                if (rs.next()){
-                    Empresa empresa = new Empresa(rs.getString("NombreEmpresa"));
-                    return new Funcionario(
-                            rs.getInt(1),
-                            rs.getString("Nombre"),
-                            rs.getString("Contrasena"),
-                            rs.getBoolean("Activo"),
-                            empresa
-                    );
-                }
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-            return null;
-        }
-    */
     @Override
     public void crearGuarda(Guarda guarda) {
         String sql = """
@@ -122,7 +117,7 @@ public class SupervisorImpl implements SupervisorDAO {
     public Guarda mostrarGuarda(int documentoGuarda) {
         String sql = """
                 SELECT `Usuarios`.*, `Empresa`.`Nombre`  FROM Usuarios
-                JOIN `Empresa` ON `Empresa`.`IdEmpresa` = `Usuarios`.`IdEmpresa` WHERE Usuario.Dcoumento = ?;
+                JOIN `Empresa` ON `Empresa`.`IdEmpresa` = `Usuarios`.`IdEmpresa` WHERE Usuarios.Documento = ?;
                 """;
         try (Connection conn = DataBaseConnection.getConnection()){
             PreparedStatement ps = conn.prepareStatement(sql);
@@ -180,6 +175,16 @@ public class SupervisorImpl implements SupervisorDAO {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public void RegistrarSalida(int Documento) {
+
+    }
+
+    @Override
+    public void RegistrarSalidaVehiculo(int cantidadPersonas, String placa) {
+
     }
 }
 

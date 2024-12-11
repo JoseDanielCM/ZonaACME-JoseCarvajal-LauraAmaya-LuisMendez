@@ -50,6 +50,7 @@ public class DataBaseConnection {
                 bufferedWriter.write(nuevaIp);
                 bufferedWriter.newLine();
                 leerIp();
+                getConnection();
         }
         } catch (Exception e){
             System.out.println(e.getMessage());

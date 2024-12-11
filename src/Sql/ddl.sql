@@ -85,12 +85,12 @@ CREATE TABLE IF NOT EXISTS Empresa (
     IdEmpresa INTEGER PRIMARY KEY NOT NULL UNIQUE,
     Nombre VARCHAR(110) UNIQUE
 ); */
-INSERT INTO `Empresa`(`Nombre`) VALUES
-("Campus"),
-("Seguridad")
+INSERT INTO `Empresa`(`IdEmpresa`,`Nombre`) VALUES
+(1112223331,"Campus"),
+(1234567890,"Seguridad")
 
 INSERT INTO `Usuarios`(`Documento`,`Nombre`,`Contrasena`,`Activo`,`IdTipoUsuario`,`IdEmpresa`) VALUES
-(1020306598,"juanito","123",TRUE,1,1);
+(1020306598,"juanito","123",TRUE,1,1234567890);
 
 /* INSERT INTO `Usuarios`(`Nombre`,`Contrasena`,`Activo`,`IdTipoUsuario`,`IdEmpresa`) VALUES
 ("juanito","123",TRUE,1,NULL); */
@@ -152,7 +152,10 @@ JOIN `Empresa` ON `Empresa`.`IdEmpresa` = `Persona`.`IdEmpresa`
 WHERE `Persona`.`Activo` = TRUE;
 
 SELECT * FROM `Persona` WHERE `Activo` = TRUE;
+
 */
+
+/*
 SELECT `Persona`.*, empresa.`Nombre` FROM `Persona`
 JOIN empresa ON empresa.`IdEmpresa` = `Persona`.`IdEmpresa`
 WHERE `Persona`.`Activo` = TRUE;
@@ -165,3 +168,27 @@ SELECT * FROM Usuarios;
 
 SELECT `Usuarios`.*, `Empresa`.`Nombre`  FROM Usuarios 
 JOIN `Empresa` ON `Empresa`.`IdEmpresa` = `Usuarios`.`IdEmpresa`;
+
+SELECT `Usuarios`. FROM `Usuarios`
+
+INSERT INTO `Registro` VALUES
+(?,DATETIME.NOW(),?,NULL,"Entrada",NULL);
+
+*/
+/*
+CREATE TABLE IF NOT EXISTS Registro (
+    IdRegistro INTEGER PRIMARY KEY NOT NULL UNIQUE AUTO_INCREMENT,
+    Documento INTEGER NOT NULL,
+    Fecha DATETIME NOT NULL,
+    DocUser INTEGER NOT NULL,
+    IdAnotacion INTEGER,
+    TipoRegistro ENUM("Salida", "Entrada") NOT NULL,
+    PlacaVehiculo CHAR(7),
+    FOREIGN KEY (Documento) REFERENCES Persona(Documento),
+    FOREIGN KEY (DocUser) REFERENCES Usuarios(Documento),
+    FOREIGN KEY (IdAnotacion) REFERENCES Anotaciones(IdAnotacion)
+);
+*/
+
+INSERT INTO `Persona`(`Documento`,`Nombre`,`Activo`,`Tipo`,`Estado`,`IdEmpresa`,`haSalido`) VALUES
+(1212121211,'InvitM',TRUE,"Invitado","Permitido",1112223331,FALSE);

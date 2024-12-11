@@ -42,6 +42,7 @@ public class FuncionarioImpl implements FuncionarioDAO {
             ps.setInt(1, invitado.getDocumento());
             ps.setString(2, invitado.getNombre());
             ps.setString(3, invitado.getEmpresa().getIdEmpresa());
+            System.out.println(ps);
             ps.executeUpdate();
 
             System.out.println("Invitado agregado correctamente");
@@ -119,11 +120,26 @@ public class FuncionarioImpl implements FuncionarioDAO {
     }
 
     @Override
+    public void crearAnotacion(Anotacion anotacion, int documento) {
+
+    }
+
+    @Override
+    public void RegistrarSalida(int Documento) {
+
+    }
+
+    @Override
+    public void RegistrarSalidaVehiculo(int cantidadPersonas, String placa) {
+
+    }
+
+    @Override
     public Persona getPersonaById(int id) {
         String sql = """
-                SELECT persona.*, empresa.`Nombre`, empresa.idEmpresa from persona
-                JOIN empresa ON empresa.`IdEmpresa` = persona.`IdEmpresa`
-                WHERE `Documento` = ?;
+                SELECT Persona.*, Empresa.`Nombre`, Empresa.idEmpresa from Persona
+                JOIN Empresa ON Empresa.`IdEmpresa` = Persona.`IdEmpresa`
+                WHERE Persona.`Documento` = ?;
 
                 """;
         try (Connection conn = DataBaseConnection.getConnection()){

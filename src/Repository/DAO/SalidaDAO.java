@@ -4,6 +4,6 @@ import Model.Guarda;
 import Model.Persona;
 
 public interface SalidaDAO {
-    void SalidaManual(Persona persona, Guarda guarda);
-    void SalidaAutomatica();
+    void RegistrarSalida(int Documento);
+    void RegistrarSalidaVehiculo(int cantidadPersonas, String placa);
 }
