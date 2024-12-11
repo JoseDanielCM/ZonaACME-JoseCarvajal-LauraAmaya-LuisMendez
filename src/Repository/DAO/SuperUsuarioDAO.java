@@ -12,6 +12,7 @@ public interface SuperUsuarioDAO {
     Supervisor getSupervisorById(int idSupervisor);         // READ
     List<Supervisor> getAllSupervisors();                   // READ
     Empresa getEmpresaById(int idEmpresa);                  // READ
+    Empresa getEmpresaByName(String name);                  // READ
     void desactivarSupervisor(Supervisor supervisor);       // UPDATE
     void desactivarEmpresa(String nombreEmpresa);           // UPDATE
     void activarEmpresa(String nombreEmpresa);              // UPDATE

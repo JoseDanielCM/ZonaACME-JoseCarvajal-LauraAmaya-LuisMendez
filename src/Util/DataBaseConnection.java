@@ -7,8 +7,8 @@ import java.sql.SQLException;
 
 public class DataBaseConnection {
 
-    private static String USER = "root";
-    private static String PASSWORD = "1234";
+    private static String USER = "campus2023";
+    private static String PASSWORD = "campus2023";
     private static Connection connection;
     private static String ip = "localhost";
 

@@ -15,6 +15,15 @@ public abstract class Usuario {
         this.empresa = empresa;
     }
 
+    public Usuario(int documento,String nombre, String contrasenia, Empresa empresa) {
+        this.documento = documento;
+        this.nombre = nombre;
+        this.contrasenia = contrasenia;
+        this.activo = activo;
+        this.empresa = empresa;
+        this.activo = true;
+    }
+
     public int getDocumento() {
         return documento;
     }

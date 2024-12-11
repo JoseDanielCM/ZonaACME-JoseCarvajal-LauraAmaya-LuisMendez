@@ -133,6 +133,29 @@ public class SuperUsuarioImpl implements SuperUsuarioDAO {
     }
 
     @Override
+    public Empresa getEmpresaByName(String name) {
+        String sql = """
+                SELECT * FROM Empresa WHERE Empresa.Nombre = ?;
+                """;
+        try (Connection conn = DataBaseConnection.getConnection()){
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, name);
+            ResultSet resultSet = ps.executeQuery();
+            if (resultSet.next()){
+                int id = resultSet.getInt(1);
+                String nombre = resultSet.getString(2);
+                Empresa empresa = new Empresa(nombre);
+                empresa.setIdEmpresa(id);
+                System.out.println("Empresa obtenida correctamente");
+                return empresa;
+            }
+            throw new IllegalArgumentException  ("Empresa no encontrada");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
     public void desactivarSupervisor(Supervisor supervisor) {
         String sql = """
                 UPDATE `Usuarios` SET `Activo` = FALSE WHERE `IdUsuario`= ?;
