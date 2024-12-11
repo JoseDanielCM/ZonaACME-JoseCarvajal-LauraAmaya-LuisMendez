@@ -130,3 +130,25 @@ CREATE TABLE IF NOT EXISTS Empresa (
     IdEmpresa INTEGER PRIMARY KEY NOT NULL UNIQUE AUTO_INCREMENT,
     Nombre VARCHAR(110) UNIQUE
 ); */
+
+/*
+CREATE TABLE IF NOT EXISTS Persona (
+    Documento INTEGER PRIMARY KEY NOT NULL UNIQUE,
+    Nombre VARCHAR(100) NOT NULL,
+    Activo BOOLEAN NOT NULL DEFAULT TRUE,
+    Tipo ENUM("Trabajador", "Invitado") NOT NULL,
+    Estado ENUM("Permitido", "Restringido") NOT NULL,
+    IdEmpresa INTEGER NOT NULL,
+    haSalido BOOLEAN DEFAULT FALSE,
+    FOREIGN KEY (IdEmpresa) REFERENCES Empresa(IdEmpresa)
+);
+*/
+
+INSERT INTO `Persona`(`Documento`,`Nombre`,`Activo`,`Tipo`,`Estado`,`IdEmpresa`,`haSalido`) VALUES
+(?,?,TRUE,"Trabajador","Permitido",?,FALSE);
+
+SELECT `Persona`.*, `Empresa`.`Nombre` FROM `Persona` 
+JOIN `Empresa` ON `Empresa`.`IdEmpresa` = `Persona`.`IdEmpresa`
+WHERE `Persona`.`Activo` = TRUE;
+
+SELECT * FROM `Persona` WHERE `Activo` = TRUE;

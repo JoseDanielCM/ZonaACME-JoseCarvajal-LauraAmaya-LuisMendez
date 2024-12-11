@@ -22,7 +22,7 @@ public class TestConnection {
         supervisor.mostrarFuncionario(1102359898); */
 
         superUsuario.setIp("127.0.0.1");
-        System.out.println(superUsuario.getEmpresaById(1));
+        superUsuario.desactivarEmpresa("Campus");
     }
 
 }

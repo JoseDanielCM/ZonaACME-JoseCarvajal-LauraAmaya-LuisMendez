@@ -13,7 +13,7 @@ public interface SuperUsuarioDAO {
     List<Supervisor> getAllSupervisors();                   // READ
     Empresa getEmpresaById(int idEmpresa);                  // READ
     void desactivarSupervisor(Supervisor supervisor);       // UPDATE
-    void desactivarEmpresa(Empresa empresa);                // UPDATE
+    void desactivarEmpresa(String nombreEmpresa);           // UPDATE
     void setIp(String ip);                                  //UPDATE
 
 }

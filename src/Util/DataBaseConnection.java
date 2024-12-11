@@ -18,7 +18,6 @@ public class DataBaseConnection {
         try {
             if (connection == null || connection.isClosed()) {
                 String url = "jdbc:mysql://"+ip+":3306/ZonaACME";
-                System.out.println(url);
                 connection = DriverManager.getConnection(url, USER, PASSWORD);
                 System.out.println("Bien bien");
             }

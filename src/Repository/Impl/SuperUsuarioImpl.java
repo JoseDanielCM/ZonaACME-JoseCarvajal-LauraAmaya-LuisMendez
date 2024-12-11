@@ -149,13 +149,13 @@ public class SuperUsuarioImpl implements SuperUsuarioDAO {
     }
 
     @Override
-    public void desactivarEmpresa(Empresa empresa) {
+    public void desactivarEmpresa(String nombreEmpresa) {
         String sql = """
-                UPDATE `Empresa` SET `Activo` = FALSE WHERE `IdEmpresa`= ?;
+                UPDATE `Empresa` SET `Activo` = FALSE WHERE `Nombre`= ?;
                 """;
         try (Connection conn = DataBaseConnection.getConnection()){
             PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setInt(1, empresa.getIdEmpresa());
+            ps.setString(1, nombreEmpresa);
             ps.executeUpdate();
             System.out.println("Empresa desactivada correctamente");
 

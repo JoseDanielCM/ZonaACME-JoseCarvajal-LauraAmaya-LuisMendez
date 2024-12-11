@@ -2,7 +2,7 @@ package Model;
 
 import java.time.format.DateTimeFormatter;
 
-public class Registro {
+public abstract class Registro {
     private Persona persona;
     private DateTimeFormatter fecha;
     private Funcionario funcionario;
