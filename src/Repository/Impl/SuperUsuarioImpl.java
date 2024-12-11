@@ -26,7 +26,7 @@ public class SuperUsuarioImpl implements SuperUsuarioDAO {
             ps.setInt(1, supervisor.getDocumento());
             ps.setString(2, supervisor.getNombre());
             ps.setString(3, supervisor.getContrasenia());
-            ps.setInt(4, supervisor.getEmpresa().getIdEmpresa());
+            ps.setString(4, supervisor.getEmpresa().getIdEmpresa());
             ps.executeUpdate();
 
             System.out.println("Supervisor agregado correctamente");
@@ -118,10 +118,9 @@ public class SuperUsuarioImpl implements SuperUsuarioDAO {
             ps.setInt(1, idEmpresa);
             ResultSet resultSet = ps.executeQuery();
             while (resultSet.next()){
-                int id = resultSet.getInt(1);
+                String id = resultSet.getString(1);
                 String nombre = resultSet.getString(2);
-                Empresa empresa = new Empresa(nombre);
-                empresa.setIdEmpresa(id);
+                Empresa empresa = new Empresa(id,nombre);
                 return empresa;
             }
 
@@ -142,10 +141,9 @@ public class SuperUsuarioImpl implements SuperUsuarioDAO {
             ps.setString(1, name);
             ResultSet resultSet = ps.executeQuery();
             if (resultSet.next()){
-                int id = resultSet.getInt(1);
+                String id = resultSet.getString(1);
                 String nombre = resultSet.getString(2);
-                Empresa empresa = new Empresa(nombre);
-                empresa.setIdEmpresa(id);
+                Empresa empresa = new Empresa(id,nombre);
                 System.out.println("Empresa obtenida correctamente");
                 return empresa;
             }
@@ -172,13 +170,13 @@ public class SuperUsuarioImpl implements SuperUsuarioDAO {
     }
 
     @Override
-    public void desactivarEmpresa(String nombreEmpresa) {
+    public void desactivarEmpresa(Empresa empresa) {
         String sql = """
                 UPDATE `Empresa` SET `Activo` = FALSE WHERE `Nombre`= ?;
                 """;
         try (Connection conn = DataBaseConnection.getConnection()){
             PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setString(1, nombreEmpresa);
+            ps.setString(1, empresa.getNombre());
             ps.executeUpdate();
             System.out.println("Empresa desactivada correctamente");
 
@@ -187,21 +185,6 @@ public class SuperUsuarioImpl implements SuperUsuarioDAO {
         }
     }
 
-    @Override
-    public void activarEmpresa(String nombreEmpresa) {
-        String sql = """
-                UPDATE `Empresa` SET `Activo` = TRUE WHERE `Nombre`= ?;
-                """;
-        try (Connection conn = DataBaseConnection.getConnection()){
-            PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setString(1, nombreEmpresa);
-            ps.executeUpdate();
-            System.out.println("Empresa activada correctamente");
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
     @Override
     public void setIp(String ip) {

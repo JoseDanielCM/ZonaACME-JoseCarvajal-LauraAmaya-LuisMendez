@@ -1,15 +1,16 @@
 package Main;
 
-import Service.SuperUsuarioService;
 import Util.DataBaseConnection;
-
-import java.util.List;
+import View.InicioSesion;
 
 public class TestConnection {
     public static void main(String[] args) {
-        SuperUsuarioService superUsuarioService = new SuperUsuarioService();
 
-        superUsuarioService.addSupervisor("1102359298","jeijei","admin123","Campus");
+        DataBaseConnection.getConnection();
+        DataBaseConnection.setIp("127.0.0.1");
+
+        InicioSesion inicioSesion = new InicioSesion();
+        inicioSesion.setVisible(true);
+
     }
-
 }

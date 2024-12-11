@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Empresa {
-    private int idEmpresa;
+    private String idEmpresa;
     private String nombre;
 
     private boolean activo;
@@ -13,16 +13,17 @@ public class Empresa {
     private List<Persona> listaTrabajadores = new ArrayList<Persona>();
     private List<Usuario> usuarios = new ArrayList<Usuario>();
 
-    public Empresa(String nombre) {
+    public Empresa(String idEmpresa, String nombre) {
+        this.idEmpresa = idEmpresa;
         this.nombre = nombre;
         this.activo = true;
     }
 
-    public int getIdEmpresa() {
+    public String getIdEmpresa() {
         return idEmpresa;
     }
 
-    public void setIdEmpresa(int idEmpresa) {
+    public void setIdEmpresa(String idEmpresa) {
         this.idEmpresa = idEmpresa;
     }
 

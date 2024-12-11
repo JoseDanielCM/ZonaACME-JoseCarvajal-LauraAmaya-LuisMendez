@@ -23,7 +23,7 @@ public class SupervisorImpl implements SupervisorDAO {
             ps.setInt(1, funcionario.getDocumento());
             ps.setString(2, funcionario.getNombre());
             ps.setString(3, funcionario.getContrasenia());
-            ps.setInt(4, funcionario.getEmpresa().getIdEmpresa());
+            ps.setString(4, funcionario.getEmpresa().getIdEmpresa());
             ps.executeUpdate();
 
             System.out.println("Funcionario agregado correctamente");
@@ -51,32 +51,38 @@ public class SupervisorImpl implements SupervisorDAO {
 
     @Override
     public Funcionario mostrarFuncionario(int documentoSupervisor) {
-        String sql = """
-            SELECT U.Nombre, Documento, E.Nombre FROM `Usuarios` U
-            JOIN `Empresa` E
-            ON `E`.`IdEmpresa` = `U`.`IdEmpresa`
-            WHERE U.IdTipoUsuario = 4 AND U.Documento = ? ;
-        """;
-        try (Connection conn = DataBaseConnection.getConnection()){
-            PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setInt(1, documentoSupervisor);
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()){
-                Empresa empresa = new Empresa(rs.getString("NombreEmpresa"));
-                return new Funcionario(
-                        rs.getInt(1),
-                        rs.getString("Nombre"),
-                        rs.getString("Contrasena"),
-                        rs.getBoolean("Activo"),
-                        empresa
-                );
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
         return null;
     }
 
+    /*
+        @Override
+        public Funcionario mostrarFuncionario(int documentoSupervisor) {
+            String sql = """
+                SELECT U.Nombre, Documento, E.Nombre FROM `Usuarios` U
+                JOIN `Empresa` E
+                ON `E`.`IdEmpresa` = `U`.`IdEmpresa`
+                WHERE U.IdTipoUsuario = 4 AND U.Documento = ? ;
+            """;
+            try (Connection conn = DataBaseConnection.getConnection()){
+                PreparedStatement ps = conn.prepareStatement(sql);
+                ps.setInt(1, documentoSupervisor);
+                ResultSet rs = ps.executeQuery();
+                if (rs.next()){
+                    Empresa empresa = new Empresa(rs.getString("NombreEmpresa"));
+                    return new Funcionario(
+                            rs.getInt(1),
+                            rs.getString("Nombre"),
+                            rs.getString("Contrasena"),
+                            rs.getBoolean("Activo"),
+                            empresa
+                    );
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            return null;
+        }
+    */
     @Override
     public void crearGuarda(Guarda guarda) {
         String sql = """
@@ -88,7 +94,7 @@ public class SupervisorImpl implements SupervisorDAO {
             ps.setInt(1, guarda.getDocumento());
             ps.setString(2, guarda.getNombre());
             ps.setString(3, guarda.getContrasenia());
-            ps.setInt(4, guarda.getEmpresa().getIdEmpresa());
+            ps.setString(4, guarda.getEmpresa().getIdEmpresa());
             ps.executeUpdate();
 
             System.out.println("Guarda agregado correctamente");
@@ -115,7 +121,8 @@ public class SupervisorImpl implements SupervisorDAO {
     @Override
     public Guarda mostrarGuarda(int documentoGuarda) {
         String sql = """
-                SELECT * FROM Usuario WHERE Usuario.Dcoumento = ?;
+                SELECT `Usuarios`.*, `Empresa`.`Nombre`  FROM Usuarios
+                JOIN `Empresa` ON `Empresa`.`IdEmpresa` = `Usuarios`.`IdEmpresa` WHERE Usuario.Dcoumento = ?;
                 """;
         try (Connection conn = DataBaseConnection.getConnection()){
             PreparedStatement ps = conn.prepareStatement(sql);
@@ -126,7 +133,9 @@ public class SupervisorImpl implements SupervisorDAO {
                 String nombre = resultSet.getString(2);
                 String contrasenia = resultSet.getString(3);
                 boolean activo = resultSet.getBoolean(4);
-                Empresa empresa = new Empresa(nombre);
+                String  idEmpresa = resultSet.getString(6);
+                String  nombreEmpresa = resultSet.getString(7);
+                Empresa empresa = new Empresa(idEmpresa, nombreEmpresa);
                 Guarda guarda = new Guarda(documento, nombre,contrasenia,activo,empresa);
                 return guarda;
             }

@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS TipoUsuario (
 );
 
 CREATE TABLE IF NOT EXISTS Empresa (
-    IdEmpresa INTEGER PRIMARY KEY NOT NULL UNIQUE AUTO_INCREMENT,
+    IdEmpresa INTEGER PRIMARY KEY NOT NULL UNIQUE,
     Nombre VARCHAR(110) UNIQUE,
     Activo BOOLEAN NOT NULL DEFAULT TRUE
 );
@@ -160,3 +160,8 @@ WHERE `Persona`.`Activo` = TRUE;
 SELECT persona.*, empresa.`Nombre` from persona
 JOIN empresa ON empresa.`IdEmpresa` = persona.`IdEmpresa`
 WHERE `Documento` !=1;
+
+SELECT * FROM Usuarios;
+
+SELECT `Usuarios`.*, `Empresa`.`Nombre`  FROM Usuarios 
+JOIN `Empresa` ON `Empresa`.`IdEmpresa` = `Usuarios`.`IdEmpresa`;

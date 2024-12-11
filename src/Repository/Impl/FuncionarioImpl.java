@@ -22,7 +22,7 @@ public class FuncionarioImpl implements FuncionarioDAO {
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1, trabajador.getDocumento());
             ps.setString(2, trabajador.getNombre());
-            ps.setInt(3, trabajador.getEmpresa().getIdEmpresa());
+            ps.setString(3, trabajador.getEmpresa().getIdEmpresa());
             ps.executeUpdate();
 
             System.out.println("Trabajador creado correctamente");
@@ -41,7 +41,7 @@ public class FuncionarioImpl implements FuncionarioDAO {
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1, invitado.getDocumento());
             ps.setString(2, invitado.getNombre());
-            ps.setInt(3, invitado.getEmpresa().getIdEmpresa());
+            ps.setString(3, invitado.getEmpresa().getIdEmpresa());
             ps.executeUpdate();
 
             System.out.println("Invitado agregado correctamente");
@@ -69,7 +69,7 @@ public class FuncionarioImpl implements FuncionarioDAO {
     @Override
     public List<Persona> mostrarActivos() {
         String sql = """
-                    SELECT `Persona`.*, empresa.`Nombre` FROM `Persona`
+                    SELECT `Persona`.*, empresa.`Nombre`, empresa.idEmpresa FROM `Persona`
                     JOIN empresa ON empresa.`IdEmpresa` = `Persona`.`IdEmpresa`
                     WHERE `Persona`.`Activo` = TRUE;
                 """;
@@ -85,8 +85,9 @@ public class FuncionarioImpl implements FuncionarioDAO {
                 String tipo = resultSet.getString(4);
                 String estado = resultSet.getString(5);
                 String nombreEmpresa = resultSet.getString(8);
+                String idEmpresa = resultSet.getString(9);
                 boolean haSalido = resultSet.getBoolean(7);
-                Empresa empresa = new Empresa(nombreEmpresa);
+                Empresa empresa = new Empresa(idEmpresa,nombreEmpresa);
                 if (tipo.equals("Invitado")){
                     Invitado invitado = new Invitado(id, nombre, activo, estado, empresa, haSalido);
                     persons.add(invitado);
@@ -120,7 +121,7 @@ public class FuncionarioImpl implements FuncionarioDAO {
     @Override
     public Persona getPersonaById(int id) {
         String sql = """
-                SELECT persona.*, empresa.`Nombre` from persona
+                SELECT persona.*, empresa.`Nombre`, empresa.idEmpresa from persona
                 JOIN empresa ON empresa.`IdEmpresa` = persona.`IdEmpresa`
                 WHERE `Documento` = ?;
 
@@ -136,8 +137,9 @@ public class FuncionarioImpl implements FuncionarioDAO {
                 String tipo = resultSet.getString(4);
                 String estado = resultSet.getString(5);
                 String nombreEmpresa = resultSet.getString(8);
+                String idEmpresa = resultSet.getString(9);
                 boolean haSalido = resultSet.getBoolean(7);
-                Empresa empresa = new Empresa(nombreEmpresa);
+                Empresa empresa = new Empresa(idEmpresa, nombreEmpresa);
                 if (tipo.equals("Invitado")){
                     Invitado invitado = new Invitado(documento, nombre, activo, estado, empresa, haSalido);
                     return invitado;
