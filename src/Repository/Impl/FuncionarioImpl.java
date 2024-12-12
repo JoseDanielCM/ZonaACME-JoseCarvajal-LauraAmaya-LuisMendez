@@ -16,14 +16,15 @@ public class FuncionarioImpl implements FuncionarioDAO {
     @Override
     public void crearTrabajador(Trabajador trabajador) {
         String sql = """
-                INSERT INTO `Persona`(`Documento`,`Nombre`,`Activo`,`Tipo`,`Estado`,`IdEmpresa`,`haSalido`) VALUES
-                (?,?,TRUE,"Trabajador","Permitido",?,FALSE);
+                INSERT INTO `Persona`(`Documento`,`Nombre`,`Activo`,`Tipo`,`Estado`,`IdEmpresa`,`haSalido`,`PlacaVehiculo`) VALUES
+                (?,?,TRUE,"Trabajador","Permitido",?,FALSE,?);
                 """;
         try (Connection conn = DataBaseConnection.getConnection()){
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1, trabajador.getDocumento());
             ps.setString(2, trabajador.getNombre());
             ps.setString(3, trabajador.getEmpresa().getIdEmpresa());
+            ps.setString(4, trabajador.getVehiculo().getPlaca());
             ps.executeUpdate();
 
             System.out.println("Trabajador creado correctamente");
@@ -35,14 +36,15 @@ public class FuncionarioImpl implements FuncionarioDAO {
     @Override
     public void crearInvitado(Invitado invitado) {
         String sql = """
-                INSERT INTO `Persona`(`Documento`,`Nombre`,`Activo`,`Tipo`,`Estado`,`IdEmpresa`,`haSalido`) VALUES
-                (?,?,TRUE,"Invitado","Permitido",?,FALSE);
+                INSERT INTO `Persona`(`Documento`,`Nombre`,`Activo`,`Tipo`,`Estado`,`IdEmpresa`,`haSalido`,`PlacaVehiculo`) VALUES
+                (?,?,TRUE,"Invitado","Permitido",?,FALSE,?);
                 """;
         try (Connection conn = DataBaseConnection.getConnection()){
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1, invitado.getDocumento());
             ps.setString(2, invitado.getNombre());
             ps.setString(3, invitado.getEmpresa().getIdEmpresa());
+            ps.setString(4, invitado.getVehiculo().getPlaca());
             System.out.println(ps);
             ps.executeUpdate();
 
@@ -71,8 +73,8 @@ public class FuncionarioImpl implements FuncionarioDAO {
     @Override
     public List<Persona> mostrarActivos() {
         String sql = """
-                    SELECT `Persona`.*, empresa.`Nombre`, empresa.idEmpresa FROM `Persona`
-                    JOIN empresa ON empresa.`IdEmpresa` = `Persona`.`IdEmpresa`
+                    SELECT `Persona`.*, e.`Nombre` FROM `Persona`
+                    JOIN Empresa e ON e.`IdEmpresa` = `Persona`.`IdEmpresa`
                     WHERE `Persona`.`Activo` = TRUE;
                 """;
         List<Persona> persons = new ArrayList<Persona>();
@@ -86,15 +88,17 @@ public class FuncionarioImpl implements FuncionarioDAO {
                 boolean activo = resultSet.getBoolean(3);
                 String tipo = resultSet.getString(4);
                 String estado = resultSet.getString(5);
-                String nombreEmpresa = resultSet.getString(8);
-                String idEmpresa = resultSet.getString(9);
+                String idEmpresa = resultSet.getString(6);
+                String nombreEmpresa = resultSet.getString(9);
                 boolean haSalido = resultSet.getBoolean(7);
+                String placaVehiculo = resultSet.getString(8);
                 Empresa empresa = new Empresa(idEmpresa,nombreEmpresa);
+                Vehiculo vehiculo = new Vehiculo(placaVehiculo,"Permitido",haSalido);
                 if (tipo.equals("Invitado")){
-                    Invitado invitado = new Invitado(id, nombre, activo, estado, empresa, haSalido);
+                    Invitado invitado = new Invitado(id, nombre, activo, estado, empresa, haSalido, vehiculo);
                     persons.add(invitado);
                 }else{
-                    Trabajador trabajador = new Trabajador(id, nombre, activo, estado, empresa, haSalido);
+                    Trabajador trabajador = new Trabajador(id, nombre, activo, estado, empresa, haSalido, vehiculo);
                     persons.add(trabajador);
                 }
             }
@@ -122,7 +126,7 @@ public class FuncionarioImpl implements FuncionarioDAO {
 
     @Override
     public void crearAnotacion(Anotacion anotacion, int documento) {
-
+        return;
     }
 
     @Override
@@ -156,8 +160,8 @@ public class FuncionarioImpl implements FuncionarioDAO {
     @Override
     public Persona getPersonaById(int id) {
         String sql = """
-                SELECT Persona.*, Empresa.`Nombre`, Empresa.idEmpresa from Persona
-                JOIN Empresa ON Empresa.`IdEmpresa` = Persona.`IdEmpresa`
+                SELECT `Persona`.*, e.`Nombre` FROM `Persona`
+                JOIN Empresa e ON e.`IdEmpresa` = `Persona`.`IdEmpresa`
                 WHERE Persona.`Documento` = ?;
 
                 """;
@@ -166,24 +170,55 @@ public class FuncionarioImpl implements FuncionarioDAO {
             ps.setInt(1, id);
             ResultSet resultSet= ps.executeQuery();
             while (resultSet.next()) {
-                int documento = resultSet.getInt(1);
                 String nombre = resultSet.getString(2);
                 boolean activo = resultSet.getBoolean(3);
                 String tipo = resultSet.getString(4);
                 String estado = resultSet.getString(5);
-                String nombreEmpresa = resultSet.getString(8);
-                String idEmpresa = resultSet.getString(9);
+                String idEmpresa = resultSet.getString(6);
+                String nombreEmpresa = resultSet.getString(9);
                 boolean haSalido = resultSet.getBoolean(7);
-                Empresa empresa = new Empresa(idEmpresa, nombreEmpresa);
+                String placaVehiculo = resultSet.getString(8);
+                Empresa empresa = new Empresa(idEmpresa,nombreEmpresa);
+                Vehiculo vehiculo = new Vehiculo(placaVehiculo,"Permitido",haSalido);
                 if (tipo.equals("Invitado")){
-                    return new Invitado(documento, nombre, activo, estado, empresa, haSalido);
+                    return new Invitado(id, nombre, activo, estado, empresa, haSalido, vehiculo);
                 }else{
-                    return new Trabajador(documento, nombre, activo, estado, empresa, haSalido);
+                    return new Trabajador(id, nombre, activo, estado, empresa, haSalido, vehiculo);
                 }
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        return null;
+    }
+
+    @Override
+    public Empresa getEmpresaFuncionario(int idFuncionario) {
+        String sql = """
+                SELECT E.`IdEmpresa`, E.`Nombre` FROM Usuarios AS U
+                JOIN Empresa as E ON E.`IdEmpresa` = U.`IdEmpresa`
+                WHERE U.`Documento` = ?;
+                """;
+        try (Connection conn = DataBaseConnection.getConnection()){
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, idFuncionario);
+            ResultSet resultSet = ps.executeQuery();
+            while (resultSet.next()){
+                String id = resultSet.getString(1);
+                String nombre = resultSet.getString(2);
+                Empresa empresa = new Empresa(id,nombre);
+                return empresa;
+            }
+
+            System.out.println("Empresa obtenida correctamente");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return null;
+    }
+
+    @Override
+    public Vehiculo crearVehiculo(Vehiculo vehiculo) {
         return null;
     }
 }

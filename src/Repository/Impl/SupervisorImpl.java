@@ -195,9 +195,11 @@ public class SupervisorImpl implements SupervisorDAO {
                 boolean haSalido = resultSet.getBoolean(7);
                 Empresa empresa = new Empresa(idEmpresa, nombreEmpresa);
                 if (tipo.equals("Invitado")){
-                    return new Invitado(documento, nombre, activo, estado, empresa, haSalido);
+                    return null;
+                    // return new Invitado(documento, nombre, activo, estado, empresa, haSalido);
                 }else{
-                    return new Trabajador(documento, nombre, activo, estado, empresa, haSalido);
+                    return null;
+                    // return new Trabajador(documento, nombre, activo, estado, empresa, haSalido, vehiculo);
                 }
             }
         } catch (SQLException e) {
@@ -231,6 +233,27 @@ public class SupervisorImpl implements SupervisorDAO {
         }
     }
 
+    @Override
+    public Empresa getEmpresaByName(String name) {
+        String sql = """
+                SELECT * FROM Empresa WHERE Empresa.Nombre = ?;
+                """;
+        try (Connection conn = DataBaseConnection.getConnection()){
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, name);
+            ResultSet resultSet = ps.executeQuery();
+            if (resultSet.next()){
+                String id = resultSet.getString(1);
+                String nombre = resultSet.getString(2);
+                Empresa empresa = new Empresa(id,nombre);
+                System.out.println("Empresa obtenida correctamente");
+                return empresa;
+            }
+            throw new IllegalArgumentException  ("Empresa no encontrada");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     @Override
     public void RegistrarSalidaVehiculo(int cantidadPersonas, String placa) {

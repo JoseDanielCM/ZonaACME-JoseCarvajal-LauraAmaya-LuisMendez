@@ -128,9 +128,9 @@ public class GuardaImpl implements GuardaDAO {
                 boolean haSalido = resultSet.getBoolean(7);
                 Empresa empresa = new Empresa(idEmpresa, nombreEmpresa);
                 if (tipo.equals("Invitado")){
-                    return new Invitado(documento, nombre, activo, estado, empresa, haSalido);
+                    return new Invitado(documento, nombre, activo, estado, empresa, haSalido,null);
                 }else{
-                    return new Trabajador(documento, nombre, activo, estado, empresa, haSalido);
+                    return new Trabajador(documento, nombre, activo, estado, empresa, haSalido,null);
                 }
             }
         } catch (SQLException e) {

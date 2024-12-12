@@ -24,6 +24,7 @@ WHERE Usuarios.`Documento`= ? AND Usuarios.`Contrasena` = ?;
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1,username);
             ps.setString(2,password);
+            System.out.println(ps);
             ResultSet resultSet= ps.executeQuery();
             if (resultSet.next()) {
                 // EMPRESA

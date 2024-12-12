@@ -10,7 +10,15 @@ public class SesionService {
         sesion = new SesionImpl();
     }
 
-    public Sesion buscarUsuario(int username, String password) {
-        return sesion.buscarUsuario(username, password);
+    public Sesion buscarUsuario(String username, String password) {
+        int documento;
+        try {
+            documento = Integer.parseInt(username);
+            return sesion.buscarUsuario(documento, password);
+        } catch (Exception e){
+            System.out.println(e);
+            throw new IllegalStateException ("Documento deben ser numeros");
+        }
+
     }
 }

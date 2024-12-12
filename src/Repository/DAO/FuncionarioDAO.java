@@ -1,9 +1,7 @@
 package Repository.DAO;
 
-import Model.Anotacion;
-import Model.Invitado;
-import Model.Persona;
-import Model.Trabajador;
+import Model.*;
+
 import java.sql.Date;
 import java.util.List;
 
@@ -17,4 +15,6 @@ public interface FuncionarioDAO extends SalidaDAO{
     void crearAnotacion(Anotacion anotacion, int documento);
     @Override
     void RegistrarSalida(int Documento, Date fecha, int documentoUser);
+    Empresa getEmpresaFuncionario(int idFuncionario);
+    Vehiculo crearVehiculo(Vehiculo vehiculo);
 }

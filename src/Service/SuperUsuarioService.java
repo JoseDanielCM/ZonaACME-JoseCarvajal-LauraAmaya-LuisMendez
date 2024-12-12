@@ -7,7 +7,7 @@ import Repository.Impl.SuperUsuarioImpl;
 import java.util.List;
 
 public class SuperUsuarioService{
-    private SuperUsuarioImpl superUsuarioImpl;
+    private final SuperUsuarioImpl superUsuarioImpl;
 
     public SuperUsuarioService() {
         superUsuarioImpl = new SuperUsuarioImpl();
@@ -17,7 +17,7 @@ public class SuperUsuarioService{
         try {
             docInt = Integer.parseInt(documento);
         }catch (Exception e) {
-            System.out.println("El documento degbe ser un numero");
+            System.out.println("El documento debe ser un numero");
             throw new IllegalArgumentException("Invalid document");
         }
         Empresa emp = superUsuarioImpl.getEmpresaByName(empresaName);

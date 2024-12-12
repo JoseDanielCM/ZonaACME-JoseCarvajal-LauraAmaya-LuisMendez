@@ -117,3 +117,13 @@ SELECT Usuarios.*, TipoUsuario.`Nombre` as NombreTipo, Empresa.`IdEmpresa`, Empr
 JOIN TipoUsuario ON TipoUsuario.`IdTipo` = Usuarios.`IdTipoUsuario`
 JOIN Empresa ON Empresa.`IdEmpresa` = Usuarios.`IdEmpresa`
 WHERE Usuarios.`Documento`= 1020306598 AND Usuarios.`Contrasena` = '123';
+
+SELECT Usuarios.*, TipoUsuario.`Nombre` as NombreTipo, Empresa.`IdEmpresa`, Empresa.`Nombre` as NombreEmpresa FROM Usuarios
+JOIN TipoUsuario ON TipoUsuario.`IdTipo` = Usuarios.`IdTipoUsuario`
+JOIN Empresa ON Empresa.`IdEmpresa` = Usuarios.`IdEmpresa`
+WHERE Usuarios.`Documento`= 1020306598 AND Usuarios.`Contrasena` = '1020306598';
+
+SELECT Usuarios.*, TipoUsuario.`Nombre` as NombreTipo, Empresa.`IdEmpresa`, Empresa.`Nombre` as NombreEmpresa FROM Usuarios
+JOIN TipoUsuario ON TipoUsuario.`IdTipo` = Usuarios.`IdTipoUsuario`
+JOIN Empresa ON Empresa.`IdEmpresa` = Usuarios.`IdEmpresa`
+WHERE Usuarios.`Documento`= 1020306598 AND Usuarios.`Contrasena` = '123';

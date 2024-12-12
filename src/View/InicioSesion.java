@@ -1,12 +1,49 @@
 package View;
 
+import Controller.SesionController;
+import Model.Sesion;
+import Model.Usuario;
+
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class InicioSesion extends JFrame {
 
     public InicioSesion() {
         initComponents();
         this.setLocationRelativeTo(null);
+        btnLogin.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String documento = txtFieldUser.getText();
+                String password = txtfieldPassword.getText();
+                SesionController sesionController = new SesionController();
+                Sesion sesion = sesionController.buscarUsuario(documento,password);
+                Usuario usuario = sesion.getUsuario();
+                String tipo = String.valueOf(usuario.getClass());
+                tipo= tipo.replace("class Model.","");
+                System.out.println(tipo);
+                switch (tipo) {
+                    case "SuperUsuario":
+                        SuperUsuarioMainMenu superUsuarioMainMenu = new SuperUsuarioMainMenu(usuario);
+                        superUsuarioMainMenu.setVisible(true);
+                        dispose();
+                        break;
+                    case "Supervisor":
+                        JOptionPane.showMessageDialog(null, "Bienvenido supervisor " + usuario.getNombre());
+                        break;
+                    case "Guarda":
+                        JOptionPane.showMessageDialog(null, "Bienvenido Guarda " + usuario.getNombre());
+                        break;
+                    case "Funcionario":
+                        JOptionPane.showMessageDialog(null, "Bienvenido Funcionario " + usuario.getNombre());
+                        break;
+                    default:
+                        JOptionPane.showMessageDialog(null, "Usuario no encontrado");
+                }
+            }
+        });
     }
 
     @SuppressWarnings("unchecked")
