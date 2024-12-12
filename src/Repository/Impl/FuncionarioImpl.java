@@ -7,6 +7,7 @@ import Util.DataBaseConnection;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -125,14 +126,32 @@ public class FuncionarioImpl implements FuncionarioDAO {
     }
 
     @Override
-    public void RegistrarSalida(int Documento) {
+    public void RegistrarSalida(int Documento, Date fecha, int documentoUser) {
+        if(getPersonaById(Documento) == null){
+            System.out.println("Usuario no encontrado");
+        } else {
+            String sql = """
+            INSERT INTO `Anotaciones`(`Documento`,DocUser,`Tipo`,`Mensaje`,`Fecha`) VALUES
+            (?,?,"Registro",?,?);
+            """;
+            try (Connection conn = DataBaseConnection.getConnection()){
+                PreparedStatement ps = conn.prepareStatement(sql);
+                ps.setInt(1, Documento);
+                ps.setInt(2, documentoUser);
+                ps.setString(3, "Persona identificada con el documento: " + Documento + " ha registrado salida manual");
+                ps.setDate(4, fecha);
+                System.out.println(ps);
+                ps.executeUpdate();
 
+                System.out.println("Registro correctamente");
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
     @Override
-    public void RegistrarSalidaVehiculo(int cantidadPersonas, String placa) {
-
-    }
+    public void RegistrarSalidaVehiculo(int cantidadPersonas, String placa) {}
 
     @Override
     public Persona getPersonaById(int id) {
@@ -157,14 +176,11 @@ public class FuncionarioImpl implements FuncionarioDAO {
                 boolean haSalido = resultSet.getBoolean(7);
                 Empresa empresa = new Empresa(idEmpresa, nombreEmpresa);
                 if (tipo.equals("Invitado")){
-                    Invitado invitado = new Invitado(documento, nombre, activo, estado, empresa, haSalido);
-                    return invitado;
+                    return new Invitado(documento, nombre, activo, estado, empresa, haSalido);
                 }else{
-                    Trabajador trabajador = new Trabajador(documento, nombre, activo, estado, empresa, haSalido);
-                    return trabajador;
+                    return new Trabajador(documento, nombre, activo, estado, empresa, haSalido);
                 }
             }
-
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

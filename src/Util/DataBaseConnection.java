@@ -12,8 +12,7 @@ public class DataBaseConnection {
     private static String PASSWORD = "campus2023";
     private static Connection connection;
     private static String ip;
-    private static final String archivoURL = "/home/camper/Escritorio/ZonaACME-JoseCarvajal-LauraAmaya-LuisMendez/src/Util/IpConnection.txt";
-
+    private static final String archivoURL = "src/Util/IpConnection.txt";
     public static void leerIp(){
         FileReader fr;
         BufferedReader buffer;
@@ -40,7 +39,7 @@ public class DataBaseConnection {
                 System.out.println("Conectado correctamente a la base de datos");
             }
         } catch (SQLException e) {
-            throw new RuntimeException("Error al conectar la base de datos");
+            throw new RuntimeException("Error al conectar la base de datos"+ e.getMessage());
         }
         return connection;}
 

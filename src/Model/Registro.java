@@ -8,5 +8,5 @@ public abstract class Registro {
     private Funcionario funcionario;
     private Anotacion anotacion;
     private String tipoRegistro;
-    private String placaVehiculo;
+    private Vehiculo vehiculo;
 }

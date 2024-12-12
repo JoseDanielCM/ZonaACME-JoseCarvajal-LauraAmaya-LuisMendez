@@ -7,14 +7,16 @@ public abstract class Persona {
     private String estado;
     private Empresa empresa;
     private boolean haSalido;
+    private Vehiculo vehiculo;
 
-    public Persona(int documento, String nombre, boolean activo, String estado, Empresa empresa, boolean haSalido) {
+    public Persona(int documento, String nombre, boolean activo, String estado, Empresa empresa, boolean haSalido, Vehiculo vehiculo) {
         this.documento = documento;
         this.nombre = nombre;
         this.activo = activo;
         this.estado = estado;
         this.empresa = empresa;
         this.haSalido = haSalido;
+        this.vehiculo = vehiculo;
     }
 
     public int getDocumento() {
@@ -64,6 +66,13 @@ public abstract class Persona {
     public void setHaSalido(boolean haSalido) {
         this.haSalido = haSalido;
     }
+    public Vehiculo getVehiculo() {
+        return vehiculo;
+    }
+
+    public void setVehiculo(Vehiculo vehiculo) {
+        this.vehiculo = vehiculo;
+    }
 
     @Override
     public String toString() {
@@ -73,7 +82,8 @@ public abstract class Persona {
                 ", activo=" + activo +
                 ", estado='" + estado + '\'' +
                 ", empresa=" + empresa +
-                ", haSalido=" + haSalido +
+                ", haSalido=" + haSalido +'\''+
+                ", vehiculo=" + vehiculo +
                 '}';
     }
 }

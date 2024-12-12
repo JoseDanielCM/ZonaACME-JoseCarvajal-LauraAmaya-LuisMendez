@@ -33,6 +33,12 @@ CREATE TABLE IF NOT EXISTS Usuarios (
     FOREIGN KEY (IdEmpresa) REFERENCES Empresa(IdEmpresa)
 );
 
+CREATE TABLE IF NOT EXISTS Vehiculo (
+    Placa CHAR(6) PRIMARY KEY NOT NULL UNIQUE,
+    Estado ENUM("Permitido", "Restringido") NOT NULL,
+    haSalido BOOLEAN DEFAULT FALSE
+);
+
 CREATE TABLE IF NOT EXISTS Persona (
     Documento INTEGER PRIMARY KEY NOT NULL UNIQUE,
     Nombre VARCHAR(100) NOT NULL,
@@ -41,16 +47,20 @@ CREATE TABLE IF NOT EXISTS Persona (
     Estado ENUM("Permitido", "Restringido") NOT NULL,
     IdEmpresa INTEGER NOT NULL,
     haSalido BOOLEAN DEFAULT FALSE,
-    FOREIGN KEY (IdEmpresa) REFERENCES Empresa(IdEmpresa)
+    PlacaVehiculo CHAR(6),
+    FOREIGN KEY (IdEmpresa) REFERENCES Empresa(IdEmpresa),
+    FOREIGN KEY (PlacaVehiculo) REFERENCES Vehiculo(Placa)
 );
 
 CREATE TABLE IF NOT EXISTS Anotaciones (
     IdAnotacion INTEGER PRIMARY KEY NOT NULL UNIQUE AUTO_INCREMENT,
     Documento INTEGER NOT NULL,
-    Tipo ENUM("Restricción", "Levantamiento", "Advertencia"),
+    DocUser INTEGER NOT NULL,
+    Tipo ENUM("Restricción", "Levantamiento", "Registro"),
     Mensaje VARCHAR(500),
     Fecha DATETIME NOT NULL,
-    FOREIGN KEY (Documento) REFERENCES Persona(Documento)
+    FOREIGN KEY (Documento) REFERENCES Persona(Documento),
+    FOREIGN KEY (DocUser) REFERENCES Usuarios(Documento)
 );
 
 CREATE TABLE IF NOT EXISTS Registro (
@@ -60,10 +70,11 @@ CREATE TABLE IF NOT EXISTS Registro (
     DocUser INTEGER NOT NULL,
     IdAnotacion INTEGER,
     TipoRegistro ENUM("Salida", "Entrada") NOT NULL,
-    PlacaVehiculo CHAR(7),
+    PlacaVehiculo CHAR(6),
     FOREIGN KEY (Documento) REFERENCES Persona(Documento),
     FOREIGN KEY (DocUser) REFERENCES Usuarios(Documento),
-    FOREIGN KEY (IdAnotacion) REFERENCES Anotaciones(IdAnotacion)
+    FOREIGN KEY (IdAnotacion) REFERENCES Anotaciones(IdAnotacion),
+    FOREIGN KEY (PlacaVehiculo) REFERENCES Vehiculo(Placa)
 );
 
 CREATE TABLE IF NOT EXISTS Log (
@@ -80,115 +91,25 @@ INSERT INTO `TipoUsuario`(`Nombre`) VALUES
 ("Guarda"),
 ("Funcionario");
 
-/*
-CREATE TABLE IF NOT EXISTS Empresa (
-    IdEmpresa INTEGER PRIMARY KEY NOT NULL UNIQUE,
-    Nombre VARCHAR(110) UNIQUE
-); */
 INSERT INTO `Empresa`(`IdEmpresa`,`Nombre`) VALUES
 (1112223331,"Campus"),
 (1234567890,"Seguridad")
 
 INSERT INTO `Usuarios`(`Documento`,`Nombre`,`Contrasena`,`Activo`,`IdTipoUsuario`,`IdEmpresa`) VALUES
-(1020306598,"juanito","123",TRUE,1,1234567890);
+(1020306598,"juanito","123",TRUE,1,1112223331),
+(1212121232,"jj","gato",TRUE,3,1234567890),
+(1102359888,"Luis","gg",TRUE,3,1234567890),
+(1102359295,"Jose","totoro",TRUE,4,1112223331),
+(1102359999,"Laura","1234",TRUE,2,1112223331);
 
-/* INSERT INTO `Usuarios`(`Nombre`,`Contrasena`,`Activo`,`IdTipoUsuario`,`IdEmpresa`) VALUES
-("juanito","123",TRUE,1,NULL); */
+INSERT INTO `Vehiculo`(`Placa`, `Estado`,`haSalido`) VALUES
+("GPR895","Permitido",FALSE),
+("JLO777","Permitido",FALSE),
+("ABA555","Permitido",FALSE);
 
-/* DELETE FROM `Usuarios`;
+INSERT INTO `Persona` VALUES
+(1102359291,"Lili",TRUE,"Trabajador","Permitido",1112223331,FALSE,"GPR895"),
+(1515151515,"Marco",TRUE,"Trabajador","Permitido",1112223331,FALSE,"GPR895"),
+(1231231231,"Lucas",TRUE,"Invitado","Permitido",1234567890,FALSE,"GPR895"),
+(1112223334,"Pepe",TRUE,"Invitado","Permitido",1234567890,FALSE,NULL);
 
-/* UPDATE `Usuarios` SET `Activo` = FALSE WHERE `IdUsuario`= ?; */
-
-SELECT * FROM Empresa WHERE Empresa.IdEmpresa = 1;
-
-SELECT *
-    FROM Usuarios u
-    JOIN TipoUsuario t ON u.IdTipoUsuario = t.IdTipo
-    WHERE t.Nombre = 'Supervisor';
-
-SELECT u.*, `Empresa`.`Nombre` as NombreEmpresa
-FROM Usuarios u
-JOIN TipoUsuario t ON u.IdTipoUsuario = t.IdTipo
-JOIN `Empresa` ON `Empresa`.`IdEmpresa` = u.`IdEmpresa`
-WHERE t.Nombre = 'Funcionario' ;
-
-SELECT U.*, E.Nombre FROM `Usuarios` U JOIN `Empresa` E ON `E`.`IdEmpresa` = `U`.`IdEmpresa`;
-
-/*
-SELECT U.Nombre, Documento, E.Nombre FROM `Usuarios` U
-            JOIN `Empresa` E
-            ON `E`.`IdEmpresa` = `U`.`IdEmpresa`
-            WHERE U.IdTipoUsuario = 4 AND u.Documento = ? ; 
-*/
-
-/* UPDATE `Persona` SET `Estado` = "Permitido" WHERE `Documento` = ?; */
-
-/*INSERT INTO `Empresa` VALUES 
-(?,TRUE);
-/*
-CREATE TABLE IF NOT EXISTS Empresa (
-    IdEmpresa INTEGER PRIMARY KEY NOT NULL UNIQUE AUTO_INCREMENT,
-    Nombre VARCHAR(110) UNIQUE
-); */
-
-/*
-CREATE TABLE IF NOT EXISTS Persona (
-    Documento INTEGER PRIMARY KEY NOT NULL UNIQUE,
-    Nombre VARCHAR(100) NOT NULL,
-    Activo BOOLEAN NOT NULL DEFAULT TRUE,
-    Tipo ENUM("Trabajador", "Invitado") NOT NULL,
-    Estado ENUM("Permitido", "Restringido") NOT NULL,
-    IdEmpresa INTEGER NOT NULL,
-    haSalido BOOLEAN DEFAULT FALSE,
-    FOREIGN KEY (IdEmpresa) REFERENCES Empresa(IdEmpresa)
-);
-*/
-/*
-INSERT INTO `Persona`(`Documento`,`Nombre`,`Activo`,`Tipo`,`Estado`,`IdEmpresa`,`haSalido`) VALUES
-(?,?,TRUE,"Trabajador","Permitido",?,FALSE);
-
-SELECT `Persona`.*, `Empresa`.`Nombre` FROM `Persona` 
-JOIN `Empresa` ON `Empresa`.`IdEmpresa` = `Persona`.`IdEmpresa`
-WHERE `Persona`.`Activo` = TRUE;
-
-SELECT * FROM `Persona` WHERE `Activo` = TRUE;
-
-*/
-
-/*
-SELECT `Persona`.*, empresa.`Nombre` FROM `Persona`
-JOIN empresa ON empresa.`IdEmpresa` = `Persona`.`IdEmpresa`
-WHERE `Persona`.`Activo` = TRUE;
-
-SELECT persona.*, empresa.`Nombre` from persona
-JOIN empresa ON empresa.`IdEmpresa` = persona.`IdEmpresa`
-WHERE `Documento` !=1;
-
-SELECT * FROM Usuarios;
-
-SELECT `Usuarios`.*, `Empresa`.`Nombre`  FROM Usuarios 
-JOIN `Empresa` ON `Empresa`.`IdEmpresa` = `Usuarios`.`IdEmpresa`;
-
-SELECT `Usuarios`. FROM `Usuarios`
-
-INSERT INTO `Registro` VALUES
-(?,DATETIME.NOW(),?,NULL,"Entrada",NULL);
-
-*/
-/*
-CREATE TABLE IF NOT EXISTS Registro (
-    IdRegistro INTEGER PRIMARY KEY NOT NULL UNIQUE AUTO_INCREMENT,
-    Documento INTEGER NOT NULL,
-    Fecha DATETIME NOT NULL,
-    DocUser INTEGER NOT NULL,
-    IdAnotacion INTEGER,
-    TipoRegistro ENUM("Salida", "Entrada") NOT NULL,
-    PlacaVehiculo CHAR(7),
-    FOREIGN KEY (Documento) REFERENCES Persona(Documento),
-    FOREIGN KEY (DocUser) REFERENCES Usuarios(Documento),
-    FOREIGN KEY (IdAnotacion) REFERENCES Anotaciones(IdAnotacion)
-);
-*/
-
-INSERT INTO `Persona`(`Documento`,`Nombre`,`Activo`,`Tipo`,`Estado`,`IdEmpresa`,`haSalido`) VALUES
-(1212121211,'InvitM',TRUE,"Invitado","Permitido",1112223331,FALSE);

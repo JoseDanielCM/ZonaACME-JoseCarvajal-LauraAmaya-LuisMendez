@@ -9,6 +9,14 @@ public class Anotacion {
     private String mensajeAnot;
     private Date fecha;
 
+    public Anotacion(int idAnotacion, Persona persona, String tipoAnotacion, String mensajeAnot, Date fecha) {
+        this.idAnotacion = idAnotacion;
+        this.persona = persona;
+        this.tipoAnotacion = tipoAnotacion;
+        this.mensajeAnot = mensajeAnot;
+        this.fecha = fecha;
+    }
+
     public int getIdAnotacion() {
         return idAnotacion;
     }

@@ -3,6 +3,8 @@ package Repository.DAO;
 import Model.Anotacion;
 import Model.Funcionario;
 import Model.Guarda;
+import Model.Persona;
+import java.sql.Date;
 
 public interface SupervisorDAO extends SalidaDAO {
     void crearFuncionario(Funcionario funcionario);
@@ -13,6 +15,7 @@ public interface SupervisorDAO extends SalidaDAO {
     Guarda mostrarGuarda(int documentoGuarda);
     void crearAnotaciones(Anotacion anotacion);
     void levantarRestriccion(int documentoPersona);
+    Persona getPersonaById(int id);
     @Override
-    void RegistrarSalida(int Documento);
+    void RegistrarSalida(int Documento, Date fecha, int documentoUser);
 }
