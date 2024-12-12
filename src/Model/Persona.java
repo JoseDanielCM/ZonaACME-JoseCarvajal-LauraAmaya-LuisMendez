@@ -9,6 +9,16 @@ public abstract class Persona {
     private boolean haSalido;
     private Vehiculo vehiculo;
 
+    public Persona(int documento, String nombre, boolean activo, String estado, Empresa empresa, boolean haSalido) {
+        this.documento = documento;
+        this.nombre = nombre;
+        this.activo = activo;
+        this.estado = estado;
+        this.empresa = empresa;
+        this.haSalido = haSalido;
+        this.vehiculo = null;
+    }
+
     public Persona(int documento, String nombre, boolean activo, String estado, Empresa empresa, boolean haSalido, Vehiculo vehiculo) {
         this.documento = documento;
         this.nombre = nombre;

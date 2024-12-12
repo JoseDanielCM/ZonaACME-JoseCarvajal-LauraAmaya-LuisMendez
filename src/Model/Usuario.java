@@ -63,4 +63,15 @@ public abstract class Usuario {
     public void setEmpresa(Empresa empresa) {
         this.empresa = empresa;
     }
+
+    @Override
+    public String toString() {
+        return "Usuario{" +
+                "documento=" + documento +
+                ", nombre='" + nombre + '\'' +
+                ", contrasenia='" + contrasenia + '\'' +
+                ", activo=" + activo +
+                ", empresa=" + empresa +
+                '}';
+    }
 }

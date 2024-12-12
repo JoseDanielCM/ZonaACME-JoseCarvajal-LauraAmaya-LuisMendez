@@ -1,20 +1,20 @@
 package Main;
 
-import Model.Empresa;
-import Model.Guarda;
-import Model.Invitado;
-import Model.Persona;
-import Repository.Impl.FuncionarioImpl;
-import Repository.Impl.GuardaImpl;
-import Repository.Impl.SuperUsuarioImpl;
-import Repository.Impl.SupervisorImpl;
+import Model.*;
+import Repository.Impl.*;
 import Util.DataBaseConnection;
 import View.InicioSesion;
 
 public class TestConnection {
     public static void main(String[] args) {
-        DataBaseConnection.getConnection();
 
+        DataBaseConnection.getConnection();
+        SesionImpl sesionImpl = new SesionImpl();
+        Sesion sesion =  sesionImpl.buscarUsuario(1020306598,"123");
+        System.out.println(sesion.getUsuario());
+        /*
+        InicioSesion inicioSesion = new InicioSesion();
+        inicioSesion.setVisible(true);*/
 
     }
 }

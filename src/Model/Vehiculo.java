@@ -1,6 +1,6 @@
 package Model;
 
-public abstract class Vehiculo {
+public class Vehiculo {
     private String placa;
     private String estado;
     private boolean haSalido;

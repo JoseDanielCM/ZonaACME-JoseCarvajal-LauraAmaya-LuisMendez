@@ -75,7 +75,8 @@ public class GuardaImpl implements GuardaDAO {
     @Override
     public void registrarVehiculo(String placa, List<Persona> personas, Guarda guarda) {
         for (int i = 0; i < personas.size(); i++) {
-            crearRegistroVehiculo(personas.get(i), guarda, placa);
+            Vehiculo vehiculo = new Vehiculo(placa, "bien", false);
+            crearRegistroVehiculo(personas.get(i), guarda, vehiculo);
         }
     }
 

@@ -113,3 +113,7 @@ INSERT INTO `Persona` VALUES
 (1231231231,"Lucas",TRUE,"Invitado","Permitido",1234567890,FALSE,"GPR895"),
 (1112223334,"Pepe",TRUE,"Invitado","Permitido",1234567890,FALSE,NULL);
 
+SELECT Usuarios.*, TipoUsuario.`Nombre` as NombreTipo, Empresa.`IdEmpresa`, Empresa.`Nombre` as NombreEmpresa FROM Usuarios
+JOIN TipoUsuario ON TipoUsuario.`IdTipo` = Usuarios.`IdTipoUsuario`
+JOIN Empresa ON Empresa.`IdEmpresa` = Usuarios.`IdEmpresa`
+WHERE Usuarios.`Documento`= 1020306598 AND Usuarios.`Contrasena` = '123';

@@ -15,15 +15,15 @@ public class SesionImpl implements SesionDAO {
     @Override
     public Sesion buscarUsuario(int username, String password) {
         String sql = """
-SELECT usuarios.*, tipousuario.`Nombre` as NombreTipo, empresa.`IdEmpresa`, empresa.`Nombre` as NombreEmpresa FROM usuarios 
-JOIN tipousuario ON tipousuario.`IdTipo` = usuarios.`IdTipoUsuario`
-JOIN empresa ON empresa.`IdEmpresa` = usuarios.`IdEmpresa`
-WHERE usuarios.`Documento`= ? AND usuarios.`Contrasena` = ?;
+SELECT Usuarios.*, TipoUsuario.`Nombre` as NombreTipo, Empresa.`IdEmpresa`, Empresa.`Nombre` as NombreEmpresa FROM Usuarios
+JOIN TipoUsuario ON TipoUsuario.`IdTipo` = Usuarios.`IdTipoUsuario`
+JOIN Empresa ON Empresa.`IdEmpresa` = Usuarios.`IdEmpresa`
+WHERE Usuarios.`Documento`= ? AND Usuarios.`Contrasena` = ?;
                 """;
         try (Connection conn = DataBaseConnection.getConnection()){
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1,username);
-            ps.setString(1,password);
+            ps.setString(2,password);
             ResultSet resultSet= ps.executeQuery();
             if (resultSet.next()) {
                 // EMPRESA
