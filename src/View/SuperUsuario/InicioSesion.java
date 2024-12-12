@@ -1,4 +1,4 @@
-package View;
+package View.SuperUsuario;
 
 import Controller.SesionController;
 import Model.Sesion;

@@ -1,10 +1,17 @@
-package View;
+package View.SuperUsuario;
+
+import Model.Usuario;
 
 import javax.swing.*;
 
 public class DesactivarSupervisorMenu extends JFrame {
-    public DesactivarSupervisorMenu() {
+    private Usuario superUsuario;
+    public DesactivarSupervisorMenu(Usuario superUsuario) {
+        this.superUsuario = superUsuario;
         initComponents();
+        this.setLocationRelativeTo(null);
+
+        lblBienvenida.setText(superUsuario.getNombre());
     }
 
     /**
@@ -25,6 +32,8 @@ public class DesactivarSupervisorMenu extends JFrame {
         DocLabel = new javax.swing.JLabel();
         txtFieldDocumento2 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
         DocLabel1 = new javax.swing.JLabel();
         txtFieldDocumento3 = new javax.swing.JTextField();
 
@@ -105,6 +114,20 @@ public class DesactivarSupervisorMenu extends JFrame {
             }
         });
 
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/casa.png"))); // NOI18N
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/logout.png"))); // NOI18N
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -167,6 +190,15 @@ public class DesactivarSupervisorMenu extends JFrame {
         // TODO add your handling code here:
     }
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {
+        // TODO add your handling code here:
+    }
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {
+        // TODO add your handling code here:
+    }
+
+
     private void txtFieldDocumento3ActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
     }
@@ -181,6 +213,8 @@ public class DesactivarSupervisorMenu extends JFrame {
     private javax.swing.JLabel ImgMenu;
     private javax.swing.JLabel Logo;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel lblBienvenida;
     private javax.swing.JLabel lblBienvenida2;
     private javax.swing.JLabel lblCrearSupervisor;

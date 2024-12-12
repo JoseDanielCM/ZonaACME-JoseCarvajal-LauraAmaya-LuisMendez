@@ -1,6 +1,5 @@
-package View;
+package View.SuperUsuario;
 
-import Model.SuperUsuario;
 import Model.Usuario;
 
 import javax.swing.*;
@@ -12,6 +11,8 @@ public class CrearSupervisorMenu extends JFrame {
         this.superUsuario = superUsuario;
         initComponents();
         this.setLocationRelativeTo(null);
+        lblNombreUsuario.setText(superUsuario.getNombre());
+
 
         btnHouse.addActionListener(new ActionListener() {
             @Override

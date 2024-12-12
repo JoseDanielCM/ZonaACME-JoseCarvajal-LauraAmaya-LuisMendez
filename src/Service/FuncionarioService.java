@@ -26,11 +26,11 @@ public class FuncionarioService {
             System.out.println("El documento del Funcionario debe ser un numero");
             throw new IllegalArgumentException("Invalid document");
         }
-        /*
-        Empresa emp = funcionarioImpl.getEmpresaFuncionario(docFuncionarioInt);
-        Vehiculo vehiculo = new Vehiculo(placaVehiculo);
-        Trabajador trabajador = new Trabajador(docInt,nombre,true,"Permitido",emp,true,vehiculo);
 
-         */
+        Empresa emp = funcionarioImpl.getEmpresaFuncionario(docFuncionarioInt);
+        //Vehiculo vehiculo = funcionarioImpl.crearVehiculo(placaVehiculo);
+        //Trabajador trabajador = new Trabajador(docInt,nombre,true,"Permitido",emp,true,vehiculo);
+
+
     }
 }

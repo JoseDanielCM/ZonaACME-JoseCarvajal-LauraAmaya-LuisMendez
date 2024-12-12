@@ -218,7 +218,19 @@ public class FuncionarioImpl implements FuncionarioDAO {
     }
 
     @Override
-    public Vehiculo crearVehiculo(Vehiculo vehiculo) {
-        return null;
+    public void crearVehiculo(Vehiculo vehiculo) {
+        String sql = """
+                INSERT INTO `Vehiculo`(`Placa`, `Estado`,`haSalido`) VALUES
+                (?,"Permitido",TRUE),
+                """;
+        try (Connection conn = DataBaseConnection.getConnection()){
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1,  vehiculo.getPlaca());
+            ps.executeUpdate();
+
+            System.out.println("Vehículo creado correctamente");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

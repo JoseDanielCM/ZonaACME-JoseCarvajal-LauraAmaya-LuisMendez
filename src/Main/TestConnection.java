@@ -1,9 +1,7 @@
 package Main;
 
-import Model.*;
-import Repository.Impl.*;
 import Util.DataBaseConnection;
-import View.InicioSesion;
+import View.SuperUsuario.InicioSesion;
 
 public class TestConnection {
     public static void main(String[] args) {

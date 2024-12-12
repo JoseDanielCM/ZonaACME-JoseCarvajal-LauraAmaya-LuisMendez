@@ -1,6 +1,5 @@
-package View;
+package View.SuperUsuario;
 
-import Model.SuperUsuario;
 import Model.Usuario;
 
 import javax.swing.*;
@@ -14,6 +13,7 @@ public class SuperUsuarioMainMenu extends JFrame {
         this.setLocationRelativeTo(null);
         lblBienvenida.setText(superUsuario.getNombre());
 
+        // ---------------------------------------------------------------- SALIR --------------------------------
         btnLogout.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -22,6 +22,7 @@ public class SuperUsuarioMainMenu extends JFrame {
                 dispose();
             }
         });
+        // ---------------------------------------------------------------- SALIR --------------------------------
         brnCrearSupervisor.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -34,8 +35,17 @@ public class SuperUsuarioMainMenu extends JFrame {
         btnDesactivarSupervisor.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                DesactivarSupervisorMenu desactivarSupervisorMenu = new DesactivarSupervisorMenu();
+                DesactivarSupervisorMenu desactivarSupervisorMenu = new DesactivarSupervisorMenu(superUsuario);
                 desactivarSupervisorMenu.setVisible(true);
+                dispose();
+            }
+        });
+
+        btnConfigurarDB.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ConfigurarIPMenu cfgMenu = new ConfigurarIPMenu(superUsuario);
+                cfgMenu.setVisible(true);
                 dispose();
             }
         });

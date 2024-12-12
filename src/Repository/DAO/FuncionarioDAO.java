@@ -16,5 +16,5 @@ public interface FuncionarioDAO extends SalidaDAO{
     @Override
     void RegistrarSalida(int Documento, Date fecha, int documentoUser);
     Empresa getEmpresaFuncionario(int idFuncionario);
-    Vehiculo crearVehiculo(Vehiculo vehiculo);
+    void crearVehiculo(Vehiculo vehiculo);
 }
