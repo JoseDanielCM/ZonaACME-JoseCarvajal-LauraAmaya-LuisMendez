@@ -54,7 +54,7 @@ public class GuardaImpl implements GuardaDAO {
     }
 
     @Override
-    public void crearRegistroVehiculo(Persona persona, Guarda guarda, String placa) {
+    public void crearRegistroVehiculo(Persona persona, Guarda guarda, Vehiculo vehiculo) {
         String sql = """
                 INSERT INTO `Registro` VALUES
                 (?,NOW(),?,NULL,"Entrada",?);
@@ -63,7 +63,7 @@ public class GuardaImpl implements GuardaDAO {
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1, persona.getDocumento());
             ps.setInt(2, guarda.getDocumento());
-            ps.setString(2, placa);
+            ps.setString(3, vehiculo.getPlaca());
             ps.executeUpdate();
 
             System.out.println("Registro con carro ingresado correctamente");

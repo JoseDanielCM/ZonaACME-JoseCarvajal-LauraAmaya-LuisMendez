@@ -13,7 +13,7 @@ END $$
 
 DELIMITER ;
 
-INSERT INTO Anotaciones(Documento,DocUser,Tipo,Mensaje,Fecha) VALUES (1102359291,1020306598,"Restricción","persona restringida",NOW());
+INSERT INTO Anotaciones(Documento,DocUser,Tipo,Mensaje,Fecha) VALUES (1102359291,1020306598,"Levantamiento","persona restringida",NOW());
 
 /* AL REALIZAR ANOTACION DE RESTRICCION CAMBIAR ESTADO DE PERSONA */ 
 DELIMITER $$
@@ -28,6 +28,19 @@ END $$
 
 DELIMITER ;
 DROP TRIGGER restringirPersona;
+
+/* AL REALIZAR ANOTACION DE LEVANTAMIENTO CAMBIAR ESTADO DE PERSONA */ 
+DELIMITER $$
+CREATE TRIGGER levantarRestriccion
+AFTER INSERT ON Anotaciones
+FOR EACH ROW
+BEGIN
+    IF NEW.Tipo = "levantamiento" THEN
+        UPDATE Persona SET Estado = "Permitido" WHERE Documento = NEW.Documento;
+    END IF;
+END $$
+
+DELIMITER ;
 
 INSERT INTO Anotaciones(Documento,DocUser,Tipo,Mensaje,Fecha) VALUES (1102359291,1020306598,"Registro","registrar persona manualmente",NOW());
 

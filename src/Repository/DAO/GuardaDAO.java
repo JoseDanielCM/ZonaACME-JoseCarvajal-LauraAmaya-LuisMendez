@@ -12,7 +12,7 @@ public interface GuardaDAO extends SalidaDAO {
 
     void mostrarAnotacionesPersonas(int documento);
 
-    void crearRegistroVehiculo(Persona persona, Guarda guarda, String placa);
+    void crearRegistroVehiculo(Persona persona, Guarda guarda, Vehiculo vehiculo);
 
     void registrarVehiculo(String placa, List<Persona> personas, Guarda guarda);
     Persona getPersonaById(int id);
