@@ -4,6 +4,7 @@ import Model.*;
 import Repository.DAO.FuncionarioDAO;
 import Util.DataBaseConnection;
 
+import javax.swing.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -253,4 +254,5 @@ public class FuncionarioImpl implements FuncionarioDAO {
         }
         return null;
     }
+
 }

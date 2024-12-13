@@ -2,6 +2,8 @@ package Repository.DAO;
 
 import Model.*;
 
+import javax.swing.*;
+import java.sql.Connection;
 import java.sql.Date;
 
 public interface SupervisorDAO extends SalidaDAO {
@@ -15,8 +17,6 @@ public interface SupervisorDAO extends SalidaDAO {
     void levantarRestriccion(int documentoPersona);
     Persona getPersonaById(int id);
     Empresa getEmpresaByName(String name);
-
-
     @Override
     void RegistrarSalida(int Documento, Date fecha, int documentoUser);
 }
