@@ -25,7 +25,7 @@ public class ConcurrenciaRegistros {
     }
 
     private void actualizarAreaTexto(JTextArea areaTexto, Usuario usuario, Connection conexion){
-        String sql = "SELECT * FROM Registro WHERE TipoRegistro = ? AND timestamp > NOW() - INTERVAL 10 SECOND";
+        String sql = "SELECT * FROM Registro WHERE TipoRegistro = ? AND Fecha > NOW() - INTERVAL 10 SECOND";
         try(PreparedStatement ps = conexion.prepareStatement(sql)){
             ps.setString(1, "Entrada");
             ResultSet rs = ps.executeQuery();
@@ -56,14 +56,7 @@ public class ConcurrenciaRegistros {
             Connection conexion = DataBaseConnection.getConnection();
             ConcurrenciaRegistros actualizador = new ConcurrenciaRegistros();
 
-            JTextArea textArea1 = new JTextArea();
-            JFrame frame1 = new JFrame("Vista Usuario 1");
-            frame1.add(new JScrollPane(textArea1));
-            frame1.setSize(400, 300);
-            frame1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame1.setVisible(true);
-
-            actualizador.actualizarAreaTexto(textArea1, usuario, conexion);
+            actualizador.actualizarAreaTexto(areaTexto, usuario, conexion);
         });
     }
 

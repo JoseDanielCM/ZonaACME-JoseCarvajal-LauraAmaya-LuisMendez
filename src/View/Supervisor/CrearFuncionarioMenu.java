@@ -1,5 +1,6 @@
 package View.Supervisor;
 
+import Controller.SupervisorController;
 import Model.Usuario;
 import View.SuperUsuario.InicioSesion;
 
@@ -28,6 +29,23 @@ public class CrearFuncionarioMenu extends javax.swing.JFrame {
                 InicioSesion inicioSesion = new InicioSesion();
                 inicioSesion.setVisible(true);
                 dispose();
+            }
+        });
+
+        btnCrear.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                String documento = txtFieldDocumento.getText();
+                txtFieldDocumento.setText("");
+                String nombre = txtFieldNombre.getText();
+                txtFieldNombre.setText("");
+                String password = txtFieldPassword.getText();
+                txtFieldPassword.setText("");
+                String empresa = txtFieldEmpresa.getText();
+                txtFieldEmpresa.setText("");
+                SupervisorController supervisorController = new SupervisorController();
+                supervisorController.crearFuncionario(documento,nombre,password,empresa);
+                JOptionPane.showMessageDialog(null, "Funcionario creado exitosamente");
             }
         });
     }

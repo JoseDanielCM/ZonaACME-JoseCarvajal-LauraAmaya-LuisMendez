@@ -1,7 +1,7 @@
 package View.SuperUsuario;
 
-import Controller.SuperUsuarioController;
 import Model.Usuario;
+import Controller.SuperUsuarioController;
 
 import javax.swing.*;
 import java.awt.event.ActionListener;

@@ -1,5 +1,7 @@
 package View.Supervisor;
 
+import Controller.SupervisorController;
+import Model.Funcionario;
 import Model.Usuario;
 import View.SuperUsuario.InicioSesion;
 
@@ -30,6 +32,17 @@ public class DesactivarUsuarioMenu extends JFrame {
                 dispose();
             }
         });
+        jButton1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                String documento = txtFieldDocumento.getText();
+                SupervisorController supervisorController = new SupervisorController();
+                Funcionario funcionario = supervisorController.mostrarFuncionarioID(documento);
+                txtFieldNombre.setText(funcionario.getNombre());
+            }
+        });
+
+
     }
 
     @SuppressWarnings("unchecked")

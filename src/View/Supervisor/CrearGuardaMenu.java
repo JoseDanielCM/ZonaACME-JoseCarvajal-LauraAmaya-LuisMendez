@@ -32,6 +32,17 @@ public class CrearGuardaMenu extends JFrame {
                     dispose();
                 }
             });
+
+            btnCrear.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    InicioSesion inicioSesion = new InicioSesion();
+                    inicioSesion.setVisible(true);
+                    dispose();
+                }
+            });
+
+
         }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">

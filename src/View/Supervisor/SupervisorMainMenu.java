@@ -1,6 +1,7 @@
 package View.Supervisor;
 
 import Model.Usuario;
+import Repository.Impl.ConcurrenciaRegistros;
 import View.SuperUsuario.DesactivarSupervisorMenu;
 import View.SuperUsuario.InicioSesion;
 import View.SuperUsuario.SuperUsuarioMainMenu;
@@ -19,7 +20,7 @@ public class SupervisorMainMenu extends JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         lblBienvenida.setText(supervisor.getNombre());
-
+        ConcurrenciaRegistros.manejoRegistros(jTextArea1, supervisor);
         btnLogout.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -32,8 +33,8 @@ public class SupervisorMainMenu extends JFrame {
         brnCrearSupervisor.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CrearFuncionarioMenu crearFuncionarioMenu = new CrearFuncionarioMenu(supervisor);
-                crearFuncionarioMenu.setVisible(true);
+                CrearGuardaMenu crearGuardaMenu = new CrearGuardaMenu(supervisor);
+                crearGuardaMenu.setVisible(true);
                 dispose();
             }
         });
