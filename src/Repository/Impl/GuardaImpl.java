@@ -85,7 +85,7 @@ public class GuardaImpl implements GuardaDAO {
 
         return anotaciones.toString();
     }
-
+/*
     @Override
     public void crearRegistroEntradaVehiculo(List<Persona> personas, Guarda guarda, Vehiculo vehiculo) {
         if (personas == null || personas.isEmpty()) {
@@ -131,7 +131,7 @@ public class GuardaImpl implements GuardaDAO {
             }
         }
     }
-
+*/
     @Override
     public Persona getPersonaById(int id) {
         String sql = """

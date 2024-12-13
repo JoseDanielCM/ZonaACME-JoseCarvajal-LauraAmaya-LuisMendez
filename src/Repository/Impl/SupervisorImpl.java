@@ -91,12 +91,15 @@ public class SupervisorImpl implements SupervisorDAO {
 
         try (Connection conn = DataBaseConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
-
             ps.setInt(1, persona.getDocumento());
+            System.out.println(ps);
             ResultSet resultSet = ps.executeQuery();
-
-            if (resultSet.next()) {
-                anotaciones.append("Anotaciones de la persona:\n")
+            int contador = 1;
+            while (resultSet.next()) {
+                if (contador == 1){
+                    anotaciones.append("ANOTACIONES DE LA PERSONA:\n");
+                }
+                anotaciones.append("Anotacion :"+contador+"\n")
                         .append("Documento: ").append(resultSet.getInt("Documento")).append("\n")
                         .append("Nombre: ").append(resultSet.getString("Nombre")).append("\n")
                         .append("Estado: ").append(resultSet.getString("Estado")).append("\n")
@@ -104,13 +107,12 @@ public class SupervisorImpl implements SupervisorDAO {
                         .append("Id Anotacion: ").append(resultSet.getInt("IdAnotacion")).append("\n")
                         .append("Tipo: ").append(resultSet.getString("Tipo")).append("\n")
                         .append("Mensaje: ").append(resultSet.getString("Mensaje")).append("\n")
-                        .append("Fecha: ").append(resultSet.getDate("Fecha")).append("\n");
-                return anotaciones.toString();
-
-            } else {
-                System.out.println("No se encontraron anotaciones para la persona.");
-                return null;
+                        .append("Fecha: ").append(resultSet.getDate("Fecha")).append("\n")
+                        .append("------------------------------------------------\n")
+                ;
+                contador++;
             }
+            return anotaciones.toString();
         } catch (SQLException e) {
             throw new RuntimeException("Error al obtener anotaciones de la persona", e);
         }

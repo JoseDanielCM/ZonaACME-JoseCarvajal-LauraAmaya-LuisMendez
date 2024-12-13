@@ -1,6 +1,7 @@
 package View.Supervisor;
 
 import Controller.SupervisorController;
+import Model.Persona;
 import Model.Usuario;
 import View.SuperUsuario.InicioSesion;
 
@@ -13,15 +14,18 @@ public class ConfirmacionLevantamiento extends javax.swing.JFrame {
      * Creates new form InicioSesion
      */
     private Usuario supervisor;
-    public ConfirmacionLevantamiento(Usuario supervisor) {
+    private Persona persona;
+    public ConfirmacionLevantamiento(Usuario supervisor, Persona persona) {
+        this.persona = persona;
         this.supervisor = supervisor;
         initComponents();
         this.setLocationRelativeTo(null);
+
+        jTextField1.setText(String.valueOf(persona.getDocumento()));
         btnAceptar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                String documento = jTextField1.getText();
-                jTextField1.setText("");
+                String documento = String.valueOf(persona.getDocumento());
                 SupervisorController supervisorController = new SupervisorController();
                 supervisorController.levantarRestriccion(documento);
                 JOptionPane.showMessageDialog(null, "Restriccion levantada correctamente");

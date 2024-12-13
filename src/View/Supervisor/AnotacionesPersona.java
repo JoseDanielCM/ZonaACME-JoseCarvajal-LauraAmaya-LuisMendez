@@ -31,6 +31,8 @@ public class AnotacionesPersona extends JFrame {
         txtFieldTipo.setText(tipo);
         txtFieldEstado.setText(String.valueOf(persona.getEstado()));
         SupervisorImpl supervisorController = new SupervisorImpl();
+
+        // ----------------------------------------------------------------
         jTextArea2.setText(supervisorController.mostrarAnotacionesPersonas(persona));
         btnHouse.addActionListener(new ActionListener() {
             @Override
@@ -52,7 +54,7 @@ public class AnotacionesPersona extends JFrame {
         btnLevantarRestriccion.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ConfirmacionLevantamiento confirmacionLevantamiento = new ConfirmacionLevantamiento(supervisor);
+                ConfirmacionLevantamiento confirmacionLevantamiento = new ConfirmacionLevantamiento(supervisor,persona);
                 confirmacionLevantamiento.setVisible(true);
             }
         });

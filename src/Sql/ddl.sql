@@ -115,10 +115,12 @@ INSERT INTO `Persona` VALUES
 
 
 INSERT INTO `Registro`(`Documento`,`Fecha`,`DocUser`,`IdAnotacion`,`TipoRegistro`,`PlacaVehiculo`) VALUES
-(1102359291, "2024-12-13 08:55:46.00", 1102359888, NULL, "Salida", NULL),
-(1102359291, "2024-12-13 10:55:46.00", 1102359888, NULL, "Entrada", NULL),
-(1112223334, "2024-12-13 10:55:46.02", 1102359888, NULL, "Salida", NULL),
-(1231231231, "2024-12-13 11:55:46.00", 1102359888, NULL, "Salida", NULL);
+(1102359291, "2024-12-13 15:29:46.00", 1102359888, NULL, "Salida", NULL),
+(1102359291, "2024-12-13 15:30:46.00", 1102359888, NULL, "Entrada", NULL);
+
+
+INSERT INTO `Registro`(`Documento`,`Fecha`,`DocUser`,`IdAnotacion`,`TipoRegistro`,`PlacaVehiculo`) VALUES
+(1102359291, "2024-12-13 15:38:46.00", 1102359888, NULL, "Salida", NULL);
 
 SELECT Usuarios.*, TipoUsuario.`Nombre` as NombreTipo, Empresa.`IdEmpresa`, Empresa.`Nombre` as NombreEmpresa FROM Usuarios
 JOIN TipoUsuario ON TipoUsuario.`IdTipo` = Usuarios.`IdTipoUsuario`

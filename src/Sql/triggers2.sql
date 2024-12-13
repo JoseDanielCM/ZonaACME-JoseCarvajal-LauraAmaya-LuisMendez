@@ -35,7 +35,7 @@ CREATE TRIGGER levantarRestriccion
 AFTER INSERT ON Anotaciones
 FOR EACH ROW
 BEGIN
-    IF NEW.Tipo = "levantamiento" THEN
+    IF NEW.Tipo = "Levantamiento" THEN
         UPDATE Persona SET Estado = "Permitido" WHERE Documento = NEW.Documento;
     END IF;
 END $$
@@ -87,3 +87,5 @@ INSERT INTO `Registro`(`Documento`,`Fecha`,`DocUser`,`IdAnotacion`,`TipoRegistro
 (1102359291, "2024-12-13 10:55:46.00", 1102359888, NULL, "Entrada", NULL),
 (1112223334, "2024-12-13 10:55:46.02", 1102359888, NULL, "Salida", NULL),
 (1231231231, "2024-12-13 11:55:46.00", 1102359888, NULL, "Salida", NULL);
+
+INSERT INTO Anotaciones(Documento,DocUser,Tipo,Mensaje,Fecha) VALUES (1102359291,1020306598,"Levantamiento","persona restringida",NOW());

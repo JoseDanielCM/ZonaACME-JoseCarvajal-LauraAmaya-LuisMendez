@@ -46,6 +46,7 @@ public class AnotacionesMenu extends javax.swing.JFrame {
                 Persona persona = supervisorController.obtenerPersona(documento);
                 CrearAnotacion crearAnotacion = new CrearAnotacion(supervisor, persona);
                 crearAnotacion.setVisible(true);
+                dispose();
 
             }
         });

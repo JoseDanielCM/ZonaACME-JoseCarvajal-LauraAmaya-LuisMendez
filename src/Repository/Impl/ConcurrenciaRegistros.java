@@ -15,17 +15,17 @@ public class ConcurrenciaRegistros {
         new Thread(()->{
             try {
                 while (true){
+                    System.out.println("Hilo ejecutándose...");
                     actualizarAreaTexto(areaTexto, usuario, conexion);
-                    Thread.sleep(10000);
+                    Thread.sleep(15000);
                 }
             } catch (Exception e){
                 Thread.currentThread().interrupt();
                 System.out.println("Problemas con el proceso de concurrencia "+ e.getMessage());
             }}).start();
     }
-
     private void actualizarAreaTexto(JTextArea areaTexto, Usuario usuario, Connection conexion){
-        String sql = "SELECT * FROM Registro WHERE Fecha > NOW() - INTERVAL 10 SECOND";
+        String sql = "SELECT * FROM Registro WHERE Fecha > NOW() - INTERVAL 15 SECOND";
         try(PreparedStatement ps = conexion.prepareStatement(sql)){
             ResultSet rs = ps.executeQuery();
 
@@ -43,19 +43,18 @@ public class ConcurrenciaRegistros {
 
             }
 
-            SwingUtilities.invokeLater(() -> areaTexto.replaceSelection(nuevosRegistros.toString()));
+            SwingUtilities.invokeLater(() -> areaTexto.setText(nuevosRegistros.toString()));
         } catch (SQLException e) {
             throw new RuntimeException(e.getMessage());
         }
 
     }
-
     public static void manejoRegistros(JTextArea areaTexto, Usuario usuario){
         SwingUtilities.invokeLater(() -> {
             Connection conexion = DataBaseConnection.getConnection();
             ConcurrenciaRegistros actualizador = new ConcurrenciaRegistros();
 
-            actualizador.actualizarAreaTexto(areaTexto, usuario, conexion);
+            actualizador.mostrarRegistro(areaTexto, usuario, conexion);
         });
     }
 
