@@ -2,6 +2,7 @@ package View.Supervisor;
 
 import Controller.SupervisorController;
 import Model.Funcionario;
+import Model.Guarda;
 import Model.Usuario;
 import View.SuperUsuario.InicioSesion;
 
@@ -38,7 +39,35 @@ public class DesactivarUsuarioMenu extends JFrame {
                 String documento = txtFieldDocumento.getText();
                 SupervisorController supervisorController = new SupervisorController();
                 Funcionario funcionario = supervisorController.mostrarFuncionarioID(documento);
-                txtFieldNombre.setText(funcionario.getNombre());
+                Guarda guarda = supervisorController.mostrarGuarda(documento);
+                if (funcionario== null && guarda==null) {
+                    JOptionPane.showMessageDialog(null, "No se encontró el usuario");
+                    txtFieldNombre.setText("");
+                } else if (guarda == null) {
+                    txtFieldNombre.setText(funcionario.getNombre());
+                }else {
+                    txtFieldNombre.setText(guarda.getNombre());
+                }
+            }
+        });
+
+        btnCrear.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                String documento = txtFieldDocumento.getText();
+                SupervisorController supervisorController = new SupervisorController();
+                Funcionario funcionario = supervisorController.mostrarFuncionarioID(documento);
+                Guarda guarda = supervisorController.mostrarGuarda(documento);
+                if (funcionario== null && guarda==null) {
+                    JOptionPane.showMessageDialog(null, "No se encontró el usuario");
+                    txtFieldNombre.setText("");
+                } else if (guarda == null) {
+                    supervisorController.desactivarFuncionario(documento);
+                    JOptionPane.showMessageDialog(null, "Funcionario desactivado exitosamente");
+                }else {
+                    supervisorController.desactivarGuarda(documento);
+                    JOptionPane.showMessageDialog(null, "Guarda desactivada exitosamente");
+                }
             }
         });
 

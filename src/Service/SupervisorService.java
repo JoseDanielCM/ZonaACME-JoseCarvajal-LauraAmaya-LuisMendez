@@ -56,7 +56,7 @@ public class SupervisorService {
         try {
             Guarda guarda = supervisorImpl.mostrarGuarda(Integer.parseInt(documenGuarda));
             supervisorImpl.desactivarGuarda(guarda);
-            System.out.println("Guarda desactivado correctamente");
+            System.out.println("SRVC Guarda desactivado correctamente");
         } catch (Exception e){
             System.out.println("Documento no valido");
             throw new IllegalArgumentException("Invalido");

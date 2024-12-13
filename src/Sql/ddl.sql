@@ -1,4 +1,3 @@
--- Active: 1734091453705@@127.0.0.1@3306@ZonaACME
 DROP DATABASE IF EXISTS ZonaACME;
 
 CREATE DATABASE ZonaACME;
@@ -82,7 +81,7 @@ CREATE TABLE IF NOT EXISTS Log (
     IdLog INTEGER PRIMARY KEY NOT NULL UNIQUE AUTO_INCREMENT,
     Fecha DATETIME NOT NULL,
     Observacion VARCHAR(500) NOT NULL,
-    DocUser INTEGER,o
+    DocUser INTEGER,
     FOREIGN KEY (DocUser) REFERENCES Usuarios(Documento)
 );
 
@@ -142,3 +141,15 @@ JOIN Empresa ON Empresa.`IdEmpresa` = Usuarios.`IdEmpresa`
 WHERE Usuarios.`Documento`= 1102359999 AND Usuarios.`Contrasena` = '1234';
 
 UPDATE `Persona` SET `Estado` = "Restringido" WHERE `Documento` = 1102359291;
+
+SELECT U.`Documento`, U.Nombre as Nombre, U.`Contrasena`, U.`Activo`, Documento, E.Nombre as NombreEmpresa, E.IdEmpresa FROM `Usuarios` U
+    JOIN `Empresa` E
+    ON `E`.`IdEmpresa` = `U`.`IdEmpresa`
+    WHERE U.IdTipoUsuario = 4 AND U.Documento = 1102359295 ;
+
+    UPDATE `Usuarios` SET `Activo` = FALSE WHERE `Documento`= 1102359295;
+
+    SELECT U.`Documento`, U.Nombre as Nombre, U.`Contrasena`, U.`Activo`, Documento, E.Nombre as NombreEmpresa, E.IdEmpresa FROM `Usuarios` U
+JOIN `Empresa` E
+ON `E`.`IdEmpresa` = `U`.`IdEmpresa`
+WHERE U.IdTipoUsuario = 3 AND U.Documento = 1102359888 ;

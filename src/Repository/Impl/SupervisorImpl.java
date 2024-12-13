@@ -31,11 +31,12 @@ public class SupervisorImpl implements SupervisorDAO {
     @Override
     public void desactivarFuncionario(Funcionario funcionario) {
         String sql = """
-                UPDATE `Usuarios` SET `Activo` = FALSE WHERE `IdUsuario`= ?;
+                UPDATE `Usuarios` SET `Activo` = FALSE WHERE `Documento`= ?;
                 """;
         try (Connection conn = DataBaseConnection.getConnection()){
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1, funcionario.getDocumento());
+            System.out.println(ps);
             ps.executeUpdate();
             System.out.println("Funcionario desactivado correctamente");
 
@@ -48,7 +49,7 @@ public class SupervisorImpl implements SupervisorDAO {
     @Override
     public Funcionario mostrarFuncionario(int documentoFuncionario) {
         String sql = """
-            SELECT U.Nombre as Nombre, U.`Contrasena`, U.`Activo`, Documento, E.Nombre as NombreEmpresa, E.IdEmpresa FROM `Usuarios` U
+            SELECT U.`Documento`, U.Nombre as Nombre, U.`Contrasena`, U.`Activo`, Documento, E.Nombre as NombreEmpresa, E.IdEmpresa FROM `Usuarios` U
             JOIN `Empresa` E
             ON `E`.`IdEmpresa` = `U`.`IdEmpresa`
             WHERE U.IdTipoUsuario = 4 AND U.Documento = ? ;
@@ -56,7 +57,6 @@ public class SupervisorImpl implements SupervisorDAO {
         try (Connection conn = DataBaseConnection.getConnection()){
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1, documentoFuncionario);
-            System.out.println(ps);
             ResultSet rs = ps.executeQuery();
             if (rs.next()){
                 Empresa empresa = new Empresa(rs.getString("IdEmpresa"),rs.getString("NombreEmpresa"));
@@ -140,13 +140,13 @@ public class SupervisorImpl implements SupervisorDAO {
     @Override
     public void desactivarGuarda(Guarda guarda) {
         String sql = """
-           UPDATE `Usuarios` SET `Activo` = FALSE WHERE `IdUsuario`= ?;
+           UPDATE `Usuarios` SET `Activo` = FALSE WHERE `Documento`= ?;
            """;
         try (Connection conn = DataBaseConnection.getConnection()){
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1, guarda.getDocumento());
             ps.executeUpdate();
-            System.out.println("Guarda desactivado correctamente");
+            System.out.println("IMPL Guarda desactivado correctamente");
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
@@ -155,20 +155,23 @@ public class SupervisorImpl implements SupervisorDAO {
     @Override
     public Guarda mostrarGuarda(int documentoGuarda) {
         String sql = """
-                SELECT `Usuarios`.*, `Empresa`.`Nombre`  FROM Usuarios
-                JOIN `Empresa` ON `Empresa`.`IdEmpresa` = `Usuarios`.`IdEmpresa` WHERE Usuarios.Documento = ?;
+                SELECT U.`Documento`, U.Nombre as Nombre, U.`Contrasena`, U.`Activo`, Documento, E.Nombre as NombreEmpresa, E.IdEmpresa FROM `Usuarios` U
+                JOIN `Empresa` E
+                ON `E`.`IdEmpresa` = `U`.`IdEmpresa`
+                WHERE U.IdTipoUsuario = 3 AND U.Documento = ? ;
                 """;
         try (Connection conn = DataBaseConnection.getConnection()){
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1, documentoGuarda);
+            System.out.println(ps);
             ResultSet resultSet = ps.executeQuery();
             while (resultSet.next()){
-                int documento = resultSet.getInt(1);
-                String nombre = resultSet.getString(2);
-                String contrasenia = resultSet.getString(3);
-                boolean activo = resultSet.getBoolean(4);
-                String  idEmpresa = resultSet.getString(6);
-                String  nombreEmpresa = resultSet.getString(7);
+                int documento = resultSet.getInt("Documento");
+                String nombre = resultSet.getString("Nombre");
+                String contrasenia = resultSet.getString("Contrasena");
+                boolean activo = resultSet.getBoolean("Activo");
+                String  idEmpresa = resultSet.getString("IdEmpresa");
+                String  nombreEmpresa = resultSet.getString("NombreEmpresa");
                 Empresa empresa = new Empresa(idEmpresa, nombreEmpresa);
                 Guarda guarda = new Guarda(documento, nombre,contrasenia,activo,empresa);
                 return guarda;
