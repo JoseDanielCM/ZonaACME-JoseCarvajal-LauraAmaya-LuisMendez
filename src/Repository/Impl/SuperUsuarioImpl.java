@@ -12,8 +12,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static java.sql.Types.NULL;
-
 public class SuperUsuarioImpl implements SuperUsuarioDAO {
     @Override
     public void addSupervisor(Supervisor supervisor) {
@@ -40,12 +38,14 @@ public class SuperUsuarioImpl implements SuperUsuarioDAO {
     public void addEmpresa(Empresa empresa) {
         String sql = """
                 INSERT INTO `Empresa` VALUES
-                (?,TRUE);
+                (?,?,TRUE);
                 """;
         try (Connection conn = DataBaseConnection.getConnection()){
             PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setString(1, empresa.getNombre());
-
+            ps.setInt(1,Integer.parseInt(empresa.getIdEmpresa()));
+            ps.setString(2, empresa.getNombre());
+            System.out.println(ps);
+            ps.executeUpdate();
             System.out.println("Empresa creada correctamente");
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -189,5 +189,10 @@ public class SuperUsuarioImpl implements SuperUsuarioDAO {
     @Override
     public void setIp(String ip) {
         DataBaseConnection.setIp(ip);
+    }
+
+    @Override
+    public String getIp() {
+        return DataBaseConnection.getIp();
     }
 }

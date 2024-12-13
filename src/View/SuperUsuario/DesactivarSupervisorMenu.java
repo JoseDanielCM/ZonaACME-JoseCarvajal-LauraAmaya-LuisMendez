@@ -1,5 +1,6 @@
 package View.SuperUsuario;
 
+import Controller.SuperUsuarioController;
 import Model.Usuario;
 import View.SuperUsuario.InicioSesion;
 import View.SuperUsuario.SuperUsuarioMainMenu;
@@ -32,6 +33,17 @@ public class DesactivarSupervisorMenu extends JFrame {
                 InicioSesion inicioSesion = new InicioSesion();
                 inicioSesion.setVisible(true);
                 dispose();
+            }
+        });
+
+        btnCrear.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                String documento = txtFieldDocumento.getText();
+                txtFieldDocumento.setText("");
+                SuperUsuarioController superUsuarioController = new SuperUsuarioController();
+                superUsuarioController.desactivarSupervisor(documento);
+                JOptionPane.showMessageDialog(null, "Supervisor desactivado con éxito.");
             }
         });
     }

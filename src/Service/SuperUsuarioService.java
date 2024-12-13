@@ -46,16 +46,24 @@ public class SuperUsuarioService{
         return superUsuarioImpl.getAllSupervisors();
     }
 
-    public Empresa getEmpresaById(int id) {
-        return superUsuarioImpl.getEmpresaById(id);
+    public Empresa getEmpresaById(String id) {
+        int idInt = Integer.parseInt(id);
+        return superUsuarioImpl.getEmpresaById(idInt);
     }
 
     public Empresa getEmpresaByName(String name) {
         return superUsuarioImpl.getEmpresaByName(name);
     }
 
-    public void desactivarSupervisor(int id) {
-        Supervisor supervisor = superUsuarioImpl.getSupervisorById(id);
+    public void desactivarSupervisor(String id) {
+        int idInt = 0;
+        try {
+            idInt = Integer.parseInt(id);
+        }catch (Exception e){
+            System.out.println(e);
+            throw new IllegalArgumentException("Invalid document");
+        }
+        Supervisor supervisor = superUsuarioImpl.getSupervisorById(idInt);
         superUsuarioImpl.desactivarSupervisor(supervisor);
     }
 
@@ -71,6 +79,10 @@ public class SuperUsuarioService{
 
     public void setIp(String ip) {
         superUsuarioImpl.setIp(ip);
+    }
+
+    public String getIp() {
+        return superUsuarioImpl.getIp();
     }
 
 }

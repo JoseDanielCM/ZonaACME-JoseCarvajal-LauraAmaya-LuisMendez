@@ -27,7 +27,7 @@ public class SuperUsuarioController {
         return superUsuarioService.getAllSupervisors();
     }
 
-    public Empresa getEmpresaById(int id) {
+    public Empresa getEmpresaById(String id) {
         return superUsuarioService.getEmpresaById(id);
     }
 
@@ -35,7 +35,7 @@ public class SuperUsuarioController {
         return superUsuarioService.getEmpresaByName(name);
     }
 
-    public void desactivarSupervisor(int id) {
+    public void desactivarSupervisor(String id) {
         superUsuarioService.desactivarSupervisor(id);
     }
 
@@ -49,6 +49,10 @@ public class SuperUsuarioController {
 
     public void setIp(String ip) {
         superUsuarioService.setIp(ip);
+    }
+
+    public String getIp() {
+        return superUsuarioService.getIp();
     }
 
 }

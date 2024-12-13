@@ -132,3 +132,6 @@ SELECT Usuarios.*, TipoUsuario.`Nombre` as NombreTipo, Empresa.`IdEmpresa`, Empr
 JOIN TipoUsuario ON TipoUsuario.`IdTipo` = Usuarios.`IdTipoUsuario`
 JOIN Empresa ON Empresa.`IdEmpresa` = Usuarios.`IdEmpresa`
 WHERE Usuarios.`Documento`= 1102359999 AND Usuarios.`Contrasena` = '1234';
+
+INSERT INTO `Empresa` VALUES
+('Chicle',TRUE);

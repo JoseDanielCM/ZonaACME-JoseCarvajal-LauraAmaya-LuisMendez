@@ -1,7 +1,6 @@
 package Repository.DAO;
 
 import Model.Empresa;
-import Model.SuperUsuario;
 import Model.Supervisor;
 
 import java.util.List;
@@ -16,5 +15,6 @@ public interface SuperUsuarioDAO {
     void desactivarSupervisor(Supervisor supervisor);       // UPDATE
     void desactivarEmpresa(Empresa empresa);           // UPDATE
     void setIp(String ip);                                  // UPDATE
+    String getIp();                                  // UPDATE
 
 }

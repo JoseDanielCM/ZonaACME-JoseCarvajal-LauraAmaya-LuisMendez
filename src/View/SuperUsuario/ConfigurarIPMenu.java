@@ -1,6 +1,8 @@
 package View.SuperUsuario;
 
+import Controller.SuperUsuarioController;
 import Model.Usuario;
+import Util.DataBaseConnection;
 
 import javax.swing.*;
 import java.awt.event.ActionListener;
@@ -15,6 +17,9 @@ public class ConfigurarIPMenu extends JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         lblBienvenida.setText(superUsuario.getNombre());
+        SuperUsuarioController superUsuarioController = new SuperUsuarioController();
+        DataBaseConnection.leerIp();
+        txtFieldDocumento3.setText(superUsuarioController.getIp());
 
         btnLogout.addActionListener(new ActionListener() {
             @Override
@@ -31,6 +36,19 @@ public class ConfigurarIPMenu extends JFrame {
                 SuperUsuarioMainMenu superUsuarioMainMenu = new SuperUsuarioMainMenu(superUsuario);
                 superUsuarioMainMenu.setVisible(true);
                 dispose();
+            }
+        });
+
+        // subir ip
+        jButton1.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                String ipNueva = txtFieldDocumento2.getText();
+                txtFieldDocumento2.setText("");
+                SuperUsuarioController superUsuarioController = new SuperUsuarioController();
+                superUsuarioController.setIp(ipNueva);
+                JOptionPane.showMessageDialog(null, "Ip cambiada con exito a "+ipNueva);
             }
         });
     }
@@ -116,7 +134,7 @@ public class ConfigurarIPMenu extends JFrame {
 
         jButton1.setBackground(new java.awt.Color(205, 181, 255));
         jButton1.setFont(new java.awt.Font("Liberation Sans", 1, 24)); // NOI18N
-        jButton1.setText("Desactivar");
+        jButton1.setText("Cambiar");
         jButton1.setBorderPainted(false);
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

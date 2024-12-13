@@ -1,5 +1,6 @@
 package View.SuperUsuario.Empresa;
 
+import Controller.SuperUsuarioController;
 import Model.Usuario;
 import View.SuperUsuario.InicioSesion;
 import View.SuperUsuario.SuperUsuarioMainMenu;
@@ -29,6 +30,19 @@ public class CrearNuevaEmpresaMenu extends JFrame {
                 InicioSesion inicioSesion = new InicioSesion();
                 inicioSesion.setVisible(true);
                 dispose();
+            }
+        });
+
+        btnCrear.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                String ipNueva = txtFieldDocumento.getText();
+                txtFieldDocumento.setText("");
+                String nombreEmpresa = txtFieldEmpresa.getText();
+                txtFieldEmpresa.setText("");
+                SuperUsuarioController superUsuarioController = new SuperUsuarioController();
+                superUsuarioController.addEmpresa(ipNueva,nombreEmpresa);
+                JOptionPane.showMessageDialog(null, "Empresa creada "+nombreEmpresa);
             }
         });
     }

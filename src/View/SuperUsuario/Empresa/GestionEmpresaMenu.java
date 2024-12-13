@@ -1,5 +1,7 @@
 package View.SuperUsuario.Empresa;
 
+import Controller.SuperUsuarioController;
+import Model.Empresa;
 import Model.Usuario;
 import View.SuperUsuario.InicioSesion;
 import View.SuperUsuario.SuperUsuarioMainMenu;
@@ -47,7 +49,15 @@ public class GestionEmpresaMenu extends JFrame {
         btnAccederEmpresa.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                DatosEmpresaMenu datosEmpresaMenu = new DatosEmpresaMenu(superUsuario);
+                String nombreEmpresa = txtFieldNit.getText();
+
+                String nitEmpresa = txtFieldNombre.getText();
+
+
+                SuperUsuarioController superUsuarioController = new SuperUsuarioController();
+                Empresa empresa = superUsuarioController.getEmpresaById(nitEmpresa);
+
+                DatosEmpresaMenu datosEmpresaMenu = new DatosEmpresaMenu(superUsuario,empresa);
                 datosEmpresaMenu.setVisible(true);
                 dispose();
             }

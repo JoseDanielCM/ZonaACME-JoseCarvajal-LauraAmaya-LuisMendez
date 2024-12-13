@@ -55,6 +55,11 @@ public class DataBaseConnection {
             System.out.println(e.getMessage());
         }
     }
+
+    public static String getIp() {
+        return ip;
+    }
+
 }
 
 

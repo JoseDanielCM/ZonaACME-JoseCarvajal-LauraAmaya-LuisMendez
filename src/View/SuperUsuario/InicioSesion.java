@@ -3,6 +3,8 @@ package View.SuperUsuario;
 import Controller.SesionController;
 import Model.Sesion;
 import Model.Usuario;
+import View.Funcionario.FuncionarioMainMenu;
+import View.Guardia.GuardiaMainMenu;
 import View.Supervisor.SupervisorMainMenu;
 
 import javax.swing.*;
@@ -37,11 +39,16 @@ public class InicioSesion extends JFrame {
                         supervisorMainMenu.setVisible(true);
                         dispose();
                         break;
-                    case "Guarda":
-                        JOptionPane.showMessageDialog(null, "Bienvenido Guarda " + usuario.getNombre());
-                        break;
+
                     case "Funcionario":
-                        JOptionPane.showMessageDialog(null, "Bienvenido Funcionario " + usuario.getNombre());
+                        FuncionarioMainMenu funcionarioMainMenu = new FuncionarioMainMenu(usuario);
+                        funcionarioMainMenu.setVisible(true);
+                        dispose();
+                        break;
+                    case "Guarda":
+                        GuardiaMainMenu guardiaMainMenu = new GuardiaMainMenu(usuario);
+                        guardiaMainMenu.setVisible(true);
+                        dispose();
                         break;
                     default:
                         JOptionPane.showMessageDialog(null, "Usuario no encontrado");

@@ -1,5 +1,7 @@
 package View.SuperUsuario.Empresa;
 
+import Controller.SuperUsuarioController;
+import Model.Empresa;
 import Model.Usuario;
 import View.SuperUsuario.InicioSesion;
 import View.SuperUsuario.SuperUsuarioMainMenu;
@@ -9,11 +11,14 @@ import java.awt.event.ActionListener;
 
 public class DatosEmpresaMenu extends JFrame {
     private Usuario superUsuario;
-    public DatosEmpresaMenu(Usuario superUsuario) {
+    public DatosEmpresaMenu(Usuario superUsuario, Empresa empresa) {
         this.superUsuario = superUsuario;
         initComponents();
         this.setLocationRelativeTo(null);
         lblNombreUsuario.setText(superUsuario.getNombre());
+
+        txtFieldDocumento.setText(empresa.getIdEmpresa());
+        txtFieldNombre.setText(empresa.getNombre());
 
 
         btnHouse.addActionListener(new ActionListener() {
@@ -30,6 +35,20 @@ public class DatosEmpresaMenu extends JFrame {
                 InicioSesion inicioSesion = new InicioSesion();
                 inicioSesion.setVisible(true);
                 dispose();
+            }
+        });
+
+        btnDesactivarEmpresa.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                String nitEmpresa = txtFieldDocumento.getText();
+                txtFieldDocumento.setText("");
+                String nombreEmpresa = txtFieldNombre.getText();
+                txtFieldNombre.setText("");
+
+                SuperUsuarioController superUsuarioController = new SuperUsuarioController();
+                superUsuarioController.desactivarEmpresa(nombreEmpresa);
+                JOptionPane.showMessageDialog(null, "Empresa desactivada: "+nombreEmpresa);
             }
         });
     }
@@ -64,7 +83,7 @@ public class DatosEmpresaMenu extends JFrame {
 
         superiorBackground.setBackground(new java.awt.Color(52, 33, 91));
 
-        lblLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Captura desde 2024-12-12 15-02-49.png"))); // NOI18N
+        lblLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/Banner.png"))); // NOI18N
 
         lblNombreUsuario.setFont(new java.awt.Font("FreeSans", 1, 18)); // NOI18N
         lblNombreUsuario.setForeground(new java.awt.Color(255, 255, 255));
@@ -99,7 +118,7 @@ public class DatosEmpresaMenu extends JFrame {
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        lblImgSide.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgSuperUsuario.jpeg"))); // NOI18N
+        lblImgSide.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/Empresa.png"))); // NOI18N
         lblImgSide.setText("jLabel1");
 
         lblCrearSupervisor.setFont(new java.awt.Font("FreeSans", 1, 36)); // NOI18N
@@ -116,16 +135,18 @@ public class DatosEmpresaMenu extends JFrame {
 
         lblFuncionario.setFont(new java.awt.Font("Liberation Sans", 1, 24)); // NOI18N
         lblFuncionario.setText("Funcionario");
-
+        txtFieldFuncionario.setEditable(false);
+        txtFieldDocumento.setEditable(false);
+        txtFieldNombre.setEditable(false);
         btnDesactivarEmpresa.setBackground(new java.awt.Color(255, 87, 87));
         btnDesactivarEmpresa.setFont(new java.awt.Font("Liberation Sans", 1, 24)); // NOI18N
         btnDesactivarEmpresa.setText("Desactivar Empresa");
         btnDesactivarEmpresa.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
 
-        btnHouse.setIcon(new javax.swing.ImageIcon(getClass().getResource("/casa.png"))); // NOI18N
+        btnHouse.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/casa.png"))); // NOI18N
         btnHouse.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
 
-        btnLogout.setIcon(new javax.swing.ImageIcon(getClass().getResource("/logout.png"))); // NOI18N
+        btnLogout.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/logout.png"))); // NOI18N
         btnLogout.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
 
         btnVerPersonas.setBackground(new java.awt.Color(205, 181, 255));

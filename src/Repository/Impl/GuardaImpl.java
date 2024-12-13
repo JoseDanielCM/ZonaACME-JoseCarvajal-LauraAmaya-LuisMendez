@@ -10,15 +10,16 @@ import java.util.List;
 public class GuardaImpl implements GuardaDAO {
 
     @Override
-    public void crearRegistroEntradaPersona(Persona persona, Guarda guarda) {
+    public void crearRegistroEntradaPersona(Persona persona, Guarda guarda, Vehiculo vehiculo) {
         String sql = """
                 INSERT INTO `Registro` VALUES
-                (?,NOW(),?,NULL,"Entrada",NULL);
+                (?,NOW(),?,NULL,"Entrada",?);
                 """;
         try (Connection conn = DataBaseConnection.getConnection()){
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1, persona.getDocumento());
             ps.setInt(2, guarda.getDocumento());
+            ps.setString(3, vehiculo.getPlaca());
             ps.executeUpdate();
 
             System.out.println("Registro ingresado correctamente");
@@ -27,15 +28,16 @@ public class GuardaImpl implements GuardaDAO {
         }
     }
     @Override
-    public void crearRegistroSalidaPersona(Persona persona, Guarda guarda) {
+    public void crearRegistroSalidaPersona(Persona persona, Guarda guarda, Vehiculo vehiculo) {
         String sql = """
                 INSERT INTO `Registro` VALUES
-                (?,NOW(),?,NULL,"Salida",NULL);
+                (?,NOW(),?,NULL,"Salida",?);
                 """;
         try (Connection conn = DataBaseConnection.getConnection()){
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1, persona.getDocumento());
             ps.setInt(2, guarda.getDocumento());
+            ps.setString(3, vehiculo.getPlaca());
             ps.executeUpdate();
 
             System.out.println("Registro ingresado correctamente");
@@ -44,34 +46,48 @@ public class GuardaImpl implements GuardaDAO {
         }
     }
     @Override
-    public void mostrarAnotacionesPersonas(Persona persona) {
+    public String mostrarAnotacionesPersonas(Persona persona) {
+        if (persona == null || persona.getDocumento() == 0) {
+            return "Información de la persona no válida.";
+        }
+
+        StringBuilder anotaciones = new StringBuilder();
         String sql = """
-                SELECT `Persona`.`Documento`,`Persona`.`Nombre`,`Persona`.`Estado`,`Persona`.`IdEmpresa`,`Anotaciones`.`IdAnotacion`,`Anotaciones`.`Tipo`,`Anotaciones`.`Mensaje`,`Anotaciones`.`Fecha` FROM `Persona`
-                JOIN `Anotaciones` ON `Anotaciones`.`Documento` = `Persona`.`Documento`
-                where `Persona`.`Documento` =  ?;
+                SELECT Persona.Documento, Persona.Nombre, Persona.Estado, Persona.IdEmpresa,
+                       Anotaciones.IdAnotacion, Anotaciones.Tipo, Anotaciones.Mensaje, Anotaciones.Fecha 
+                FROM Persona
+                JOIN Anotaciones ON Anotaciones.Documento = Persona.Documento
+                WHERE Persona.Documento = ?;
                 """;
-        try (Connection conn = DataBaseConnection.getConnection()){
-            PreparedStatement ps = conn.prepareStatement(sql);
+
+        try (Connection conn = DataBaseConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
             ps.setInt(1, persona.getDocumento());
             ResultSet resultSet = ps.executeQuery();
-            if (resultSet.next()){
-                System.out.println("Anotaciones de la persona:");
-                System.out.println("Documento: " + resultSet.getInt("Documento"));
-                System.out.println("Nombre: " + resultSet.getString("Nombre"));
-                System.out.println("Estado: " + resultSet.getString("Estado"));
-                System.out.println("Empresa: " + resultSet.getString("IdEmpresa"));
-                System.out.println("Id Anotacion: " + resultSet.getInt("IdAnotacion"));
-                System.out.println("Tipo: " + resultSet.getString("Tipo"));
-                System.out.println("Mensaje: " + resultSet.getString("Mensaje"));
-                System.out.println("Fecha: " + resultSet.getDate("Fecha"));
+
+            if (resultSet.next()) {
+                anotaciones.append("Anotaciones de la persona:\n")
+                        .append("Documento: ").append(resultSet.getInt("Documento")).append("\n")
+                        .append("Nombre: ").append(resultSet.getString("Nombre")).append("\n")
+                        .append("Estado: ").append(resultSet.getString("Estado")).append("\n")
+                        .append("Empresa: ").append(resultSet.getString("IdEmpresa")).append("\n")
+                        .append("Id Anotacion: ").append(resultSet.getInt("IdAnotacion")).append("\n")
+                        .append("Tipo: ").append(resultSet.getString("Tipo")).append("\n")
+                        .append("Mensaje: ").append(resultSet.getString("Mensaje")).append("\n")
+                        .append("Fecha: ").append(resultSet.getDate("Fecha")).append("\n");
+            } else {
+                anotaciones.append("No se encontraron anotaciones para la persona.");
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Error al obtener anotaciones de la persona", e);
         }
+
+        return anotaciones.toString();
     }
 
     @Override
-    public void crearRegistroEntradaVehiculo(List<Persona> personas, Guarda guarda) {
+    public void crearRegistroEntradaVehiculo(List<Persona> personas, Guarda guarda, Vehiculo vehiculo) {
         if (personas == null || personas.isEmpty()) {
             System.out.println("La lista de personas está vacía o es nula. No se puede realizar el registro.");
             return;
@@ -80,44 +96,38 @@ public class GuardaImpl implements GuardaDAO {
         for (Persona persona : personas) {
             try {
                 if (persona != null) {
-                    crearRegistroEntradaPersona(persona, guarda);
+                    mostrarAnotacionesPersonas(persona);
+                    crearRegistroEntradaPersona(persona, guarda, vehiculo);
                 } else {
                     System.out.println("Se encontró una persona nula en la lista, se omite el registro.");
                 }
             } catch (Exception e) {
                 System.out.println("Error al registrar la entrada de la persona con documento: "
-                        + (persona != null ? persona.getDocumento() : "Desconocido"));
+                        + (persona != null ? persona.getDocumento() : "Persona no registrada"));
                 e.printStackTrace();
             }
         }
     }
 
     @Override
-    public void crearRegistroSalidaVehiculo(List<Persona> personas, Guarda guarda) {
+    public void crearRegistroSalidaVehiculo(List<Persona> personas, Guarda guarda, Vehiculo vehiculo) {
+        if (personas == null || personas.isEmpty()) {
+            System.out.println("La lista de personas está vacía o es nula. No se puede realizar el registro.");
+            return;
+        }
 
-    }
-
-    @Override
-    public void RegistrarSalida(int Documento, Date fecha, int documentoUser) {
-        if(getPersonaById(Documento) == null){
-            System.out.println("Usuario no encontrado");
-        } else {
-            String sql = """
-            INSERT INTO `Anotaciones`(`Documento`,DocUser,`Tipo`,`Mensaje`,`Fecha`) VALUES
-            (?,?,"Registro",?,?);
-            """;
-            try (Connection conn = DataBaseConnection.getConnection()){
-                PreparedStatement ps = conn.prepareStatement(sql);
-                ps.setInt(1, Documento);
-                ps.setInt(2, documentoUser);
-                ps.setString(3, "Persona identificada con el documento: " + Documento + " ha registrado salida manual");
-                ps.setDate(4, fecha);
-                System.out.println(ps);
-                ps.executeUpdate();
-
-                System.out.println("Registro correctamente");
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
+        for (Persona persona : personas) {
+            try {
+                if (persona != null) {
+                    crearRegistroSalidaPersona(persona, guarda, vehiculo);
+                    mostrarAnotacionesPersonas(persona);
+                } else {
+                    System.out.println("Se encontró una persona nula en la lista, se omite el registro.");
+                }
+            } catch (Exception e) {
+                System.out.println("Error al registrar la entrada de la persona con documento: "
+                        + (persona != null ? persona.getDocumento() : "Persona no registrada"));
+                e.printStackTrace();
             }
         }
     }
@@ -157,9 +167,35 @@ public class GuardaImpl implements GuardaDAO {
     }
 
     @Override
-    public void RegistrarSalidaVehiculo(int cantidadPersonas, String placa) {
-
+    public boolean validarEstadoPersona(Persona persona){
+        return persona.getEstado().equals("Permitido");
     }
 
+    @Override
+    public Guarda mostrarGuarda(int documentoGuarda) {
+        String sql = """
+                SELECT `Usuarios`.*, `Empresa`.`Nombre`  FROM Usuarios
+                JOIN `Empresa` ON `Empresa`.`IdEmpresa` = `Usuarios`.`IdEmpresa` WHERE Usuarios.Documento = ?;
+                """;
+        try (Connection conn = DataBaseConnection.getConnection()){
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, documentoGuarda);
+            ResultSet resultSet = ps.executeQuery();
+            while (resultSet.next()){
+                int documento = resultSet.getInt(1);
+                String nombre = resultSet.getString(2);
+                String contrasenia = resultSet.getString(3);
+                boolean activo = resultSet.getBoolean(4);
+                String  idEmpresa = resultSet.getString(6);
+                String  nombreEmpresa = resultSet.getString(7);
+                Empresa empresa = new Empresa(idEmpresa, nombreEmpresa);
+                return new Guarda(documento, nombre,contrasenia,activo,empresa);
+            }
 
+            System.out.println("Empresa obtenida correctamente");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return null;
+    }
 }
