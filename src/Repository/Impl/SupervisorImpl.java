@@ -75,6 +75,49 @@ public class SupervisorImpl implements SupervisorDAO {
     }
 
     @Override
+    public String mostrarAnotacionesPersonas(Persona persona) {
+        if (persona == null || persona.getDocumento() == 0) {
+            return "Información de la persona no válida.";
+        }
+
+        StringBuilder anotaciones = new StringBuilder();
+        String sql = """
+                SELECT Persona.Documento, Persona.Nombre, Persona.Estado, Persona.IdEmpresa,
+                       Anotaciones.IdAnotacion, Anotaciones.Tipo, Anotaciones.Mensaje, Anotaciones.Fecha 
+                FROM Persona
+                JOIN Anotaciones ON Anotaciones.Documento = Persona.Documento
+                WHERE Persona.Documento = ?;
+                """;
+
+        try (Connection conn = DataBaseConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, persona.getDocumento());
+            ResultSet resultSet = ps.executeQuery();
+
+            if (resultSet.next()) {
+                anotaciones.append("Anotaciones de la persona:\n")
+                        .append("Documento: ").append(resultSet.getInt("Documento")).append("\n")
+                        .append("Nombre: ").append(resultSet.getString("Nombre")).append("\n")
+                        .append("Estado: ").append(resultSet.getString("Estado")).append("\n")
+                        .append("Empresa: ").append(resultSet.getString("IdEmpresa")).append("\n")
+                        .append("Id Anotacion: ").append(resultSet.getInt("IdAnotacion")).append("\n")
+                        .append("Tipo: ").append(resultSet.getString("Tipo")).append("\n")
+                        .append("Mensaje: ").append(resultSet.getString("Mensaje")).append("\n")
+                        .append("Fecha: ").append(resultSet.getDate("Fecha")).append("\n");
+                return anotaciones.toString();
+
+            } else {
+                System.out.println("No se encontraron anotaciones para la persona.");
+                return null;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al obtener anotaciones de la persona", e);
+        }
+
+    }
+
+    @Override
     public void crearGuarda(Guarda guarda) {
         String sql = """
                 INSERT INTO `Usuarios`(Documento,`Nombre`,`Contrasena`,`Activo`,`IdTipoUsuario`,`IdEmpresa`) VALUES
@@ -141,16 +184,17 @@ public class SupervisorImpl implements SupervisorDAO {
     @Override
     public void crearAnotaciones(Anotacion anotacion) {
         String sql = """
-                INSERT INTO `Anotaciones`(Documento,`Tipo`,`Mensaje`,`Fecha`) VALUES
-                (?,?,?,?,?,?);
+                INSERT INTO `Anotaciones`(Documento, docUser,`Tipo`,`Mensaje`,`Fecha`) VALUES
+                (?,?,?,?,?);
                 """;
         try (Connection conn = DataBaseConnection.getConnection()) {
             PreparedStatement ps = conn.prepareStatement(sql);
             Persona persona = anotacion.getPersona();
-            ps.setString(1, persona.getNombre());
-            ps.setString(2, anotacion.getTipoAnotacion());
-            ps.setString(3, anotacion.getMensajeAnot());
-            ps.setDate(4, anotacion.getFecha());
+            ps.setString(1, String.valueOf(persona.getDocumento()));
+            ps.setString(2,anotacion.getDocUser());
+            ps.setString(3, anotacion.getTipoAnotacion());
+            ps.setString(4, anotacion.getMensajeAnot());
+            ps.setTimestamp(5, anotacion.getFecha());
             ps.executeUpdate();
             System.out.println("Anotación agregada correctamente");
         } catch (SQLException e) {
@@ -196,11 +240,9 @@ public class SupervisorImpl implements SupervisorDAO {
                 boolean haSalido = resultSet.getBoolean(7);
                 Empresa empresa = new Empresa(idEmpresa, nombreEmpresa);
                 if (tipo.equals("Invitado")){
-                    return null;
-                    // return new Invitado(documento, nombre, activo, estado, empresa, haSalido);
+                     return new Invitado(documento, nombre, activo, estado, empresa, haSalido, null);
                 }else{
-                    return null;
-                    // return new Trabajador(documento, nombre, activo, estado, empresa, haSalido, vehiculo);
+                    return new Trabajador(documento, nombre, activo, estado, empresa, haSalido, null);
                 }
             }
         } catch (SQLException e) {
@@ -210,7 +252,7 @@ public class SupervisorImpl implements SupervisorDAO {
     }
 
     @Override
-    public void RegistrarSalida(int Documento, Date fecha, int documentoUser) {
+    public void RegistrarSalida(int Documento, Timestamp fecha, int documentoUser) {
         if(getPersonaById(Documento) == null){
             System.out.println("Usuario no encontrado");
         } else {
@@ -223,7 +265,7 @@ public class SupervisorImpl implements SupervisorDAO {
                 ps.setInt(1, Documento);
                 ps.setInt(2, documentoUser);
                 ps.setString(3, "Persona identificada con el documento: " + Documento + " ha registrado salida manual");
-                ps.setDate(4, fecha);
+                ps.setTimestamp(4, fecha);
                 System.out.println(ps);
                 ps.executeUpdate();
 

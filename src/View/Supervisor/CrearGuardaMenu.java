@@ -1,5 +1,7 @@
 package View.Supervisor;
 
+import Controller.SuperUsuarioController;
+import Controller.SupervisorController;
 import Model.Usuario;
 import View.SuperUsuario.InicioSesion;
 import View.SuperUsuario.SuperUsuarioMainMenu;
@@ -36,11 +38,21 @@ public class CrearGuardaMenu extends JFrame {
             btnCrear.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    InicioSesion inicioSesion = new InicioSesion();
-                    inicioSesion.setVisible(true);
-                    dispose();
+                    String documento = txtFieldDocumento.getText();
+                    txtFieldDocumento.setText("");
+                    String nombre = txtFieldNombre.getText();
+                    txtFieldNombre.setText("");
+                    String password = txtFieldPassword.getText();
+                    txtFieldPassword.setText("");
+                    String empresa = txtFieldEmpresa.getText();
+                    txtFieldEmpresa.setText("");
+                    SupervisorController supervisorController = new SupervisorController();
+                    supervisorController.crearGuarda(documento,nombre,password,empresa);
+                    JOptionPane.showMessageDialog(null, "Guarda creado exitosamente");
                 }
             });
+
+
 
 
         }

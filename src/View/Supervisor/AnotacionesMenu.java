@@ -1,10 +1,15 @@
 package View.Supervisor;
 
 
+import Controller.SupervisorController;
+import Model.Funcionario;
+import Model.Persona;
 import Model.Usuario;
 import View.SuperUsuario.InicioSesion;
 
+import javax.swing.*;
 import java.awt.event.ActionListener;
+import java.sql.SQLOutput;
 
 public class AnotacionesMenu extends javax.swing.JFrame {
 
@@ -32,12 +37,42 @@ public class AnotacionesMenu extends javax.swing.JFrame {
             }
         });
 
+        // CREAR ANOTACIONES
+        btnCrear1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                String documento = txtFieldDocumento.getText();
+                SupervisorController supervisorController = new SupervisorController();
+                Persona persona = supervisorController.obtenerPersona(documento);
+                CrearAnotacion crearAnotacion = new CrearAnotacion(supervisor, persona);
+                crearAnotacion.setVisible(true);
+
+            }
+        });
+
+        // VER ANOTACIONES de persona
         btnCrear.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                AnotacionesPersona anotacionesPersona = new AnotacionesPersona(supervisor);
+                String documento = txtFieldDocumento.getText();
+                SupervisorController supervisorController = new SupervisorController();
+                Persona persona = supervisorController.obtenerPersona(documento);
+                AnotacionesPersona anotacionesPersona = new AnotacionesPersona(supervisor, persona);
                 anotacionesPersona.setVisible(true);
                 dispose();
+            }
+        });
+
+        // LUPITA -
+        btnHouse.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                String documento = txtFieldDocumento.getText();
+                System.out.println(documento);
+                SupervisorController supervisorController = new SupervisorController();
+                Persona persona = supervisorController.obtenerPersona(documento);
+                System.out.println(persona);
+                txtFieldEmpresa.setText(persona.getNombre());
             }
         });
 
@@ -87,7 +122,7 @@ public class AnotacionesMenu extends javax.swing.JFrame {
 
         lblTipoUsuario.setFont(new java.awt.Font("FreeSans", 1, 36)); // NOI18N
         lblTipoUsuario.setForeground(new java.awt.Color(255, 255, 255));
-        lblTipoUsuario.setText("SUPERUSUARIO");
+        lblTipoUsuario.setText("SUPERVISOR");
 
         javax.swing.GroupLayout superiorBackgroundLayout = new javax.swing.GroupLayout(superiorBackground);
         superiorBackground.setLayout(superiorBackgroundLayout);
@@ -146,7 +181,7 @@ public class AnotacionesMenu extends javax.swing.JFrame {
 
         btnCrear1.setBackground(new java.awt.Color(205, 181, 255));
         btnCrear1.setFont(new java.awt.Font("Liberation Sans", 1, 24)); // NOI18N
-        btnCrear1.setText("Crear Anotación");
+        btnCrear1.setText("Crear Restricción");
         btnCrear1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
 
 

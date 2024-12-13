@@ -25,9 +25,8 @@ public class ConcurrenciaRegistros {
     }
 
     private void actualizarAreaTexto(JTextArea areaTexto, Usuario usuario, Connection conexion){
-        String sql = "SELECT * FROM Registro WHERE TipoRegistro = ? AND Fecha > NOW() - INTERVAL 10 SECOND";
+        String sql = "SELECT * FROM Registro WHERE Fecha > NOW() - INTERVAL 10 SECOND";
         try(PreparedStatement ps = conexion.prepareStatement(sql)){
-            ps.setString(1, "Entrada");
             ResultSet rs = ps.executeQuery();
 
             StringBuilder nuevosRegistros = new StringBuilder();

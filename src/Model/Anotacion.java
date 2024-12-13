@@ -1,20 +1,30 @@
 package Model;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 public class Anotacion {
     private Persona persona;
     private String tipoAnotacion;
     private String mensajeAnot;
-    private Date fecha;
+    private Timestamp fecha;
+    private String docUser;
 
-    public Anotacion(Persona persona, String tipoAnotacion, String mensajeAnot, Date fecha) {
+    public Anotacion(Persona persona, String docUser, String tipoAnotacion, String mensajeAnot, Timestamp fecha) {
         this.persona = persona;
         this.tipoAnotacion = tipoAnotacion;
         this.mensajeAnot = mensajeAnot;
         this.fecha = fecha;
+        this.docUser = docUser;
     }
 
+    public String getDocUser() {
+        return docUser;
+    }
+
+    public void setDocUser(String docUser) {
+        this.docUser = docUser;
+    }
 
     public Persona getPersona() {
         return persona;
@@ -40,11 +50,11 @@ public class Anotacion {
         this.mensajeAnot = mensajeAnot;
     }
 
-    public Date getFecha() {
+    public Timestamp getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(Timestamp fecha) {
         this.fecha = fecha;
     }
 }

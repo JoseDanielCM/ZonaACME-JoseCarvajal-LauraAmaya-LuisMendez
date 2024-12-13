@@ -6,3 +6,4 @@ SELECT Usuarios.*, TipoUsuario.`Nombre` as NombreTipo, Empresa.`IdEmpresa`, Empr
 JOIN TipoUsuario ON TipoUsuario.`IdTipo` = Usuarios.`IdTipoUsuario`
 JOIN Empresa ON Empresa.`IdEmpresa` = Usuarios.`IdEmpresa`
 WHERE Usuarios.`Documento`= 1 AND Usuarios.`Contrasena` = "1";
+

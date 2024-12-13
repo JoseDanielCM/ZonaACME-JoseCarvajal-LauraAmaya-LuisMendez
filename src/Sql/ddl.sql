@@ -82,7 +82,7 @@ CREATE TABLE IF NOT EXISTS Log (
     IdLog INTEGER PRIMARY KEY NOT NULL UNIQUE AUTO_INCREMENT,
     Fecha DATETIME NOT NULL,
     Observacion VARCHAR(500) NOT NULL,
-    DocUser INTEGER,
+    DocUser INTEGER,o
     FOREIGN KEY (DocUser) REFERENCES Usuarios(Documento)
 );
 
@@ -114,6 +114,13 @@ INSERT INTO `Persona` VALUES
 (1231231231,"Lucas",TRUE,"Invitado","Permitido",1234567890,FALSE,"GPR895"),
 (1112223334,"Pepe",TRUE,"Invitado","Permitido",1234567890,FALSE,NULL);
 
+
+INSERT INTO `Registro`(`Documento`,`Fecha`,`DocUser`,`IdAnotacion`,`TipoRegistro`,`PlacaVehiculo`) VALUES
+(1102359291, "2024-12-13 08:55:46.00", 1102359888, NULL, "Salida", NULL),
+(1102359291, "2024-12-13 10:55:46.00", 1102359888, NULL, "Entrada", NULL),
+(1112223334, "2024-12-13 10:55:46.02", 1102359888, NULL, "Salida", NULL),
+(1231231231, "2024-12-13 11:55:46.00", 1102359888, NULL, "Salida", NULL);
+
 SELECT Usuarios.*, TipoUsuario.`Nombre` as NombreTipo, Empresa.`IdEmpresa`, Empresa.`Nombre` as NombreEmpresa FROM Usuarios
 JOIN TipoUsuario ON TipoUsuario.`IdTipo` = Usuarios.`IdTipoUsuario`
 JOIN Empresa ON Empresa.`IdEmpresa` = Usuarios.`IdEmpresa`
@@ -133,3 +140,5 @@ SELECT Usuarios.*, TipoUsuario.`Nombre` as NombreTipo, Empresa.`IdEmpresa`, Empr
 JOIN TipoUsuario ON TipoUsuario.`IdTipo` = Usuarios.`IdTipoUsuario`
 JOIN Empresa ON Empresa.`IdEmpresa` = Usuarios.`IdEmpresa`
 WHERE Usuarios.`Documento`= 1102359999 AND Usuarios.`Contrasena` = '1234';
+
+UPDATE `Persona` SET `Estado` = "Restringido" WHERE `Documento` = 1102359291;

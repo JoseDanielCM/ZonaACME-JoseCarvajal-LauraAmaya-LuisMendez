@@ -1,11 +1,8 @@
 package Repository.DAO;
 
-import Model.Guarda;
-import Model.Persona;
-
-import java.sql.Date;
+import java.sql.Timestamp;
 
 public interface SalidaDAO {
-    void RegistrarSalida(int Documento,Date fecha, int documentoUser);
+    void RegistrarSalida(int Documento, Timestamp fecha, int documentoUser);
     void RegistrarSalidaVehiculo(int cantidadPersonas, String placa);
 }

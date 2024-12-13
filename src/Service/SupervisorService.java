@@ -2,7 +2,8 @@ package Service;
 
 import Model.*;
 import Repository.Impl.SupervisorImpl;
-import java.sql.Date;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 
 public class SupervisorService {
     private final SupervisorImpl supervisorImpl;
@@ -66,15 +67,16 @@ public class SupervisorService {
         return supervisorImpl.mostrarGuarda(Integer.parseInt(documentoGuar));
     }
 
-    public void crearAnotaciones(String documento, String tipoAnotacion, String mensajeAnot, String fecha){
+    public void crearAnotaciones(String documento, String docUser, String tipoAnotacion, String mensajeAnot, String fecha){
         Persona persona = supervisorImpl.getPersonaById(Integer.parseInt(documento));
         try {
-           Date fechaFormato = Date.valueOf(fecha);
-           Anotacion anotacion = new Anotacion(persona,tipoAnotacion,mensajeAnot,fechaFormato);
+           Timestamp fechaFormato = Timestamp.valueOf(fecha);
+           Anotacion anotacion = new Anotacion(persona, docUser, tipoAnotacion,mensajeAnot,fechaFormato);
+            System.out.println(anotacion);
            supervisorImpl.crearAnotaciones(anotacion);
         } catch (Exception e){
             System.out.println("Formato invalido");
-            throw new IllegalArgumentException("Invalido");
+            throw new IllegalArgumentException("Invalido" + e.getMessage());
         }
     }
 
@@ -82,8 +84,8 @@ public class SupervisorService {
         supervisorImpl.levantarRestriccion(Integer.parseInt(documentoPersona));
     }
 
-    public void obtenerPersona(String documentoPersona){
-        supervisorImpl.getPersonaById(Integer.parseInt(documentoPersona));
+    public Persona obtenerPersona(String documentoPersona){
+        return supervisorImpl.getPersonaById(Integer.parseInt(documentoPersona));
     }
 
     public void RegistrarSalida(String Documento, String fecha, String documentoUser) {
@@ -91,7 +93,7 @@ public class SupervisorService {
         try {
             DocumentoPersona = Integer.parseInt(Documento);
             documentoUInt = Integer.parseInt(documentoUser);
-            Date fechaFormato = Date.valueOf(fecha);
+            Timestamp fechaFormato = Timestamp.valueOf(fecha);
             supervisorImpl.RegistrarSalida(DocumentoPersona,fechaFormato,documentoUInt);
         } catch (Exception e){
             System.out.println("Valores invalidos");

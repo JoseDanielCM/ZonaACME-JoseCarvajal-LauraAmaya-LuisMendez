@@ -1,6 +1,9 @@
 package View.Supervisor;
 
+import Controller.SupervisorController;
+import Model.Persona;
 import Model.Usuario;
+import Repository.Impl.SupervisorImpl;
 import View.SuperUsuario.InicioSesion;
 
 import javax.swing.*;
@@ -9,14 +12,26 @@ import java.awt.event.ActionListener;
 
 public class AnotacionesPersona extends JFrame {
     private Usuario supervisor;
+    private Persona persona;
 
-    public AnotacionesPersona(Usuario supervisor) {
+    public AnotacionesPersona(Usuario supervisor, Persona persona) {
+        // text area 1 esquina derecha
+        // text area 2 abajo anotaciones
         this.supervisor = supervisor;
+        this.persona = persona;
 
         initComponents();
         this.setLocationRelativeTo(null);
         lblNombreUsuario.setText(supervisor.getNombre());
 
+        txtFieldDocumento.setText(String.valueOf(persona.getDocumento()));
+        txtFieldNombre.setText(String.valueOf(persona.getNombre()));
+        String tipo = String.valueOf(persona.getClass());
+        tipo= tipo.replace("class Model.","");
+        txtFieldTipo.setText(tipo);
+        txtFieldEstado.setText(String.valueOf(persona.getEstado()));
+        SupervisorImpl supervisorController = new SupervisorImpl();
+        jTextArea2.setText(supervisorController.mostrarAnotacionesPersonas(persona));
         btnHouse.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -85,6 +100,10 @@ public class AnotacionesPersona extends JFrame {
         lblTipoUsuario.setForeground(new java.awt.Color(255, 255, 255));
         lblTipoUsuario.setText("SUPERVISOR");
 
+        txtFieldEstado.setEditable(false);
+        txtFieldTipo.setEditable(false);
+        txtFieldNombre.setEditable(false);
+        txtFieldDocumento.setEditable(false);
         javax.swing.GroupLayout superiorBackgroundLayout = new javax.swing.GroupLayout(superiorBackground);
         superiorBackground.setLayout(superiorBackgroundLayout);
         superiorBackgroundLayout.setHorizontalGroup(
@@ -143,6 +162,7 @@ public class AnotacionesPersona extends JFrame {
         jTextArea2.setColumns(20);
         jTextArea2.setRows(5);
         jScrollPane2.setViewportView(jTextArea2);
+        jTextArea2.setEditable(false);
 
         btnLevantarRestriccion.setBackground(new java.awt.Color(255, 87, 87));
         btnLevantarRestriccion.setFont(new java.awt.Font("Liberation Sans", 1, 24)); // NOI18N
