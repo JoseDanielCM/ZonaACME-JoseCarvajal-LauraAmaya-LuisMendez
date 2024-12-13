@@ -7,7 +7,7 @@ import java.sql.Date;
 public interface SupervisorDAO extends SalidaDAO {
     void crearFuncionario(Funcionario funcionario);
     void desactivarFuncionario(Funcionario funcionario);
-    Funcionario mostrarFuncionario(int documentoSupervisor);
+    Funcionario mostrarFuncionario(int documentoFuncionario);
     void crearGuarda(Guarda guarda);
     void desactivarGuarda(Guarda guarda);
     Guarda mostrarGuarda(int documentoGuarda);

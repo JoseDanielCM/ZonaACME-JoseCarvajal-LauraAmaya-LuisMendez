@@ -46,7 +46,7 @@ public class SupervisorImpl implements SupervisorDAO {
 
 
     @Override
-    public Funcionario mostrarFuncionario(int documentoSupervisor) {
+    public Funcionario mostrarFuncionario(int documentoFuncionario) {
         String sql = """
             SELECT U.Nombre, Documento, E.Nombre, E.IdEmpresa FROM `Usuarios` U
             JOIN `Empresa` E
@@ -55,7 +55,7 @@ public class SupervisorImpl implements SupervisorDAO {
         """;
         try (Connection conn = DataBaseConnection.getConnection()){
             PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setInt(1, documentoSupervisor);
+            ps.setInt(1, documentoFuncionario);
             ResultSet rs = ps.executeQuery();
             if (rs.next()){
                 Empresa empresa = new Empresa(rs.getString("IdEmpresa"),rs.getString("Nombre"));

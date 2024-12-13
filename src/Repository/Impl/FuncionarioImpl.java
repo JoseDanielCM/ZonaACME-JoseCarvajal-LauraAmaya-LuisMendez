@@ -93,7 +93,7 @@ public class FuncionarioImpl implements FuncionarioDAO {
                 boolean haSalido = resultSet.getBoolean(7);
                 String placaVehiculo = resultSet.getString(8);
                 Empresa empresa = new Empresa(idEmpresa,nombreEmpresa);
-                Vehiculo vehiculo = new Vehiculo(placaVehiculo,"Permitido",haSalido);
+                Vehiculo vehiculo = new Vehiculo(placaVehiculo);
                 if (tipo.equals("Invitado")){
                     Invitado invitado = new Invitado(id, nombre, activo, estado, empresa, haSalido, vehiculo);
                     persons.add(invitado);
@@ -125,13 +125,8 @@ public class FuncionarioImpl implements FuncionarioDAO {
     }
 
     @Override
-    public void crearAnotacion(Anotacion anotacion, int documento) {
-        return;
-    }
-
-    @Override
-    public void RegistrarSalida(int Documento, Date fecha, int documentoUser) {
-        if(getPersonaById(Documento) == null){
+    public void RegistrarSalidaManual(Persona persona, Date fecha, Funcionario funcionario) {
+        if(persona == null){
             System.out.println("Usuario no encontrado");
         } else {
             String sql = """
@@ -140,9 +135,9 @@ public class FuncionarioImpl implements FuncionarioDAO {
             """;
             try (Connection conn = DataBaseConnection.getConnection()){
                 PreparedStatement ps = conn.prepareStatement(sql);
-                ps.setInt(1, Documento);
-                ps.setInt(2, documentoUser);
-                ps.setString(3, "Persona identificada con el documento: " + Documento + " ha registrado salida manual");
+                ps.setInt(1, persona.getDocumento());
+                ps.setInt(2, funcionario.getDocumento());
+                ps.setString(3, "Persona identificada con el documento: " + persona.getDocumento() + " ha registrado salida manual");
                 ps.setDate(4, fecha);
                 System.out.println(ps);
                 ps.executeUpdate();
@@ -153,9 +148,6 @@ public class FuncionarioImpl implements FuncionarioDAO {
             }
         }
     }
-
-    @Override
-    public void RegistrarSalidaVehiculo(int cantidadPersonas, String placa) {}
 
     @Override
     public Persona getPersonaById(int id) {
@@ -179,7 +171,7 @@ public class FuncionarioImpl implements FuncionarioDAO {
                 boolean haSalido = resultSet.getBoolean(7);
                 String placaVehiculo = resultSet.getString(8);
                 Empresa empresa = new Empresa(idEmpresa,nombreEmpresa);
-                Vehiculo vehiculo = new Vehiculo(placaVehiculo,"Permitido",haSalido);
+                Vehiculo vehiculo = new Vehiculo(placaVehiculo);
                 if (tipo.equals("Invitado")){
                     return new Invitado(id, nombre, activo, estado, empresa, haSalido, vehiculo);
                 }else{
@@ -229,8 +221,36 @@ public class FuncionarioImpl implements FuncionarioDAO {
             ps.executeUpdate();
 
             System.out.println("Vehículo creado correctamente");
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+    @Override
+    public Funcionario mostrarFuncionario(int documentoFuncionario) {
+        String sql = """
+            SELECT U.Nombre, Documento, E.Nombre, E.IdEmpresa FROM `Usuarios` U
+            JOIN `Empresa` E
+            ON `E`.`IdEmpresa` = `U`.`IdEmpresa`
+            WHERE U.IdTipoUsuario = 4 AND U.Documento = ? ;
+        """;
+        try (Connection conn = DataBaseConnection.getConnection()){
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, documentoFuncionario);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()){
+                Empresa empresa = new Empresa(rs.getString("IdEmpresa"),rs.getString("Nombre"));
+                return new Funcionario(
+                        rs.getInt(1),
+                        rs.getString("Nombre"),
+                        rs.getString("Contrasena"),
+                        rs.getBoolean("Activo"),
+                        empresa
+                );
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return null;
     }
 }

@@ -8,13 +8,14 @@ import java.sql.Date;
 import java.util.List;
 
 public interface GuardaDAO extends SalidaDAO {
-    void crearRegistro(Persona persona, Guarda guarda, Vehiculo vehiculo);
+    void crearRegistroEntradaPersona(Persona persona, Guarda guarda);
+    void crearRegistroSalidaPersona(Persona persona, Guarda guarda);
 
-    void mostrarAnotacionesPersonas(int documento);
+    void mostrarAnotacionesPersonas(Persona persona);
 
-    void crearRegistroVehiculo(Persona persona, Guarda guarda, Vehiculo vehiculo);
+    void crearRegistroEntradaVehiculo(List<Persona> personas, Guarda guarda);
+    void crearRegistroSalidaVehiculo(List<Persona> personas, Guarda guarda);
 
-    void registrarVehiculo(String placa, List<Persona> personas, Guarda guarda);
     Persona getPersonaById(int id);
     @Override
     void RegistrarSalida(int Documento, Date fecha, int documentoUser);

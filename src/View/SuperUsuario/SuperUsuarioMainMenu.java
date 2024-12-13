@@ -1,6 +1,7 @@
 package View.SuperUsuario;
 
 import Model.Usuario;
+import View.SuperUsuario.Empresa.GestionEmpresaMenu;
 
 import javax.swing.*;
 import java.awt.event.ActionListener;
@@ -46,6 +47,15 @@ public class SuperUsuarioMainMenu extends JFrame {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ConfigurarIPMenu cfgMenu = new ConfigurarIPMenu(superUsuario);
                 cfgMenu.setVisible(true);
+                dispose();
+            }
+        });
+
+        btnEmpresa.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                GestionEmpresaMenu gestionEmpresaMenu = new GestionEmpresaMenu(superUsuario);
+                gestionEmpresaMenu.setVisible(true);
                 dispose();
             }
         });

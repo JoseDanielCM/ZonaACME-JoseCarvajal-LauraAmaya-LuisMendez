@@ -5,10 +5,10 @@ public class Vehiculo {
     private String estado;
     private boolean haSalido;
 
-    public Vehiculo(String placa, String estado, boolean haSalido) {
+    public Vehiculo(String placa) {
         this.placa = placa;
-        this.estado = estado;
-        this.haSalido = haSalido;
+        estado = "Permitido";
+        haSalido = true;
     }
 
     public String getPlaca() {

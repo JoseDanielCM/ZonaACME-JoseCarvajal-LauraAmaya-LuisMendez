@@ -10,7 +10,7 @@ import java.util.List;
 public class GuardaImpl implements GuardaDAO {
 
     @Override
-    public void crearRegistro(Persona persona, Guarda guarda, Vehiculo vehiculo) {
+    public void crearRegistroEntradaPersona(Persona persona, Guarda guarda) {
         String sql = """
                 INSERT INTO `Registro` VALUES
                 (?,NOW(),?,NULL,"Entrada",NULL);
@@ -27,7 +27,24 @@ public class GuardaImpl implements GuardaDAO {
         }
     }
     @Override
-    public void mostrarAnotacionesPersonas(int documento) {
+    public void crearRegistroSalidaPersona(Persona persona, Guarda guarda) {
+        String sql = """
+                INSERT INTO `Registro` VALUES
+                (?,NOW(),?,NULL,"Salida",NULL);
+                """;
+        try (Connection conn = DataBaseConnection.getConnection()){
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, persona.getDocumento());
+            ps.setInt(2, guarda.getDocumento());
+            ps.executeUpdate();
+
+            System.out.println("Registro ingresado correctamente");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    @Override
+    public void mostrarAnotacionesPersonas(Persona persona) {
         String sql = """
                 SELECT `Persona`.`Documento`,`Persona`.`Nombre`,`Persona`.`Estado`,`Persona`.`IdEmpresa`,`Anotaciones`.`IdAnotacion`,`Anotaciones`.`Tipo`,`Anotaciones`.`Mensaje`,`Anotaciones`.`Fecha` FROM `Persona`
                 JOIN `Anotaciones` ON `Anotaciones`.`Documento` = `Persona`.`Documento`
@@ -35,7 +52,7 @@ public class GuardaImpl implements GuardaDAO {
                 """;
         try (Connection conn = DataBaseConnection.getConnection()){
             PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setInt(1, documento);
+            ps.setInt(1, persona.getDocumento());
             ResultSet resultSet = ps.executeQuery();
             if (resultSet.next()){
                 System.out.println("Anotaciones de la persona:");
@@ -54,30 +71,30 @@ public class GuardaImpl implements GuardaDAO {
     }
 
     @Override
-    public void crearRegistroVehiculo(Persona persona, Guarda guarda, Vehiculo vehiculo) {
-        String sql = """
-                INSERT INTO `Registro` VALUES
-                (?,NOW(),?,NULL,"Entrada",?);
-                """;
-        try (Connection conn = DataBaseConnection.getConnection()){
-            PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setInt(1, persona.getDocumento());
-            ps.setInt(2, guarda.getDocumento());
-            ps.setString(3, vehiculo.getPlaca());
-            ps.executeUpdate();
+    public void crearRegistroEntradaVehiculo(List<Persona> personas, Guarda guarda) {
+        if (personas == null || personas.isEmpty()) {
+            System.out.println("La lista de personas está vacía o es nula. No se puede realizar el registro.");
+            return;
+        }
 
-            System.out.println("Registro con carro ingresado correctamente");
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        for (Persona persona : personas) {
+            try {
+                if (persona != null) {
+                    crearRegistroEntradaPersona(persona, guarda);
+                } else {
+                    System.out.println("Se encontró una persona nula en la lista, se omite el registro.");
+                }
+            } catch (Exception e) {
+                System.out.println("Error al registrar la entrada de la persona con documento: "
+                        + (persona != null ? persona.getDocumento() : "Desconocido"));
+                e.printStackTrace();
+            }
         }
     }
 
     @Override
-    public void registrarVehiculo(String placa, List<Persona> personas, Guarda guarda) {
-        for (int i = 0; i < personas.size(); i++) {
-            Vehiculo vehiculo = new Vehiculo(placa, "bien", false);
-            crearRegistroVehiculo(personas.get(i), guarda, vehiculo);
-        }
+    public void crearRegistroSalidaVehiculo(List<Persona> personas, Guarda guarda) {
+
     }
 
     @Override

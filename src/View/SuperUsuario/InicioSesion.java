@@ -3,6 +3,7 @@ package View.SuperUsuario;
 import Controller.SesionController;
 import Model.Sesion;
 import Model.Usuario;
+import View.Supervisor.SupervisorMainMenu;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -21,6 +22,7 @@ public class InicioSesion extends JFrame {
                 SesionController sesionController = new SesionController();
                 Sesion sesion = sesionController.buscarUsuario(documento,password);
                 Usuario usuario = sesion.getUsuario();
+                System.out.println(usuario.getClass());
                 String tipo = String.valueOf(usuario.getClass());
                 tipo= tipo.replace("class Model.","");
                 System.out.println(tipo);
@@ -31,7 +33,9 @@ public class InicioSesion extends JFrame {
                         dispose();
                         break;
                     case "Supervisor":
-                        JOptionPane.showMessageDialog(null, "Bienvenido supervisor " + usuario.getNombre());
+                        SupervisorMainMenu supervisorMainMenu = new SupervisorMainMenu(usuario);
+                        supervisorMainMenu.setVisible(true);
+                        dispose();
                         break;
                     case "Guarda":
                         JOptionPane.showMessageDialog(null, "Bienvenido Guarda " + usuario.getNombre());

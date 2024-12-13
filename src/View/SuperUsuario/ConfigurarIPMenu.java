@@ -3,6 +3,7 @@ package View.SuperUsuario;
 import Model.Usuario;
 
 import javax.swing.*;
+import java.awt.event.ActionListener;
 
 public class ConfigurarIPMenu extends JFrame {
     private Usuario superUsuario;
@@ -15,7 +16,23 @@ public class ConfigurarIPMenu extends JFrame {
         this.setLocationRelativeTo(null);
         lblBienvenida.setText(superUsuario.getNombre());
 
+        btnLogout.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                InicioSesion inicioSesion = new InicioSesion();
+                inicioSesion.setVisible(true);
+                dispose();
+            }
+        });
+        btnCasa.addActionListener(new ActionListener() {
 
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SuperUsuarioMainMenu superUsuarioMainMenu = new SuperUsuarioMainMenu(superUsuario);
+                superUsuarioMainMenu.setVisible(true);
+                dispose();
+            }
+        });
     }
 
     /**
@@ -38,8 +55,8 @@ public class ConfigurarIPMenu extends JFrame {
         jButton1 = new javax.swing.JButton();
         DocLabel1 = new javax.swing.JLabel();
         txtFieldDocumento3 = new javax.swing.JTextField();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        btnLogout = new javax.swing.JButton();
+        btnCasa = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(52, 33, 91));
@@ -83,7 +100,7 @@ public class ConfigurarIPMenu extends JFrame {
                                 .addGap(12, 12, 12))
         );
 
-        ImgMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/ImgIp.webp"))); // NOI18N
+        ImgMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/imgIp.png"))); // NOI18N
 
         lblCrearSupervisor.setFont(new java.awt.Font("FreeSans", 1, 36)); // NOI18N
         lblCrearSupervisor.setText("Configurar conexión BD");
@@ -117,15 +134,15 @@ public class ConfigurarIPMenu extends JFrame {
             }
         });
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/casa.png"))); // NOI18N
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnLogout.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/logout.png"))); // NOI18N
+        btnLogout.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
             }
         });
 
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/logout.png"))); // NOI18N
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        btnCasa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/casa.png"))); // NOI18N
+        btnCasa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
             }
@@ -158,9 +175,9 @@ public class ConfigurarIPMenu extends JFrame {
                                 .addGap(52, 52, 52))
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnCasa, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(354, 354, 354)
-                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(43, 43, 43))
         );
         layout.setVerticalGroup(
@@ -183,8 +200,8 @@ public class ConfigurarIPMenu extends JFrame {
                                                 .addComponent(jButton1)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 152, Short.MAX_VALUE)
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                        .addComponent(btnLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(btnCasa, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
                                                 .addGap(30, 30, 30))
                                         .addGroup(layout.createSequentialGroup()
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -223,8 +240,8 @@ public class ConfigurarIPMenu extends JFrame {
     private javax.swing.JLabel ImgMenu;
     private javax.swing.JLabel Logo;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JButton btnCasa;
+    private javax.swing.JButton btnLogout;
     private javax.swing.JLabel lblBienvenida;
     private javax.swing.JLabel lblBienvenida2;
     private javax.swing.JLabel lblCrearSupervisor;

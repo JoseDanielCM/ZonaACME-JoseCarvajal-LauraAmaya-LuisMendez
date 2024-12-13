@@ -1,17 +1,39 @@
 package View.SuperUsuario;
 
 import Model.Usuario;
-
+import View.SuperUsuario.InicioSesion;
+import View.SuperUsuario.SuperUsuarioMainMenu;
 import javax.swing.*;
+import java.awt.event.ActionListener;
 
 public class DesactivarSupervisorMenu extends JFrame {
     private Usuario superUsuario;
+
+    /**
+     * Creates new form InicioSesion
+     */
     public DesactivarSupervisorMenu(Usuario superUsuario) {
         this.superUsuario = superUsuario;
         initComponents();
         this.setLocationRelativeTo(null);
+        lblNombreUsuario.setText(superUsuario.getNombre());
 
-        lblBienvenida.setText(superUsuario.getNombre());
+        btnHouse.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SuperUsuarioMainMenu superUsuarioMainMenu = new SuperUsuarioMainMenu(superUsuario);
+                superUsuarioMainMenu.setVisible(true);
+                dispose();
+            }
+        });
+        btnLogout.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                InicioSesion inicioSesion = new InicioSesion();
+                inicioSesion.setVisible(true);
+                dispose();
+            }
+        });
     }
 
     /**
@@ -24,18 +46,18 @@ public class DesactivarSupervisorMenu extends JFrame {
     private void initComponents() {
 
         superiorBackground = new javax.swing.JPanel();
-        Logo = new javax.swing.JLabel();
-        lblBienvenida = new javax.swing.JLabel();
-        lblBienvenida2 = new javax.swing.JLabel();
-        ImgMenu = new javax.swing.JLabel();
+        lblLogo = new javax.swing.JLabel();
+        lblNombreUsuario = new javax.swing.JLabel();
+        lblTipoUsuario = new javax.swing.JLabel();
+        lblImgSide = new javax.swing.JLabel();
         lblCrearSupervisor = new javax.swing.JLabel();
         DocLabel = new javax.swing.JLabel();
-        txtFieldDocumento2 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        DocLabel1 = new javax.swing.JLabel();
-        txtFieldDocumento3 = new javax.swing.JTextField();
+        lblEmpresa = new javax.swing.JLabel();
+        txtFieldDocumento = new javax.swing.JTextField();
+        txtFieldEmpresa = new javax.swing.JTextField();
+        btnCrear = new javax.swing.JButton();
+        btnHouse = new javax.swing.JButton();
+        btnLogout = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(52, 33, 91));
@@ -44,43 +66,43 @@ public class DesactivarSupervisorMenu extends JFrame {
 
         superiorBackground.setBackground(new java.awt.Color(52, 33, 91));
 
-        Logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/Banner.png"))); // NOI18N
+        lblLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/Banner.png"))); // NOI18N
 
-        lblBienvenida.setFont(new java.awt.Font("FreeSans", 1, 18)); // NOI18N
-        lblBienvenida.setForeground(new java.awt.Color(255, 255, 255));
-        lblBienvenida.setText("Username");
+        lblNombreUsuario.setFont(new java.awt.Font("FreeSans", 1, 18)); // NOI18N
+        lblNombreUsuario.setForeground(new java.awt.Color(255, 255, 255));
+        lblNombreUsuario.setText("Username");
 
-        lblBienvenida2.setFont(new java.awt.Font("FreeSans", 1, 36)); // NOI18N
-        lblBienvenida2.setForeground(new java.awt.Color(255, 255, 255));
-        lblBienvenida2.setText("SUPERUSUARIO");
+        lblTipoUsuario.setFont(new java.awt.Font("FreeSans", 1, 36)); // NOI18N
+        lblTipoUsuario.setForeground(new java.awt.Color(255, 255, 255));
+        lblTipoUsuario.setText("SUPERUSUARIO");
 
         javax.swing.GroupLayout superiorBackgroundLayout = new javax.swing.GroupLayout(superiorBackground);
         superiorBackground.setLayout(superiorBackgroundLayout);
         superiorBackgroundLayout.setHorizontalGroup(
                 superiorBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(superiorBackgroundLayout.createSequentialGroup()
-                                .addComponent(Logo)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(lblLogo)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 372, Short.MAX_VALUE)
                                 .addGroup(superiorBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(lblBienvenida2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(lblBienvenida, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addComponent(lblTipoUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(lblNombreUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addGap(16, 16, 16))
         );
         superiorBackgroundLayout.setVerticalGroup(
                 superiorBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(superiorBackgroundLayout.createSequentialGroup()
-                                .addComponent(Logo, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lblLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, superiorBackgroundLayout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(lblBienvenida2)
+                                .addComponent(lblTipoUsuario)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lblBienvenida)
+                                .addComponent(lblNombreUsuario)
                                 .addGap(12, 12, 12))
         );
 
-        ImgMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/DesactivarSupervisorImg.webp"))); // NOI18N
-        ImgMenu.setText("jLabel1");
+        lblImgSide.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/desactivar.jpg"))); // NOI18N
+        lblImgSide.setText("jLabel1");
 
         lblCrearSupervisor.setFont(new java.awt.Font("FreeSans", 1, 36)); // NOI18N
         lblCrearSupervisor.setText("Desactivar Supervisor");
@@ -88,45 +110,42 @@ public class DesactivarSupervisorMenu extends JFrame {
         DocLabel.setFont(new java.awt.Font("Liberation Sans", 1, 24)); // NOI18N
         DocLabel.setText("Documento");
 
-        txtFieldDocumento2.addActionListener(new java.awt.event.ActionListener() {
+        lblEmpresa.setFont(new java.awt.Font("Liberation Sans", 1, 24)); // NOI18N
+        lblEmpresa.setText("Nombre");
+
+        txtFieldDocumento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtFieldDocumento2ActionPerformed(evt);
+                txtFieldDocumentoActionPerformed(evt);
             }
         });
 
-        jButton1.setBackground(new java.awt.Color(255, 87, 87));
-        jButton1.setFont(new java.awt.Font("Liberation Sans", 1, 24)); // NOI18N
-        jButton1.setText("Desactivar");
-        jButton1.setBorderPainted(false);
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        txtFieldEmpresa.setEditable(false);
+        txtFieldEmpresa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                txtFieldEmpresaActionPerformed(evt);
             }
         });
 
-        DocLabel1.setFont(new java.awt.Font("Liberation Sans", 1, 24)); // NOI18N
-        DocLabel1.setText("Nombre");
-
-        txtFieldDocumento3.setEditable(false);
-        txtFieldDocumento3.addActionListener(new java.awt.event.ActionListener() {
+        btnCrear.setBackground(new java.awt.Color(255, 87, 87));
+        btnCrear.setFont(new java.awt.Font("Liberation Sans", 1, 24)); // NOI18N
+        btnCrear.setText("Desactivar");
+        btnCrear.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        btnCrear.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtFieldDocumento3ActionPerformed(evt);
+                btnCrearActionPerformed(evt);
             }
         });
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/casa.png"))); // NOI18N
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnHouse.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/casa.png"))); // NOI18N
+        btnHouse.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        btnHouse.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnHouseActionPerformed(evt);
             }
         });
 
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/logout.png"))); // NOI18N
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
+        btnLogout.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img//logout.png"))); // NOI18N
+        btnLogout.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -134,92 +153,96 @@ public class DesactivarSupervisorMenu extends JFrame {
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(superiorBackground, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(ImgMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 431, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lblImgSide, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup(layout.createSequentialGroup()
-                                                .addGap(211, 211, 211)
-                                                .addComponent(DocLabel))
+                                                .addGap(18, 18, 18)
+                                                .addComponent(btnHouse)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(btnLogout)
+                                                .addGap(25, 25, 25))
                                         .addGroup(layout.createSequentialGroup()
-                                                .addGap(150, 150, 150)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                        .addComponent(txtFieldDocumento3, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addComponent(txtFieldDocumento2, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                        .addGroup(layout.createSequentialGroup()
-                                                .addGap(238, 238, 238)
-                                                .addComponent(DocLabel1))
-                                        .addGroup(layout.createSequentialGroup()
-                                                .addGap(92, 92, 92)
-                                                .addComponent(lblCrearSupervisor, javax.swing.GroupLayout.PREFERRED_SIZE, 397, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGroup(layout.createSequentialGroup()
-                                                .addGap(208, 208, 208)
-                                                .addComponent(jButton1)))
-                                .addContainerGap(111, Short.MAX_VALUE))
+                                                        .addComponent(lblCrearSupervisor)
+                                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                                .addComponent(txtFieldEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                                                                                .addComponent(DocLabel)
+                                                                                                .addGap(125, 125, 125))
+                                                                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                                                                                .addComponent(txtFieldDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                                                .addGap(59, 59, 59))
+                                                                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                                                                                .addComponent(lblEmpresa)
+                                                                                                .addGap(143, 143, 143))))
+                                                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                                                                .addComponent(btnCrear, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                                .addGap(123, 123, 123)))))
+                                                .addGap(176, 176, 176))))
         );
         layout.setVerticalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
                                 .addComponent(superiorBackground, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(59, 59, 59)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(ImgMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 341, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGroup(layout.createSequentialGroup()
-                                                .addComponent(lblCrearSupervisor, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(48, 48, 48)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                                .addComponent(lblCrearSupervisor)
+                                                .addGap(62, 62, 62)
                                                 .addComponent(DocLabel)
-                                                .addGap(32, 32, 32)
-                                                .addComponent(txtFieldDocumento2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addGap(18, 18, 18)
-                                                .addComponent(DocLabel1)
+                                                .addComponent(txtFieldDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(34, 34, 34)
+                                                .addComponent(lblEmpresa)
                                                 .addGap(18, 18, 18)
-                                                .addComponent(txtFieldDocumento3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(50, 50, 50)
-                                                .addComponent(jButton1)
-                                                .addGap(35, 35, 35)))
-                                .addContainerGap(109, Short.MAX_VALUE))
+                                                .addComponent(txtFieldEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(48, 48, 48)
+                                                .addComponent(btnCrear, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(48, 48, 48)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(btnLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(btnHouse))
+                                                .addGap(15, 15, 15))
+                                        .addComponent(lblImgSide, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 580, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         pack();
     }// </editor-fold>
 
-    private void txtFieldDocumento2ActionPerformed(java.awt.event.ActionEvent evt) {
+    private void txtFieldEmpresaActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
     }
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
+    private void btnHouseActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
     }
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {
+    private void txtFieldDocumentoActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
     }
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {
+    private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
     }
-
-
-    private void txtFieldDocumento3ActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
-    }
-
-    /**
-     * @param args the command line arguments
-     */
 
     // Variables declaration - do not modify
     private javax.swing.JLabel DocLabel;
-    private javax.swing.JLabel DocLabel1;
-    private javax.swing.JLabel ImgMenu;
-    private javax.swing.JLabel Logo;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JLabel lblBienvenida;
-    private javax.swing.JLabel lblBienvenida2;
+    private javax.swing.JButton btnCrear;
+    private javax.swing.JButton btnHouse;
+    private javax.swing.JButton btnLogout;
     private javax.swing.JLabel lblCrearSupervisor;
+    private javax.swing.JLabel lblEmpresa;
+    private javax.swing.JLabel lblImgSide;
+    private javax.swing.JLabel lblLogo;
+    private javax.swing.JLabel lblNombreUsuario;
+    private javax.swing.JLabel lblTipoUsuario;
     private javax.swing.JPanel superiorBackground;
-    private javax.swing.JTextField txtFieldDocumento2;
-    private javax.swing.JTextField txtFieldDocumento3;
+    private javax.swing.JTextField txtFieldDocumento;
+    private javax.swing.JTextField txtFieldEmpresa;
     // End of variables declaration
 }
