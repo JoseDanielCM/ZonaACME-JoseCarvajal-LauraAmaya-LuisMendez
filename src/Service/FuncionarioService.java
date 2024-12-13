@@ -92,7 +92,7 @@ public class FuncionarioService {
         return funcionarioImpl.estadoActualPersona(persona);
     }
 
-    public void RegistrarSalidaManual(String documento, Date fecha, String docFuncionario) {
+    public void RegistrarSalidaManual(String documento, String docFuncionario) {
         int docInt;
         int docFuncionarioInt;
         try {
@@ -109,6 +109,6 @@ public class FuncionarioService {
         }
         Persona persona = funcionarioImpl.getPersonaById(docInt);
         Funcionario funcionario = funcionarioImpl.mostrarFuncionario(docFuncionarioInt);
-        funcionarioImpl.RegistrarSalidaManual(persona,fecha,funcionario);
+        funcionarioImpl.RegistrarSalidaManual(persona,funcionario);
     }
 }

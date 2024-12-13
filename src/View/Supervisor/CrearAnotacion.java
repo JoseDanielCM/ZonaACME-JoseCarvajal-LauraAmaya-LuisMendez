@@ -3,6 +3,7 @@ package View.Supervisor;
 import Controller.SupervisorController;
 import Model.Persona;
 import Model.Usuario;
+import Repository.Impl.ConcurrenciaRegistros;
 import View.SuperUsuario.InicioSesion;
 
 import javax.swing.*;
@@ -17,6 +18,7 @@ public class CrearAnotacion extends javax.swing.JFrame {
         this.persona = persona;
         initComponents();
         this.setLocationRelativeTo(null);
+        ConcurrenciaRegistros.manejoRegistros(registros, supervisor);
         lblNombreUsuario.setText(supervisor.getNombre());
         txtFieldDocumento.setText(String.valueOf(persona.getDocumento()));
         String documento = String.valueOf(persona.getDocumento());

@@ -3,6 +3,7 @@ package View.Supervisor;
 import Controller.SupervisorController;
 import Model.Persona;
 import Model.Usuario;
+import Repository.Impl.ConcurrenciaRegistros;
 import Repository.Impl.SupervisorImpl;
 import View.SuperUsuario.InicioSesion;
 
@@ -23,6 +24,8 @@ public class AnotacionesPersona extends JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         lblNombreUsuario.setText(supervisor.getNombre());
+        ConcurrenciaRegistros.manejoRegistros(jTextArea1, supervisor);
+
 
         txtFieldDocumento.setText(String.valueOf(persona.getDocumento()));
         txtFieldNombre.setText(String.valueOf(persona.getNombre()));

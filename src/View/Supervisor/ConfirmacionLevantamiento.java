@@ -3,6 +3,7 @@ package View.Supervisor;
 import Controller.SupervisorController;
 import Model.Persona;
 import Model.Usuario;
+import Repository.Impl.ConcurrenciaRegistros;
 import View.SuperUsuario.InicioSesion;
 
 import javax.swing.*;

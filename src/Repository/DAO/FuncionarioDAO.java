@@ -14,7 +14,7 @@ public interface FuncionarioDAO {
     String estadoActualPersona(Persona persona);
     Persona getPersonaById(int id);
     void desactivarPersona(Persona persona);
-    void RegistrarSalidaManual(Persona persona, Date fecha, Funcionario funcionario);
+    void RegistrarSalidaManual(Persona persona, Funcionario funcionario);
     Empresa getEmpresaFuncionario(int idFuncionario);
     void crearVehiculo(Vehiculo vehiculo);
     Funcionario mostrarFuncionario(int documentoFuncionario);

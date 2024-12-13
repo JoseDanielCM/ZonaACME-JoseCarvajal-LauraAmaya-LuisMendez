@@ -4,6 +4,7 @@ import Controller.SupervisorController;
 import Model.Funcionario;
 import Model.Guarda;
 import Model.Usuario;
+import Repository.Impl.ConcurrenciaRegistros;
 import View.SuperUsuario.InicioSesion;
 
 import javax.swing.*;
@@ -16,6 +17,7 @@ public class DesactivarUsuarioMenu extends JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         lblNombreUsuario.setText(supervisor.getNombre());
+        ConcurrenciaRegistros.manejoRegistros(jTextArea1, supervisor);
 
         btnHouse.addActionListener(new ActionListener() {
             @Override

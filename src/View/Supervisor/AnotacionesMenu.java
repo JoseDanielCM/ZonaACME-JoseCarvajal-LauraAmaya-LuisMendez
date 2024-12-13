@@ -5,6 +5,7 @@ import Controller.SupervisorController;
 import Model.Funcionario;
 import Model.Persona;
 import Model.Usuario;
+import Repository.Impl.ConcurrenciaRegistros;
 import View.SuperUsuario.InicioSesion;
 
 import javax.swing.*;
@@ -19,6 +20,7 @@ public class AnotacionesMenu extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         lblNombreUsuario.setText(supervisor.getNombre());
+        ConcurrenciaRegistros.manejoRegistros(jTextArea2, supervisor);
 
         btnHouse1.addActionListener(new ActionListener() {
             @Override

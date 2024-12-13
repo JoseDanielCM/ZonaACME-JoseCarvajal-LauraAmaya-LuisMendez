@@ -2,9 +2,11 @@ package View.Supervisor;
 
 import Controller.SupervisorController;
 import Model.Usuario;
+import Repository.Impl.ConcurrenciaRegistros;
 import View.SuperUsuario.InicioSesion;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionListener;
 
 public class CrearFuncionarioMenu extends javax.swing.JFrame {
@@ -14,7 +16,7 @@ public class CrearFuncionarioMenu extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         lblNombreUsuario.setText(supervisor.getNombre());
-
+        ConcurrenciaRegistros.manejoRegistros(jTextArea2, supervisor);
         btnHouse.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {

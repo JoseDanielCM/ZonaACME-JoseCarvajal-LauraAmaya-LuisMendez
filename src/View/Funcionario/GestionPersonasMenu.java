@@ -1,6 +1,7 @@
 package View.Funcionario;
 
 import Model.Usuario;
+import Repository.Impl.ConcurrenciaRegistros;
 import View.SuperUsuario.InicioSesion;
 
 import javax.swing.*;
@@ -14,6 +15,7 @@ public class GestionPersonasMenu extends JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         lblNombreUsuario.setText(funcionario.getNombre());
+        ConcurrenciaRegistros.manejoRegistros(jTextArea1, funcionario);
 
         btnHouse.addActionListener(new ActionListener() {
             @Override
@@ -33,7 +35,7 @@ public class GestionPersonasMenu extends JFrame {
             }
         });
 
-        btnVerPersona.addActionListener(new ActionListener() {
+        btnAccederEmpresa.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 PersonaInformationMenu personaInformationMenu = new PersonaInformationMenu(funcionario);
@@ -42,7 +44,7 @@ public class GestionPersonasMenu extends JFrame {
             }
         });
 
-        btnRegistrarPersona.addActionListener(new ActionListener() {
+        btnCrearEmpresa.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 AgregarPersona agregarPersona = new AgregarPersona(funcionario);
@@ -66,11 +68,13 @@ public class GestionPersonasMenu extends JFrame {
         lblDocumento = new javax.swing.JLabel();
         txtFieldNombre = new javax.swing.JTextField();
         txtFieldNit = new javax.swing.JTextField();
-        btnRegistrarPersona = new javax.swing.JButton();
+        btnCrearEmpresa = new javax.swing.JButton();
         btnHouse = new javax.swing.JButton();
         btnLogout = new javax.swing.JButton();
         lblCrearSupervisor1 = new javax.swing.JLabel();
-        btnVerPersona = new javax.swing.JButton();
+        btnAccederEmpresa = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(52, 33, 91));
@@ -87,7 +91,7 @@ public class GestionPersonasMenu extends JFrame {
 
         lblTipoUsuario.setFont(new java.awt.Font("FreeSans", 1, 36)); // NOI18N
         lblTipoUsuario.setForeground(new java.awt.Color(255, 255, 255));
-        lblTipoUsuario.setText("Funcionario");
+        lblTipoUsuario.setText("FUNCIONARIO");
 
         javax.swing.GroupLayout superiorBackgroundLayout = new javax.swing.GroupLayout(superiorBackground);
         superiorBackground.setLayout(superiorBackgroundLayout);
@@ -95,7 +99,7 @@ public class GestionPersonasMenu extends JFrame {
                 superiorBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(superiorBackgroundLayout.createSequentialGroup()
                                 .addComponent(lblLogo)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 460, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 408, Short.MAX_VALUE)
                                 .addGroup(superiorBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                         .addComponent(lblTipoUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(lblNombreUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -114,7 +118,7 @@ public class GestionPersonasMenu extends JFrame {
                                 .addGap(12, 12, 12))
         );
 
-        lblImgSide.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/Empresa.png"))); // NOI18N
+        lblImgSide.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/imgSuperUsuario.jpeg"))); // NOI18N
         lblImgSide.setText("jLabel1");
 
         lblCrearSupervisor.setFont(new java.awt.Font("FreeSans", 1, 24)); // NOI18N
@@ -126,14 +130,30 @@ public class GestionPersonasMenu extends JFrame {
         lblDocumento.setFont(new java.awt.Font("Liberation Sans", 1, 24)); // NOI18N
         lblDocumento.setText("Documento");
 
-        btnRegistrarPersona.setBackground(new java.awt.Color(193, 255, 114));
-        btnRegistrarPersona.setFont(new java.awt.Font("Liberation Sans", 1, 24)); // NOI18N
-        btnRegistrarPersona.setText("Registrar Persona");
-        btnRegistrarPersona.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        txtFieldNombre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtFieldNombreActionPerformed(evt);
+            }
+        });
+
+        txtFieldNit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtFieldNitActionPerformed(evt);
+            }
+        });
+
+        btnCrearEmpresa.setBackground(new java.awt.Color(193, 255, 114));
+        btnCrearEmpresa.setFont(new java.awt.Font("Liberation Sans", 1, 24)); // NOI18N
+        btnCrearEmpresa.setText("Registrar Persona");
+        btnCrearEmpresa.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
 
         btnHouse.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/casa.png"))); // NOI18N
         btnHouse.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-
+        btnHouse.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHouseActionPerformed(evt);
+            }
+        });
 
         btnLogout.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/logout.png"))); // NOI18N
         btnLogout.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
@@ -141,10 +161,15 @@ public class GestionPersonasMenu extends JFrame {
         lblCrearSupervisor1.setFont(new java.awt.Font("FreeSans", 1, 36)); // NOI18N
         lblCrearSupervisor1.setText("Gestion De Personas ");
 
-        btnVerPersona.setBackground(new java.awt.Color(205, 181, 255));
-        btnVerPersona.setFont(new java.awt.Font("Liberation Sans", 1, 24)); // NOI18N
-        btnVerPersona.setText("Ver Persona");
-        btnVerPersona.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        btnAccederEmpresa.setBackground(new java.awt.Color(205, 181, 255));
+        btnAccederEmpresa.setFont(new java.awt.Font("Liberation Sans", 1, 24)); // NOI18N
+        btnAccederEmpresa.setText("Ver Persona");
+        btnAccederEmpresa.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+
+        jTextArea1.setEditable(false);
+        jTextArea1.setColumns(20);
+        jTextArea1.setRows(5);
+        jScrollPane1.setViewportView(jTextArea1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -153,40 +178,24 @@ public class GestionPersonasMenu extends JFrame {
                         .addComponent(superiorBackground, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createSequentialGroup()
                                 .addComponent(lblImgSide, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(layout.createSequentialGroup()
-                                                .addGap(18, 18, 18)
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                                                .addComponent(txtFieldNit, javax.swing.GroupLayout.PREFERRED_SIZE, 306, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                                .addComponent(txtFieldNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 306, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                                                .addGap(27, 27, 27)
-                                                                .addComponent(btnRegistrarPersona, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                                .addComponent(btnVerPersona, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                .addGap(32, 32, 32))
-                                                        .addGroup(layout.createSequentialGroup()
-                                                                .addComponent(btnHouse)
-                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                                .addComponent(btnLogout))
-                                                        .addGroup(layout.createSequentialGroup()
-                                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                                                        .addGroup(layout.createSequentialGroup()
-                                                                                .addGap(0, 0, Short.MAX_VALUE)
-                                                                                .addComponent(lblCrearSupervisor1))
-                                                                        .addGroup(layout.createSequentialGroup()
-                                                                                .addGap(96, 96, 96)
-                                                                                .addComponent(lblDocumento)
-                                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                                                .addComponent(lblNombre)))
-                                                                .addGap(151, 151, 151)))
-                                                .addGap(25, 25, 25))
-                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(54, 54, 54)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(txtFieldNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 306, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(txtFieldNit, javax.swing.GroupLayout.PREFERRED_SIZE, 306, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(lblNombre)
                                                 .addComponent(lblCrearSupervisor)
-                                                .addGap(244, 244, 244))))
+                                                .addComponent(lblCrearSupervisor1)
+                                                .addComponent(lblDocumento)
+                                                .addComponent(btnCrearEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGroup(layout.createSequentialGroup()
+                                                        .addComponent(btnAccederEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addGap(144, 144, 144)
+                                                        .addComponent(btnHouse)))
+                                        .addComponent(btnLogout))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap())
         );
         layout.setVerticalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -197,38 +206,55 @@ public class GestionPersonasMenu extends JFrame {
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                 .addComponent(lblImgSide, javax.swing.GroupLayout.PREFERRED_SIZE, 548, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addGroup(layout.createSequentialGroup()
-                                                .addGap(54, 54, 54)
+                                                .addGap(64, 64, 64)
                                                 .addComponent(lblCrearSupervisor1)
-                                                .addGap(28, 28, 28)
+                                                .addGap(41, 41, 41)
                                                 .addComponent(lblCrearSupervisor)
-                                                .addGap(81, 81, 81)
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                                        .addComponent(lblNombre)
-                                                        .addComponent(lblDocumento))
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                                        .addComponent(txtFieldNit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addComponent(txtFieldNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                .addGap(35, 35, 35)
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                                        .addComponent(btnRegistrarPersona, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addComponent(btnVerPersona, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                        .addComponent(btnLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(lblDocumento)
+                                                .addGap(17, 17, 17)
+                                                .addComponent(txtFieldNit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(42, 42, 42)
+                                                .addComponent(lblNombre)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(txtFieldNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(29, 29, 29)
+                                                .addComponent(btnCrearEmpresa)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                        .addComponent(btnAccederEmpresa)
                                                         .addComponent(btnHouse))
-                                                .addGap(15, 15, 15))))
+                                                .addGap(18, 18, 18)
+                                                .addComponent(btnLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addContainerGap())
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(jScrollPane1)
+                                                .addContainerGap())))
         );
 
         pack();
     }// </editor-fold>
 
+    private void txtFieldNombreActionPerformed(java.awt.event.ActionEvent evt) {
+        // TODO add your handling code here:
+    }
+
+    private void txtFieldNitActionPerformed(java.awt.event.ActionEvent evt) {
+        // TODO add your handling code here:
+    }
+
+    private void btnHouseActionPerformed(java.awt.event.ActionEvent evt) {
+        // TODO add your handling code here:
+    }
 
     // Variables declaration - do not modify
-    private javax.swing.JButton btnVerPersona;
-    private javax.swing.JButton btnRegistrarPersona;
+    private javax.swing.JButton btnAccederEmpresa;
+    private javax.swing.JButton btnCrearEmpresa;
     private javax.swing.JButton btnHouse;
     private javax.swing.JButton btnLogout;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JLabel lblCrearSupervisor;
     private javax.swing.JLabel lblCrearSupervisor1;
     private javax.swing.JLabel lblDocumento;

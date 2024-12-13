@@ -27,8 +27,8 @@ public class FuncionarioController {
     public String estadoActualPersona(int id) {
         return funcionarioService.estadoActualPersona(id);
     }
-    public void RegistrarSalidaManual(String documento, Date fecha, String docFuncionario) {
-        funcionarioService.RegistrarSalidaManual(documento,fecha,docFuncionario);
+    public void RegistrarSalidaManual(String documento, String docFuncionario) {
+        funcionarioService.RegistrarSalidaManual(documento,docFuncionario);
     }
 
 

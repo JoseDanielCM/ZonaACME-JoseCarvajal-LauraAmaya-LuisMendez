@@ -126,20 +126,19 @@ public class FuncionarioImpl implements FuncionarioDAO {
     }
 
     @Override
-    public void RegistrarSalidaManual(Persona persona, Date fecha, Funcionario funcionario) {
+    public void RegistrarSalidaManual(Persona persona, Funcionario funcionario) {
         if(persona == null){
             System.out.println("Usuario no encontrado");
         } else {
             String sql = """
             INSERT INTO `Anotaciones`(`Documento`,DocUser,`Tipo`,`Mensaje`,`Fecha`) VALUES
-            (?,?,"Registro",?,?);
+            (?,?,"Registro",?,NOW());
             """;
             try (Connection conn = DataBaseConnection.getConnection()){
                 PreparedStatement ps = conn.prepareStatement(sql);
                 ps.setInt(1, persona.getDocumento());
                 ps.setInt(2, funcionario.getDocumento());
                 ps.setString(3, "Persona identificada con el documento: " + persona.getDocumento() + " ha registrado salida manual");
-                ps.setDate(4, fecha);
                 System.out.println(ps);
                 ps.executeUpdate();
 

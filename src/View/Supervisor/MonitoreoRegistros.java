@@ -1,6 +1,7 @@
 package View.Supervisor;
 
 import Model.Usuario;
+import Repository.Impl.ConcurrenciaRegistros;
 import View.SuperUsuario.InicioSesion;
 
 import javax.swing.*;
@@ -13,6 +14,7 @@ public class MonitoreoRegistros extends JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         lblNombreUsuario.setText(supervisor.getNombre());
+        ConcurrenciaRegistros.manejoRegistros(jTextArea1, supervisor);
 
         btnHouse.addActionListener(new ActionListener() {
             @Override
