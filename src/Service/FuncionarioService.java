@@ -2,83 +2,57 @@ package Service;
 
 import Model.*;
 import Repository.Impl.FuncionarioImpl;
+import Service.Factory.PersonaFactory;
 
 import java.sql.Date;
 import java.util.List;
-
 public class FuncionarioService {
     private FuncionarioImpl funcionarioImpl;
 
-    public FuncionarioService(){
-        funcionarioImpl = new FuncionarioImpl();
+    public FuncionarioService() {
+        this.funcionarioImpl = new FuncionarioImpl();
     }
+
     public void crearTrabajador(String documento, String nombre, String placaVehiculo, String docFuncionario) {
-        int docInt;
-        int docFuncionarioInt;
-        try {
-            docInt = Integer.parseInt(documento);
-        }catch (Exception e){
-            System.out.println("El documento del trabajador debe ser un numero");
-            throw new IllegalArgumentException("Invalid document");
-        }
-        try {
-            docFuncionarioInt = Integer.parseInt(docFuncionario);
-        }catch (Exception e){
-            System.out.println("El documento del Funcionario debe ser un numero");
-            throw new IllegalArgumentException("Invalid document");
+        int docInt = validarDocumento(documento);
+        int docFuncionarioInt = validarDocumento(docFuncionario);
+
+        Empresa empresa = funcionarioImpl.getEmpresaFuncionario(docFuncionarioInt);
+        Vehiculo vehiculo = PersonaFactory.crearVehiculo(placaVehiculo);
+
+        if (vehiculo != null) {
+            funcionarioImpl.crearVehiculo(vehiculo);
         }
 
-        Empresa emp = funcionarioImpl.getEmpresaFuncionario(docFuncionarioInt);
-        
-        Vehiculo vehiculo = null;
-        if (placaVehiculo != null && !placaVehiculo.isEmpty()) {
-            if (placaVehiculo.matches("^[a-zA-Z0-9]{6}$")) {
-                vehiculo = new Vehiculo(placaVehiculo);
-                funcionarioImpl.crearVehiculo(vehiculo);
-            } else {
-                System.out.println("La placa del vehículo no es válida. Debe tener exactamente 6 caracteres alfanuméricos.");
-                throw new IllegalArgumentException("Placa del vehículo no válida.");
-            }
-        }
-
-        Trabajador trabajador = new Trabajador(docInt,nombre,true,"Permitido",emp,true,vehiculo);
+        Trabajador trabajador = PersonaFactory.crearTrabajador(docInt, nombre, empresa, vehiculo);
         funcionarioImpl.crearTrabajador(trabajador);
     }
 
+    public void updatePersona(String newName, String newPlaca, String documento) {
+        int docInt = validarDocumento(documento);
+        funcionarioImpl.updatePersona(newName, newPlaca, docInt);
+    }
+
+    public void updatePlaca(String newPlaca, String oldPlaca) {
+        funcionarioImpl.updateVehiculoPlaca(newPlaca, oldPlaca);
+    }
+
     public void crearInvitado(String documento, String nombre, String placaVehiculo, String docFuncionario) {
-        int docInt;
-        int docFuncionarioInt;
-        try {
-            docInt = Integer.parseInt(documento);
-        }catch (Exception e){
-            System.out.println("El documento del trabajador debe ser un numero");
-            throw new IllegalArgumentException("Invalid document");
-        }
-        try {
-            docFuncionarioInt = Integer.parseInt(documento);
-        }catch (Exception e){
-            System.out.println("El documento del Funcionario debe ser un numero");
-            throw new IllegalArgumentException("Invalid document");
+        int docInt = validarDocumento(documento);
+        int docFuncionarioInt = validarDocumento(docFuncionario);
+
+        Empresa empresa = funcionarioImpl.getEmpresaFuncionario(docFuncionarioInt);
+        Vehiculo vehiculo = PersonaFactory.crearVehiculo(placaVehiculo);
+
+        if (vehiculo != null) {
+            funcionarioImpl.crearVehiculo(vehiculo);
         }
 
-        Empresa emp = funcionarioImpl.getEmpresaFuncionario(docFuncionarioInt);
-
-        Vehiculo vehiculo = null;
-        if (placaVehiculo != null && !placaVehiculo.isEmpty()) {
-            if (placaVehiculo.matches("^[a-zA-Z0-9]{6}$")) {
-                vehiculo = new Vehiculo(placaVehiculo);
-                funcionarioImpl.crearVehiculo(vehiculo);
-            } else {
-                System.out.println("La placa del vehículo no es válida. Debe tener exactamente 6 caracteres alfanuméricos.");
-                throw new IllegalArgumentException("Placa del vehículo no válida.");
-            }
-        }
-
-        Invitado invitado = new Invitado(docInt,nombre,true,"Permitido",emp,true,vehiculo);
+        Invitado invitado = PersonaFactory.crearInvitado(docInt, nombre, empresa, vehiculo);
         funcionarioImpl.crearInvitado(invitado);
     }
 
-    public void desactivarPersona(int id){
+    public void desactivarPersona(int id) {
         Persona persona = funcionarioImpl.getPersonaById(id);
         funcionarioImpl.desactivarPersona(persona);
     }
@@ -93,22 +67,28 @@ public class FuncionarioService {
     }
 
     public void RegistrarSalidaManual(String documento, String docFuncionario) {
-        int docInt;
-        int docFuncionarioInt;
-        try {
-            docInt = Integer.parseInt(documento);
-        }catch (Exception e){
-            System.out.println("El documento del trabajador debe ser un numero");
-            throw new IllegalArgumentException("Invalid document");
-        }
-        try {
-            docFuncionarioInt = Integer.parseInt(docFuncionario);
-        }catch (Exception e){
-            System.out.println("El documento del Funcionario debe ser un numero");
-            throw new IllegalArgumentException("Invalid document");
-        }
+        int docInt = validarDocumento(documento);
+        int docFuncionarioInt = validarDocumento(docFuncionario);
+
         Persona persona = funcionarioImpl.getPersonaById(docInt);
         Funcionario funcionario = funcionarioImpl.mostrarFuncionario(docFuncionarioInt);
-        funcionarioImpl.RegistrarSalidaManual(persona,funcionario);
+
+        funcionarioImpl.RegistrarSalidaManual(persona, funcionario);
     }
+
+    public Persona getPersonaById(String idStr) {
+        int id = validarDocumento(idStr);
+        return funcionarioImpl.getPersonaById(id);
+    }
+
+    private int validarDocumento(String documento) {
+        try {
+            return Integer.parseInt(documento);
+        } catch (Exception e) {
+            System.out.println("El documento debe ser un número válido.");
+            throw new IllegalArgumentException("Documento no válido.");
+        }
+    }
+
+
 }

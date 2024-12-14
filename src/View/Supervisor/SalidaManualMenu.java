@@ -75,7 +75,7 @@ public class SalidaManualMenu extends JFrame {
 
         superiorBackground.setBackground(new java.awt.Color(52, 33, 91));
 
-        lblLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Captura desde 2024-12-12 15-02-49.png"))); // NOI18N
+        lblLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/Banner.png"))); // NOI18N
 
         lblNombreUsuario.setFont(new java.awt.Font("FreeSans", 1, 18)); // NOI18N
         lblNombreUsuario.setForeground(new java.awt.Color(255, 255, 255));
@@ -115,7 +115,7 @@ public class SalidaManualMenu extends JFrame {
 
         txtFieldDocumento.setFont(new java.awt.Font("Liberation Sans", 0, 24)); // NOI18N
 
-        btnLogout.setIcon(new javax.swing.ImageIcon(getClass().getResource("/logout.png"))); // NOI18N
+        btnLogout.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/logout.png"))); // NOI18N
         btnLogout.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
 
         lblCrearSupervisor1.setFont(new java.awt.Font("FreeSans", 1, 36)); // NOI18N
@@ -131,9 +131,9 @@ public class SalidaManualMenu extends JFrame {
 
         txtFieldFecha.setFont(new java.awt.Font("Liberation Sans", 0, 24)); // NOI18N
 
-        btnHouse.setIcon(new javax.swing.ImageIcon(getClass().getResource("/casa.png"))); // NOI18N
+        btnHouse.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/casa.png"))); // NOI18N
         btnHouse.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-
+        jTextArea1.setEditable(false);
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
         jScrollPane1.setViewportView(jTextArea1);

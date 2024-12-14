@@ -23,6 +23,14 @@ public class InicioSesion extends JFrame {
                 String password = txtfieldPassword.getText();
                 SesionController sesionController = new SesionController();
                 Sesion sesion = sesionController.buscarUsuario(documento,password);
+
+                if (sesion == null) {
+                    JOptionPane.showMessageDialog(null, "Usuario no hallado. Por favor, verifique sus credenciales.");
+                    txtFieldUser.setText("");
+                    txtfieldPassword.setText("");
+                    return;
+                }
+
                 Usuario usuario = sesion.getUsuario();
                 System.out.println(usuario.getClass());
                 String tipo = String.valueOf(usuario.getClass());

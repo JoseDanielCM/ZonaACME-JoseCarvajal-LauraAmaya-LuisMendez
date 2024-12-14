@@ -1,5 +1,7 @@
 package View.Funcionario;
 
+import Controller.FuncionarioController;
+import Model.Persona;
 import Model.Usuario;
 import Repository.Impl.ConcurrenciaRegistros;
 import View.SuperUsuario.InicioSesion;
@@ -9,13 +11,23 @@ import java.awt.event.ActionListener;
 
 public class PersonaInformationMenu extends JFrame {
     private Usuario funcionario;
+    private Persona persona;
 
-    public PersonaInformationMenu(Usuario funcionario) {
+    public PersonaInformationMenu(Usuario funcionario, Persona persona) {
+        this.persona = persona;
         this.funcionario = funcionario;
         initComponents();
         this.setLocationRelativeTo(null);
         lblNombreUsuario.setText(funcionario.getNombre());
         ConcurrenciaRegistros.manejoRegistros(jTextArea1, funcionario);
+
+
+        txtFieldDocumento.setText(String.valueOf(persona.getDocumento()));
+        txtFieldNombre.setText(persona.getNombre());
+        txtFieldActivo.setText(String.valueOf(persona.isActivo()));
+        txtFieldEmpresa.setText(persona.getEmpresa().getNombre());
+        txtFieldEstado.setText(persona.getEstado());
+        txtFieldPlaca.setText(persona.getVehiculo().getPlaca());
 
         btnHouse.addActionListener(new ActionListener() {
             @Override
@@ -32,6 +44,15 @@ public class PersonaInformationMenu extends JFrame {
                 InicioSesion inicioSesion = new InicioSesion();
                 inicioSesion.setVisible(true);
                 dispose();
+            }
+        });
+
+        btnCrear.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                FuncionarioController funcionarioController = new FuncionarioController();
+                funcionarioController.desactivarPersona(persona.getDocumento());
+                JOptionPane.showMessageDialog(null,"Persona desactivada con exito");
             }
         });
     }

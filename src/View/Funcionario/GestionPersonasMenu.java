@@ -1,5 +1,7 @@
 package View.Funcionario;
 
+import Controller.FuncionarioController;
+import Model.Persona;
 import Model.Usuario;
 import Repository.Impl.ConcurrenciaRegistros;
 import View.SuperUsuario.InicioSesion;
@@ -38,7 +40,10 @@ public class GestionPersonasMenu extends JFrame {
         btnAccederEmpresa.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                PersonaInformationMenu personaInformationMenu = new PersonaInformationMenu(funcionario);
+                String docStr = txtFieldNit.getText();
+                FuncionarioController funcionarioController =new FuncionarioController();
+                Persona persona = funcionarioController.getPersonaById(docStr);
+                PersonaInformationMenu personaInformationMenu = new PersonaInformationMenu(funcionario, persona);
                 personaInformationMenu.setVisible(true);
                 dispose();
             }

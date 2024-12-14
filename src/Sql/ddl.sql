@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS Usuarios (
 
 CREATE TABLE IF NOT EXISTS Vehiculo (
     Placa CHAR(6) PRIMARY KEY NOT NULL UNIQUE,
-    Estado ENUM("Permitido", "Restringido") NOT NULL,
+    Estado ENUM("Permitido", "Restringido","Inactivo") NOT NULL,
     haSalido BOOLEAN DEFAULT FALSE
 );
 
@@ -155,3 +155,12 @@ SELECT U.`Documento`, U.Nombre as Nombre, U.`Contrasena`, U.`Activo`, Documento,
 JOIN `Empresa` E
 ON `E`.`IdEmpresa` = `U`.`IdEmpresa`
 WHERE U.IdTipoUsuario = 3 AND U.Documento = 1102359888 ;
+
+SELECT U.`Documento`, U.Nombre, Documento, E.Nombre, E.IdEmpresa FROM `Usuarios` U
+    JOIN `Empresa` E
+    ON `E`.`IdEmpresa` = `U`.`IdEmpresa`
+    WHERE U.IdTipoUsuario = 4 AND U.Documento = 1102359295 ;
+
+UPDATE `Persona` SET `Nombre` = ?, `PlacaVehiculo` = ?  WHERE `Documento` = ?;
+
+UPDATE `Vehiculo` SET `Placa` = 'PPP313' WHERE `Placa` = 'JLO777';

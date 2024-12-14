@@ -1,16 +1,18 @@
 package Controller;
 
 import Model.Sesion;
+import Service.SesionProxy;
 import Service.SesionService;
 
 public class SesionController {
-    private SesionService sesionService;
+    private SesionProxy sesionProxy;
 
     public SesionController() {
-        sesionService = new SesionService();
+        // Inyecta el servicio real en el Proxy
+        this.sesionProxy = new SesionProxy(new SesionService());
     }
 
     public Sesion buscarUsuario(String username, String password) {
-        return sesionService.buscarUsuario(username, password);
+        return sesionProxy.buscarUsuario(username, password);
     }
 }

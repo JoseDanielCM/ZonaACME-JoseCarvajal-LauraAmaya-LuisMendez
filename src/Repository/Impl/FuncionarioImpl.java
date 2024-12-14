@@ -213,11 +213,12 @@ public class FuncionarioImpl implements FuncionarioDAO {
     public void crearVehiculo(Vehiculo vehiculo) {
         String sql = """
                 INSERT INTO `Vehiculo`(`Placa`, `Estado`,`haSalido`) VALUES
-                (?,"Permitido",TRUE),
+                (?,"Permitido",TRUE);
                 """;
         try (Connection conn = DataBaseConnection.getConnection()){
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1,  vehiculo.getPlaca());
+            System.out.println(ps);
             ps.executeUpdate();
 
             System.out.println("Vehículo creado correctamente");
@@ -226,10 +227,50 @@ public class FuncionarioImpl implements FuncionarioDAO {
             throw new RuntimeException(e);
         }
     }
+
+    @Override
+    public void updatePersona(String newName, String newPlaca, int documento) {
+        String sql = """
+                UPDATE `Persona` SET `Nombre` = ?, `PlacaVehiculo` = ?  WHERE `Documento` = ?;
+                """;
+        try (Connection conn = DataBaseConnection.getConnection()){
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1,  newName);
+            ps.setString(2,  newPlaca);
+            ps.setInt(3,  documento);
+            System.out.println(ps);
+            ps.executeUpdate();
+
+            System.out.println("Persona actualizada correctamente");
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void updateVehiculoPlaca(String newPlaca, String oldPlaca) {
+        String sql = """
+                UPDATE `Vehiculo` SET `Placa` = ? WHERE `Placa` = ?;
+                  """;
+        try (Connection conn = DataBaseConnection.getConnection()){
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1,  newPlaca);
+            ps.setString(2,  oldPlaca);
+            System.out.println(ps);
+            ps.executeUpdate();
+
+            System.out.println("Placa actualizada");
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     @Override
     public Funcionario mostrarFuncionario(int documentoFuncionario) {
         String sql = """
-            SELECT U.Nombre, Documento, E.Nombre, E.IdEmpresa FROM `Usuarios` U
+            SELECT U.*, E.Nombre as NombreEmpresa, E.IdEmpresa FROM `Usuarios` U
             JOIN `Empresa` E
             ON `E`.`IdEmpresa` = `U`.`IdEmpresa`
             WHERE U.IdTipoUsuario = 4 AND U.Documento = ? ;
@@ -237,11 +278,12 @@ public class FuncionarioImpl implements FuncionarioDAO {
         try (Connection conn = DataBaseConnection.getConnection()){
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1, documentoFuncionario);
+            System.out.println(ps);
             ResultSet rs = ps.executeQuery();
             if (rs.next()){
-                Empresa empresa = new Empresa(rs.getString("IdEmpresa"),rs.getString("Nombre"));
+                Empresa empresa = new Empresa(rs.getString("IdEmpresa"),rs.getString("NombreEmpresa"));
                 return new Funcionario(
-                        rs.getInt(1),
+                        rs.getInt("Documento"),
                         rs.getString("Nombre"),
                         rs.getString("Contrasena"),
                         rs.getBoolean("Activo"),

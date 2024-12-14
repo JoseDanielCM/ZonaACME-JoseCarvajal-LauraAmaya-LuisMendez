@@ -54,7 +54,7 @@ import java.awt.event.ActionListener;
             btnActualizarPersona.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    ActualizarPersonaMenu actualizarPersonaMenu = new ActualizarPersonaMenu();
+                    ActualizarPersonaMenu actualizarPersonaMenu = new ActualizarPersonaMenu(funcionario);
                     actualizarPersonaMenu.setVisible(true);
                     dispose();
                 }

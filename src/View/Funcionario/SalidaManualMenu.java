@@ -43,7 +43,7 @@ public class SalidaManualMenu extends JFrame {
                 String documento = txtFieldDocumento.getText();
                 FuncionarioController funcionarioController = new FuncionarioController();
                 funcionarioController.RegistrarSalidaManual(documento, String.valueOf(funcionario.getDocumento()));
-
+                JOptionPane.showMessageDialog(null, "Salida exitosa");
 
             }
         });

@@ -17,5 +17,8 @@ public interface FuncionarioDAO {
     void RegistrarSalidaManual(Persona persona, Funcionario funcionario);
     Empresa getEmpresaFuncionario(int idFuncionario);
     void crearVehiculo(Vehiculo vehiculo);
+
+    void updatePersona(String newName, String newPlaca, int documento);
+    void updateVehiculoPlaca(String newPlaca, String oldPlaca);
     Funcionario mostrarFuncionario(int documentoFuncionario);
 }

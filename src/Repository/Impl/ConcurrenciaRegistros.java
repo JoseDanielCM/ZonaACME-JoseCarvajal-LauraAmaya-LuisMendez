@@ -1,5 +1,4 @@
 package Repository.Impl;
-
 import Model.Usuario;
 import Util.DataBaseConnection;
 
