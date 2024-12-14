@@ -93,14 +93,15 @@ INSERT INTO `TipoUsuario`(`Nombre`) VALUES
 
 INSERT INTO `Empresa`(`IdEmpresa`,`Nombre`) VALUES
 (1112223331,"Campus"),
+(1122112211,"CocaCola"),
 (1234567890,"Seguridad")
 
 INSERT INTO `Usuarios`(`Documento`,`Nombre`,`Contrasena`,`Activo`,`IdTipoUsuario`,`IdEmpresa`) VALUES
-(1020306598,"juanito","123",TRUE,1,1112223331),
-(1212121232,"jj","gato",TRUE,3,1234567890),
-(1102359888,"Luis","gg",TRUE,3,1234567890),
-(1102359295,"Jose","totoro",TRUE,4,1112223331),
-(1102359999,"Laura","1234",TRUE,2,1112223331);
+(1020306598,"Juan Gomez","123",TRUE,1,1234567890), /* EMPRESA SEGURIDAD */ 
+(1212121232,"Gabriel Diaz","222",TRUE,3,1234567890), /* EMPRESA SEGURIDAD */ 
+(1102359888,"Luis Nicolas","nico",TRUE,4,1122112211), /* EMPRESA COCACOLA */ 
+(1102359295,"Jose Daniel","gato",TRUE,4,1112223331), /* EMPRESA CAMPUS    */ 
+(1102359999,"Laura Sofia","1234",TRUE,2,1234567890); /* EMPRESA SEGURIDAD */ 
 
 INSERT INTO `Vehiculo`(`Placa`, `Estado`,`haSalido`) VALUES
 ("GPR895","Permitido",FALSE),
@@ -108,10 +109,10 @@ INSERT INTO `Vehiculo`(`Placa`, `Estado`,`haSalido`) VALUES
 ("ABA555","Permitido",FALSE);
 
 INSERT INTO `Persona` VALUES
-(1102359291,"Lili",TRUE,"Trabajador","Permitido",1112223331,FALSE,"GPR895"),
-(1515151515,"Marco",TRUE,"Trabajador","Permitido",1112223331,FALSE,"GPR895"),
-(1231231231,"Lucas",TRUE,"Invitado","Permitido",1234567890,FALSE,"GPR895"),
-(1112223334,"Pepe",TRUE,"Invitado","Permitido",1234567890,FALSE,NULL);
+(1102359291,"Lili",TRUE,"Trabajador","Permitido",1122112211,FALSE,"GPR895"),
+(1515151515,"Marco",TRUE,"Trabajador","Permitido",1122112211,FALSE,"GPR895"),
+(1231231231,"Lucas",TRUE,"Invitado","Permitido",1112223331,FALSE,"GPR895"),
+(1112223334,"Pepe",TRUE,"Invitado","Permitido",1112223331,FALSE,NULL);
 
 
 INSERT INTO `Registro`(`Documento`,`Fecha`,`DocUser`,`IdAnotacion`,`TipoRegistro`,`PlacaVehiculo`) VALUES
@@ -121,6 +122,8 @@ INSERT INTO `Registro`(`Documento`,`Fecha`,`DocUser`,`IdAnotacion`,`TipoRegistro
 
 INSERT INTO `Registro`(`Documento`,`Fecha`,`DocUser`,`IdAnotacion`,`TipoRegistro`,`PlacaVehiculo`) VALUES
 (1102359291, "2024-12-13 15:38:46.00", 1102359888, NULL, "Salida", NULL);
+
+/*
 
 SELECT Usuarios.*, TipoUsuario.`Nombre` as NombreTipo, Empresa.`IdEmpresa`, Empresa.`Nombre` as NombreEmpresa FROM Usuarios
 JOIN TipoUsuario ON TipoUsuario.`IdTipo` = Usuarios.`IdTipoUsuario`
@@ -161,10 +164,9 @@ SELECT U.`Documento`, U.Nombre, Documento, E.Nombre, E.IdEmpresa FROM `Usuarios`
     ON `E`.`IdEmpresa` = `U`.`IdEmpresa`
     WHERE U.IdTipoUsuario = 4 AND U.Documento = 1102359295 ;
 
-UPDATE `Persona` SET `Nombre` = ?, `PlacaVehiculo` = ?  WHERE `Documento` = ?;
+*/
 
-UPDATE `Vehiculo` SET `Placa` = 'PPP313' WHERE `Placa` = 'JLO777';
-
+/* ------------------------------------------------------------------------------- */
 SHOW CREATE TABLE Persona;
 
 ALTER TABLE Persona DROP FOREIGN KEY Persona_ibfk_2; 
@@ -173,9 +175,7 @@ ALTER TABLE Persona
 ADD CONSTRAINT Persona_ibfk_2
 FOREIGN KEY (PlacaVehiculo) REFERENCES Vehiculo(Placa)
 ON UPDATE CASCADE;
-
-INSERT INTO `Registro`() VALUES
-(1111212121,NOW(),1102359888,NULL,"Entrada",NULL);
+/* ------------------------------------------------------------------------------- */
 
 INSERT INTO `Registro`(`Documento`,`Fecha`,`DocUser`,`IdAnotacion`,`TipoRegistro`,`PlacaVehiculo`) VALUES
 (1102359291, "2024-12-13 08:55:46.00", 1102359888, NULL, "Salida", NULL),

@@ -16,7 +16,7 @@ public class ConcurrenciaRegistros {
                 while (true){
                     System.out.println("Hilo ejecutándose...");
                     actualizarAreaTexto(areaTexto, usuario, conexion);
-                    Thread.sleep(15000);
+                    Thread.sleep(10000);
                 }
             } catch (Exception e){
                 Thread.currentThread().interrupt();
@@ -24,7 +24,7 @@ public class ConcurrenciaRegistros {
             }}).start();
     }
     private void actualizarAreaTexto(JTextArea areaTexto, Usuario usuario, Connection conexion){
-        String sql = "SELECT * FROM Registro WHERE Fecha > NOW() - INTERVAL 15 SECOND";
+        String sql = "SELECT * FROM Registro WHERE Fecha > NOW() - INTERVAL 20 SECOND";
         try(PreparedStatement ps = conexion.prepareStatement(sql)){
             ResultSet rs = ps.executeQuery();
 

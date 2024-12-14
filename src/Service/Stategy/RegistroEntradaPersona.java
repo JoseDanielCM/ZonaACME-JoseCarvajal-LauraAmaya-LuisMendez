@@ -2,9 +2,11 @@ package Service.Stategy;
 
 import Model.*;
 import Repository.Impl.GuardaImpl;
+import View.Extras.MostrarAnotaciones;
 
 public class RegistroEntradaPersona implements RegistroStrategy {
     private GuardaImpl guardaImpl;
+
 
     public RegistroEntradaPersona(GuardaImpl guardaImpl) {
         this.guardaImpl = guardaImpl;
@@ -12,6 +14,7 @@ public class RegistroEntradaPersona implements RegistroStrategy {
 
     @Override
     public String crearRegistro(String documento, String docGuarda, String placa) {
+
         int docInt;
         int docGuardaInt;
         Vehiculo vehiculo = null;
@@ -27,6 +30,9 @@ public class RegistroEntradaPersona implements RegistroStrategy {
         }
         Persona persona = guardaImpl.getPersonaById(docInt);
         Guarda guarda = guardaImpl.mostrarGuarda(docGuardaInt);
+        String txt = guardaImpl.mostrarAnotacionesPersonas(persona);
+        MostrarAnotaciones mostrar = new MostrarAnotaciones(txt);
+        mostrar.setVisible(true);
         if (placa != null && !placa.isEmpty()) {
             vehiculo = new Vehiculo(placa);
         }

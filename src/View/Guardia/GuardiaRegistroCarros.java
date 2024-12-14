@@ -1,9 +1,11 @@
 package View.Guardia;
 
 
+import Controller.GuardaController;
 import Model.Usuario;
 import View.SuperUsuario.InicioSesion;
 
+import javax.swing.*;
 import java.awt.event.ActionListener;
 
 public class GuardiaRegistroCarros extends javax.swing.JFrame {
@@ -17,6 +19,29 @@ public class GuardiaRegistroCarros extends javax.swing.JFrame {
 
         // --------------------------------------------------------------------------------
         btnLogout.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                GuardiaMainMenu guardiaMainMenu = new GuardiaMainMenu(guardia);
+                guardiaMainMenu.setVisible(true);
+                dispose();
+            }
+        });
+
+        btnEntrada.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                String documentos = jTextArea1.getText();
+                String placa = txtFieldNit.getText();
+
+                GuardaController guardaController = new GuardaController();
+                String texto= guardaController.crearRegistroEntradaVehiculo(documentos, String.valueOf(guardia.getDocumento()),placa);
+                JOptionPane.showMessageDialog(null, texto);
+            }
+        });
+
+        btnSalida.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {

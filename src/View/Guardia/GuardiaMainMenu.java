@@ -30,7 +30,7 @@ public class GuardiaMainMenu extends JFrame {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 GuardiaRegistroCarros guardiaRegistroCarros = new GuardiaRegistroCarros(guardia);
                 guardiaRegistroCarros.setVisible(true);
-
+                dispose();
             }
         });
 
@@ -40,8 +40,8 @@ public class GuardiaMainMenu extends JFrame {
                 String documentStr = txtFieldNit.getText();
                 String documentGuarda = String.valueOf(guardia.getDocumento());
                 GuardaController guardaController = new GuardaController();
-                guardaController.crearRegistroSalidaPersona(documentStr,documentGuarda,null);
-                JOptionPane.showMessageDialog(null, "Registro de salida ingresado correctamente");
+                String texto = guardaController.crearRegistroSalidaPersona(documentStr,documentGuarda,null);
+                JOptionPane.showMessageDialog(null, texto);
             }
         });
 
@@ -51,8 +51,8 @@ public class GuardiaMainMenu extends JFrame {
                 String documentStr = txtFieldNit.getText();
                 String documentGuarda = String.valueOf(guardia.getDocumento());
                 GuardaController guardaController = new GuardaController();
-                guardaController.crearRegistroEntradaPersona(documentStr,documentGuarda,null);
-                JOptionPane.showMessageDialog(null, "Registro de ingreso ingresado correctamente");
+                String texto= guardaController.crearRegistroEntradaPersona(documentStr,documentGuarda,null);
+                JOptionPane.showMessageDialog(null, texto);
             }
         });
     }

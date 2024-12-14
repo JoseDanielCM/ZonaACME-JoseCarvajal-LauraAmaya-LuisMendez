@@ -94,53 +94,6 @@ public class GuardaImpl implements GuardaDAO {
 
         return anotaciones.toString();
     }
-/*
-    @Override
-    public void crearRegistroEntradaVehiculo(List<Persona> personas, Guarda guarda, Vehiculo vehiculo) {
-        if (personas == null || personas.isEmpty()) {
-            System.out.println("La lista de personas está vacía o es nula. No se puede realizar el registro.");
-            return;
-        }
-
-        for (Persona persona : personas) {
-            try {
-                if (persona != null) {
-                    mostrarAnotacionesPersonas(persona);
-                    crearRegistroEntradaPersona(persona, guarda, vehiculo);
-                } else {
-                    System.out.println("Se encontró una persona nula en la lista, se omite el registro.");
-                }
-            } catch (Exception e) {
-                System.out.println("Error al registrar la entrada de la persona con documento: "
-                        + (persona != null ? persona.getDocumento() : "Persona no registrada"));
-                e.printStackTrace();
-            }
-        }
-    }
-
-    @Override
-    public void crearRegistroSalidaVehiculo(List<Persona> personas, Guarda guarda, Vehiculo vehiculo) {
-        if (personas == null || personas.isEmpty()) {
-            System.out.println("La lista de personas está vacía o es nula. No se puede realizar el registro.");
-            return;
-        }
-
-        for (Persona persona : personas) {
-            try {
-                if (persona != null) {
-                    crearRegistroSalidaPersona(persona, guarda, vehiculo);
-                    mostrarAnotacionesPersonas(persona);
-                } else {
-                    System.out.println("Se encontró una persona nula en la lista, se omite el registro.");
-                }
-            } catch (Exception e) {
-                System.out.println("Error al registrar la entrada de la persona con documento: "
-                        + (persona != null ? persona.getDocumento() : "Persona no registrada"));
-                e.printStackTrace();
-            }
-        }
-    }
-*/
     @Override
     public Persona getPersonaById(int id) {
         String sql = """

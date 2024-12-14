@@ -13,6 +13,7 @@ public class RegistroEntradaVehiculo implements RegistroStrategy {
 
     @Override
     public String crearRegistro(String documento, String docGuarda, String placa) {
+
         List<String> documentosList = List.of(documento.split(","));
 
         for (String doc : documentosList) {
