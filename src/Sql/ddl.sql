@@ -164,3 +164,21 @@ SELECT U.`Documento`, U.Nombre, Documento, E.Nombre, E.IdEmpresa FROM `Usuarios`
 UPDATE `Persona` SET `Nombre` = ?, `PlacaVehiculo` = ?  WHERE `Documento` = ?;
 
 UPDATE `Vehiculo` SET `Placa` = 'PPP313' WHERE `Placa` = 'JLO777';
+
+SHOW CREATE TABLE Persona;
+
+ALTER TABLE Persona DROP FOREIGN KEY Persona_ibfk_2; 
+
+ALTER TABLE Persona
+ADD CONSTRAINT Persona_ibfk_2
+FOREIGN KEY (PlacaVehiculo) REFERENCES Vehiculo(Placa)
+ON UPDATE CASCADE;
+
+INSERT INTO `Registro`() VALUES
+(1111212121,NOW(),1102359888,NULL,"Entrada",NULL);
+
+INSERT INTO `Registro`(`Documento`,`Fecha`,`DocUser`,`IdAnotacion`,`TipoRegistro`,`PlacaVehiculo`) VALUES
+(1102359291, "2024-12-13 08:55:46.00", 1102359888, NULL, "Salida", NULL),
+(1102359291, "2024-12-13 10:55:46.00", 1102359888, NULL, "Entrada", NULL),
+(1112223334, "2024-12-13 10:55:46.02", 1102359888, NULL, "Salida", NULL),
+(1231231231, "2024-12-13 11:55:46.00", 1102359888, NULL, "Salida", NULL);

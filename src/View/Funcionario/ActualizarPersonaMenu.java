@@ -67,8 +67,8 @@ public class ActualizarPersonaMenu extends JFrame {
                 String newPlaca = txtFieldPlaca.getText();
                 System.out.println("PLACA VIEJA "+oldPlaca);
                 System.out.println("PLACA NUEVA "+newPlaca);
-                funcionarioController.updatePersona(newName,newPlaca,docString);
                 funcionarioController.updatePlacaVehiculo(newPlaca,oldPlaca);
+                funcionarioController.updatePersona(newName,docString);
                 JOptionPane.showMessageDialog(null,"Persona actualizada");
                 // funcionarioController.
             }

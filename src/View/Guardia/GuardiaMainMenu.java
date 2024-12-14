@@ -1,5 +1,6 @@
 package View.Guardia;
 
+import Controller.GuardaController;
 import Model.Usuario;
 import View.SuperUsuario.InicioSesion;
 
@@ -21,6 +22,37 @@ public class GuardiaMainMenu extends JFrame {
                 InicioSesion inicioSesion = new InicioSesion();
                 inicioSesion.setVisible(true);
                 dispose();
+            }
+        });
+
+        jButton1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                GuardiaRegistroCarros guardiaRegistroCarros = new GuardiaRegistroCarros(guardia);
+                guardiaRegistroCarros.setVisible(true);
+
+            }
+        });
+
+        btnSalida.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                String documentStr = txtFieldNit.getText();
+                String documentGuarda = String.valueOf(guardia.getDocumento());
+                GuardaController guardaController = new GuardaController();
+                guardaController.crearRegistroSalidaPersona(documentStr,documentGuarda,null);
+                JOptionPane.showMessageDialog(null, "Registro de salida ingresado correctamente");
+            }
+        });
+
+        btnEntrada.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                String documentStr = txtFieldNit.getText();
+                String documentGuarda = String.valueOf(guardia.getDocumento());
+                GuardaController guardaController = new GuardaController();
+                guardaController.crearRegistroEntradaPersona(documentStr,documentGuarda,null);
+                JOptionPane.showMessageDialog(null, "Registro de ingreso ingresado correctamente");
             }
         });
     }

@@ -56,7 +56,7 @@ public class GuardiaRegistroCarros extends javax.swing.JFrame {
 
         superiorBackground.setBackground(new java.awt.Color(52, 33, 91));
 
-        lblLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Captura desde 2024-12-12 15-02-49.png"))); // NOI18N
+        lblLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/Banner.png"))); // NOI18N
 
         lblNombreUsuario.setFont(new java.awt.Font("FreeSans", 1, 18)); // NOI18N
         lblNombreUsuario.setForeground(new java.awt.Color(255, 255, 255));
@@ -106,7 +106,7 @@ public class GuardiaRegistroCarros extends javax.swing.JFrame {
         btnEntrada.setText("Entrada");
         btnEntrada.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
 
-        btnLogout.setIcon(new javax.swing.ImageIcon(getClass().getResource("/logout.png"))); // NOI18N
+        btnLogout.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/logout.png"))); // NOI18N
         btnLogout.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
 
         lblCrearSupervisor1.setFont(new java.awt.Font("FreeSans", 1, 36)); // NOI18N

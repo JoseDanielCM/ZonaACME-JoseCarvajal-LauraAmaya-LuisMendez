@@ -30,8 +30,8 @@ public class FuncionarioController {
     public void RegistrarSalidaManual(String documento, String docFuncionario) {
         funcionarioService.RegistrarSalidaManual(documento,docFuncionario);
     }
-    public void updatePersona(String newName, String newPlaca, String documento){
-        funcionarioService.updatePersona(newName,newPlaca,documento);
+    public void updatePersona(String newName, String documento){
+        funcionarioService.updatePersona(newName,documento);
     }
 
     public void updatePlacaVehiculo(String newPlaca, String oldPlaca){

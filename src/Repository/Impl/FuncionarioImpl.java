@@ -229,15 +229,14 @@ public class FuncionarioImpl implements FuncionarioDAO {
     }
 
     @Override
-    public void updatePersona(String newName, String newPlaca, int documento) {
+    public void updatePersona(String newName, int documento) {
         String sql = """
-                UPDATE `Persona` SET `Nombre` = ?, `PlacaVehiculo` = ?  WHERE `Documento` = ?;
+                UPDATE `Persona` SET `Nombre` = ? WHERE `Documento` = ?;
                 """;
         try (Connection conn = DataBaseConnection.getConnection()){
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1,  newName);
-            ps.setString(2,  newPlaca);
-            ps.setInt(3,  documento);
+            ps.setInt(2,  documento);
             System.out.println(ps);
             ps.executeUpdate();
 

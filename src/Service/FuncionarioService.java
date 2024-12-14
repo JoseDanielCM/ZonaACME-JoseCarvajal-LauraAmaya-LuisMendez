@@ -28,9 +28,9 @@ public class FuncionarioService {
         funcionarioImpl.crearTrabajador(trabajador);
     }
 
-    public void updatePersona(String newName, String newPlaca, String documento) {
+    public void updatePersona(String newName, String documento) {
         int docInt = validarDocumento(documento);
-        funcionarioImpl.updatePersona(newName, newPlaca, docInt);
+        funcionarioImpl.updatePersona(newName, docInt);
     }
 
     public void updatePlaca(String newPlaca, String oldPlaca) {

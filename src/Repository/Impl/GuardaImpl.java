@@ -12,14 +12,19 @@ public class GuardaImpl implements GuardaDAO {
     @Override
     public void crearRegistroEntradaPersona(Persona persona, Guarda guarda, Vehiculo vehiculo) {
         String sql = """
-                INSERT INTO `Registro` VALUES
+                INSERT INTO `Registro`(`Documento`,`Fecha`,`DocUser`,`IdAnotacion`,`TipoRegistro`,`PlacaVehiculo`) VALUES
                 (?,NOW(),?,NULL,"Entrada",?);
                 """;
         try (Connection conn = DataBaseConnection.getConnection()){
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1, persona.getDocumento());
             ps.setInt(2, guarda.getDocumento());
-            ps.setString(3, vehiculo.getPlaca());
+            if (vehiculo==null){
+                ps.setString(3, null);
+            }else{
+                ps.setString(3, vehiculo.getPlaca());
+            }
+            System.out.println(ps);
             ps.executeUpdate();
 
             System.out.println("Registro ingresado correctamente");
@@ -30,14 +35,18 @@ public class GuardaImpl implements GuardaDAO {
     @Override
     public void crearRegistroSalidaPersona(Persona persona, Guarda guarda, Vehiculo vehiculo) {
         String sql = """
-                INSERT INTO `Registro` VALUES
+                INSERT INTO `Registro`(`Documento`,`Fecha`,`DocUser`,`IdAnotacion`,`TipoRegistro`,`PlacaVehiculo`) VALUES
                 (?,NOW(),?,NULL,"Salida",?);
                 """;
         try (Connection conn = DataBaseConnection.getConnection()){
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1, persona.getDocumento());
             ps.setInt(2, guarda.getDocumento());
-            ps.setString(3, vehiculo.getPlaca());
+            if (vehiculo==null){
+                ps.setString(3, null);
+            }else{
+                ps.setString(3, vehiculo.getPlaca());
+            }
             ps.executeUpdate();
 
             System.out.println("Registro ingresado correctamente");
