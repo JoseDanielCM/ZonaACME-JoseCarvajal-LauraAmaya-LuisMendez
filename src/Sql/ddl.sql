@@ -104,27 +104,29 @@ INSERT INTO `Usuarios`(`Documento`,`Nombre`,`Contrasena`,`Activo`,`IdTipoUsuario
 (1102359999,"Laura Sofia","1234",TRUE,2,1234567890); /* EMPRESA SEGURIDAD */ 
 
 INSERT INTO `Vehiculo`(`Placa`, `Estado`,`haSalido`) VALUES
-("GPR895","Permitido",FALSE),
-("JLO777","Permitido",FALSE),
-("ABA555","Permitido",FALSE);
+("GPR895","Permitido",TRUE),
+("JLO777","Permitido",TRUE),
+("ABA555","Permitido",TRUE);
 
 INSERT INTO `Persona` VALUES
-(1102359291,"Lili",TRUE,"Trabajador","Permitido",1122112211,FALSE,"GPR895"),
-(1515151515,"Marco",TRUE,"Trabajador","Permitido",1122112211,FALSE,"GPR895"),
-(1231231231,"Lucas",TRUE,"Invitado","Permitido",1112223331,FALSE,"GPR895"),
-(1112223334,"Pepe",TRUE,"Invitado","Permitido",1112223331,FALSE,NULL);
+(1102359291,"Lili",TRUE,"Trabajador","Permitido",1122112211,TRUE,"GPR895"),
+(1515151515,"Marco",TRUE,"Trabajador","Permitido",1122112211,TRUE,"GPR895"),
+(1231231231,"Lucas",TRUE,"Invitado","Permitido",1112223331,TRUE,"GPR895"),
+(1112223334,"Pepe",TRUE,"Invitado","Permitido",1112223331,TRUE,NULL);
 
 
+/*
 INSERT INTO `Registro`(`Documento`,`Fecha`,`DocUser`,`IdAnotacion`,`TipoRegistro`,`PlacaVehiculo`) VALUES
 (1102359291, "2024-12-13 15:29:46.00", 1102359888, NULL, "Salida", NULL),
 (1102359291, "2024-12-13 15:30:46.00", 1102359888, NULL, "Entrada", NULL);
-
-
-INSERT INTO `Registro`(`Documento`,`Fecha`,`DocUser`,`IdAnotacion`,`TipoRegistro`,`PlacaVehiculo`) VALUES
-(1102359291, "2024-12-13 15:38:46.00", 1102359888, NULL, "Salida", NULL);
+*/
 
 /*
+INSERT INTO `Registro`(`Documento`,`Fecha`,`DocUser`,`IdAnotacion`,`TipoRegistro`,`PlacaVehiculo`) VALUES
+(1102359291, "2024-12-13 15:38:46.00", 1102359888, NULL, "Salida", NULL);
+*/
 
+/*
 SELECT Usuarios.*, TipoUsuario.`Nombre` as NombreTipo, Empresa.`IdEmpresa`, Empresa.`Nombre` as NombreEmpresa FROM Usuarios
 JOIN TipoUsuario ON TipoUsuario.`IdTipo` = Usuarios.`IdTipoUsuario`
 JOIN Empresa ON Empresa.`IdEmpresa` = Usuarios.`IdEmpresa`
@@ -163,8 +165,8 @@ SELECT U.`Documento`, U.Nombre, Documento, E.Nombre, E.IdEmpresa FROM `Usuarios`
     JOIN `Empresa` E
     ON `E`.`IdEmpresa` = `U`.`IdEmpresa`
     WHERE U.IdTipoUsuario = 4 AND U.Documento = 1102359295 ;
-
 */
+
 
 /* ------------------------------------------------------------------------------- */
 SHOW CREATE TABLE Persona;
@@ -177,8 +179,10 @@ FOREIGN KEY (PlacaVehiculo) REFERENCES Vehiculo(Placa)
 ON UPDATE CASCADE;
 /* ------------------------------------------------------------------------------- */
 
+/*
 INSERT INTO `Registro`(`Documento`,`Fecha`,`DocUser`,`IdAnotacion`,`TipoRegistro`,`PlacaVehiculo`) VALUES
 (1102359291, "2024-12-13 08:55:46.00", 1102359888, NULL, "Salida", NULL),
 (1102359291, "2024-12-13 10:55:46.00", 1102359888, NULL, "Entrada", NULL),
 (1112223334, "2024-12-13 10:55:46.02", 1102359888, NULL, "Salida", NULL),
 (1231231231, "2024-12-13 11:55:46.00", 1102359888, NULL, "Salida", NULL);
+*/

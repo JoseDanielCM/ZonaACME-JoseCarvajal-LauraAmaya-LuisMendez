@@ -190,7 +190,7 @@ public class SupervisorImpl implements SupervisorDAO {
     public void crearAnotaciones(Anotacion anotacion) {
         String sql = """
                 INSERT INTO `Anotaciones`(Documento, docUser,`Tipo`,`Mensaje`,`Fecha`) VALUES
-                (?,?,?,?,?);
+                (?,?,?,?,NOW());
                 """;
         try (Connection conn = DataBaseConnection.getConnection()) {
             PreparedStatement ps = conn.prepareStatement(sql);
@@ -199,7 +199,6 @@ public class SupervisorImpl implements SupervisorDAO {
             ps.setString(2,anotacion.getDocUser());
             ps.setString(3, anotacion.getTipoAnotacion());
             ps.setString(4, anotacion.getMensajeAnot());
-            ps.setTimestamp(5, anotacion.getFecha());
             ps.executeUpdate();
             System.out.println("Anotación agregada correctamente");
         } catch (SQLException e) {
@@ -257,20 +256,19 @@ public class SupervisorImpl implements SupervisorDAO {
     }
 
     @Override
-    public void RegistrarSalida(int Documento, Timestamp fecha, int documentoUser) {
+    public void RegistrarSalida(int Documento, int documentoUser) {
         if(getPersonaById(Documento) == null){
             System.out.println("Usuario no encontrado");
         } else {
             String sql = """
             INSERT INTO `Anotaciones`(`Documento`,DocUser,`Tipo`,`Mensaje`,`Fecha`) VALUES
-            (?,?,"Registro",?,?);
+            (?,?,"Registro",?,NOW());
             """;
             try (Connection conn = DataBaseConnection.getConnection()){
                 PreparedStatement ps = conn.prepareStatement(sql);
                 ps.setInt(1, Documento);
                 ps.setInt(2, documentoUser);
-                ps.setString(3, "Persona identificada con el documento: " + Documento + " ha registrado salida manual");
-                ps.setTimestamp(4, fecha);
+                ps.setString(3, "Persona identificada con el documento: " + Documento + " ha sido registrad@ salida manual");
                 System.out.println(ps);
                 ps.executeUpdate();
 

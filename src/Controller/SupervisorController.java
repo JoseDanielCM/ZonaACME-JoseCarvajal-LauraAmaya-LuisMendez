@@ -40,16 +40,16 @@ public class SupervisorController {
         return supervisorService.mostrarGuarda(documentoGuar);
     }
 
-    public void crearAnotaciones(String Documento, String docUser, String Tipo, String Mensaje, String Fecha){
-        supervisorService.crearAnotaciones(Documento, docUser, Tipo, Mensaje, Fecha);
+    public void crearAnotaciones(String Documento, String docUser, String Tipo, String Mensaje){
+        supervisorService.crearAnotaciones(Documento, docUser, Tipo, Mensaje);
     }
 
     public void levantarRestriccion(String documentoPersona){
         supervisorService.levantarRestriccion(documentoPersona);
     }
 
-    public void registrarSalida(String documentoPer, String fecha, String docUs){
-        supervisorService.RegistrarSalida(documentoPer,fecha,docUs);
+    public void registrarSalida(String documentoPer, String docUs){
+        supervisorService.RegistrarSalida(documentoPer,docUs);
     }
 
 }

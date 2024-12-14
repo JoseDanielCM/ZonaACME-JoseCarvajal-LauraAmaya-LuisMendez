@@ -105,7 +105,7 @@ public class AnotacionesMenu extends javax.swing.JFrame {
         jTextArea2 = new javax.swing.JTextArea();
         btnCrear1 = new javax.swing.JButton();
         btnHouse1 = new javax.swing.JButton();
-
+        txtFieldEmpresa.setEditable(false);
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
         jScrollPane1.setViewportView(jTextArea1);

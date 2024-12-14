@@ -10,11 +10,10 @@ public class Anotacion {
     private Timestamp fecha;
     private String docUser;
 
-    public Anotacion(Persona persona, String docUser, String tipoAnotacion, String mensajeAnot, Timestamp fecha) {
+    public Anotacion(Persona persona, String docUser, String tipoAnotacion, String mensajeAnot) {
         this.persona = persona;
         this.tipoAnotacion = tipoAnotacion;
         this.mensajeAnot = mensajeAnot;
-        this.fecha = fecha;
         this.docUser = docUser;
     }
 

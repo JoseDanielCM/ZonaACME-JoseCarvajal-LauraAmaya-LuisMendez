@@ -37,12 +37,12 @@ public class RegistroEntradaPersona implements RegistroStrategy {
             vehiculo = new Vehiculo(placa);
         }
         if (persona == null) {
-            return "La persona no está registrada por favor comúniquese con el funcionario de la empresa.";
+            return "La persona "+docInt+" no está registrada por favor comúniquese con el funcionario de la empresa.";
         } else if (guardaImpl.validarEstadoPersona(persona)) {
             guardaImpl.crearRegistroEntradaPersona(persona, guarda, vehiculo);
-            return "¡Registro de entrada realizado con éxito!";
+            return "¡Registro de salida de "+persona.getNombre()+" realizado con éxito!";
         } else {
-            return "La persona tiene el acceso restringido, por favor comúniquese con el funcionario de la empresa.";
+            return "La persona: "+persona.getNombre()+" tiene el acceso restringido, por favor comúniquese con el funcionario de la empresa.";
         }
     }
 }

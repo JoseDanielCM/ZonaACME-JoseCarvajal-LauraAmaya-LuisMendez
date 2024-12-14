@@ -1,6 +1,3 @@
-/* levantamiento, auditoria de empleados, */
-
-
 /* INACTIVAR PERSONAS AL INACTIVAR EMPRESA */ 
 DELIMITER $$
 
@@ -12,8 +9,6 @@ BEGIN
 END $$
 
 DELIMITER ;
-
-INSERT INTO Anotaciones(Documento,DocUser,Tipo,Mensaje,Fecha) VALUES (1102359291,1020306598,"Levantamiento","persona restringida",NOW());
 
 /* AL REALIZAR ANOTACION DE RESTRICCION CAMBIAR ESTADO DE PERSONA */ 
 DELIMITER $$
@@ -41,8 +36,6 @@ BEGIN
 END $$
 
 DELIMITER ;
-
-INSERT INTO Anotaciones(Documento,DocUser,Tipo,Mensaje,Fecha) VALUES (1102359291,1020306598,"Registro","registrar persona manualmente",NOW());
 
 /* Registro manual */ 
 
@@ -82,10 +75,3 @@ DELIMITER ;
 
 /* DROP TRIGGER cambiarEstancia; */
 
-INSERT INTO `Registro`(`Documento`,`Fecha`,`DocUser`,`IdAnotacion`,`TipoRegistro`,`PlacaVehiculo`) VALUES
-(1102359291, "2024-12-13 08:55:46.00", 1102359888, NULL, "Salida", NULL),
-(1102359291, "2024-12-13 10:55:46.00", 1102359888, NULL, "Entrada", NULL),
-(1112223334, "2024-12-13 10:55:46.02", 1102359888, NULL, "Salida", NULL),
-(1231231231, "2024-12-13 11:55:46.00", 1102359888, NULL, "Salida", NULL);
-
-INSERT INTO Anotaciones(Documento,DocUser,Tipo,Mensaje,Fecha) VALUES (1102359291,1020306598,"Levantamiento","persona restringida",NOW());

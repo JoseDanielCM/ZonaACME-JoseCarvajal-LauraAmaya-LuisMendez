@@ -17,5 +17,5 @@ public interface SupervisorDAO extends SalidaDAO {
     Persona getPersonaById(int id);
     Empresa getEmpresaByName(String name);
     @Override
-    void RegistrarSalida(int Documento, Timestamp fecha, int documentoUser);
+    void RegistrarSalida(int Documento, int documentoUser);
 }

@@ -4,6 +4,7 @@ import Model.*;
 import Repository.DAO.GuardaDAO;
 import Util.DataBaseConnection;
 
+import javax.swing.*;
 import java.sql.*;
 import java.util.List;
 
@@ -29,6 +30,7 @@ public class GuardaImpl implements GuardaDAO {
 
             System.out.println("Registro ingresado correctamente");
         } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "La placa o las personas no existen o fueron ingresadas incorrectamente");
             throw new RuntimeException(e);
         }
     }

@@ -45,9 +45,12 @@ public class GuardiaRegistroCarros extends javax.swing.JFrame {
 
             @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                GuardiaMainMenu guardiaMainMenu = new GuardiaMainMenu(guardia);
-                guardiaMainMenu.setVisible(true);
-                dispose();
+                String documentos = jTextArea1.getText();
+                String placa = txtFieldNit.getText();
+
+                GuardaController guardaController = new GuardaController();
+                String texto= guardaController.crearRegistroSalidaVehiculo(documentos, String.valueOf(guardia.getDocumento()),placa);
+                JOptionPane.showMessageDialog(null, texto);
             }
         });
     }

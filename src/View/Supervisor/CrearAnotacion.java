@@ -18,11 +18,11 @@ public class CrearAnotacion extends javax.swing.JFrame {
         this.persona = persona;
         initComponents();
         this.setLocationRelativeTo(null);
-        ConcurrenciaRegistros.manejoRegistros(registros, supervisor);
+        ConcurrenciaRegistros.manejoRegistros(txtAreaRegistros, supervisor);
         lblNombreUsuario.setText(supervisor.getNombre());
         txtFieldDocumento.setText(String.valueOf(persona.getDocumento()));
         String documento = String.valueOf(persona.getDocumento());
-        txtFieldDocumento1.setText("Restricción");
+        txtFieldTipo.setText("Restricción");
         String tipo = "Restricción";
 
         btnHouse.addActionListener(new ActionListener() {
@@ -45,14 +45,11 @@ public class CrearAnotacion extends javax.swing.JFrame {
         btnCrear.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                String fecha = Fecha.getText();
-                System.out.println(fecha);
                 String documentoUser = String.valueOf(supervisor.getDocumento());
-                Fecha.setText("");
-                String mensaje = Mensaje.getText();
-                Mensaje.setText("");
+                String mensaje = txtAreaMessage.getText();
+                txtAreaMessage.setText("");
                 SupervisorController supervisorController = new SupervisorController();
-                supervisorController.crearAnotaciones(documento,documentoUser,tipo,mensaje,fecha);
+                supervisorController.crearAnotaciones(documento,documentoUser,tipo,mensaje);
                 JOptionPane.showMessageDialog(null, "Anotación creada exitosamente");
             }
         });
@@ -69,19 +66,17 @@ public class CrearAnotacion extends javax.swing.JFrame {
         lblImgSide = new javax.swing.JLabel();
         lblCrearSupervisor = new javax.swing.JLabel();
         DocLabel = new javax.swing.JLabel();
-        lblEmpresa = new javax.swing.JLabel();
         nombreLabel = new javax.swing.JLabel();
         lblPassword = new javax.swing.JLabel();
+        txtFieldTipo = new javax.swing.JTextField();
         txtFieldDocumento = new javax.swing.JTextField();
-        Fecha = new javax.swing.JTextField();
         btnCrear = new javax.swing.JButton();
         btnHouse = new javax.swing.JButton();
         btnLogout = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        Mensaje = new javax.swing.JTextArea();
+        txtAreaRegistros = new javax.swing.JTextArea();
         jScrollPane2 = new javax.swing.JScrollPane();
-        registros = new javax.swing.JTextArea();
-        txtFieldDocumento1 = new javax.swing.JTextField();
+        txtAreaMessage = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(52, 33, 91));
@@ -98,7 +93,7 @@ public class CrearAnotacion extends javax.swing.JFrame {
 
         lblTipoUsuario.setFont(new java.awt.Font("FreeSans", 1, 36)); // NOI18N
         lblTipoUsuario.setForeground(new java.awt.Color(255, 255, 255));
-        lblTipoUsuario.setText("SUPERUSUARIO");
+        lblTipoUsuario.setText("SUPERVISOR");
 
         javax.swing.GroupLayout superiorBackgroundLayout = new javax.swing.GroupLayout(superiorBackground);
         superiorBackground.setLayout(superiorBackgroundLayout);
@@ -125,17 +120,14 @@ public class CrearAnotacion extends javax.swing.JFrame {
                                 .addGap(12, 12, 12))
         );
 
-        lblImgSide.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/anotaciones.png"))); // NOI18N
+        lblImgSide.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/Empresa.png"))); // NOI18N
         lblImgSide.setText("jLabel1");
 
         lblCrearSupervisor.setFont(new java.awt.Font("FreeSans", 1, 36)); // NOI18N
-        lblCrearSupervisor.setText("Crear Restricción ");
+        lblCrearSupervisor.setText("Crear Restricción");
 
         DocLabel.setFont(new java.awt.Font("Liberation Sans", 1, 24)); // NOI18N
         DocLabel.setText("Documento");
-
-        lblEmpresa.setFont(new java.awt.Font("Liberation Sans", 1, 24)); // NOI18N
-        lblEmpresa.setText("Fecha");
 
         nombreLabel.setFont(new java.awt.Font("Liberation Sans", 1, 24)); // NOI18N
         nombreLabel.setText("Tipo");
@@ -143,19 +135,11 @@ public class CrearAnotacion extends javax.swing.JFrame {
         lblPassword.setFont(new java.awt.Font("Liberation Sans", 1, 24)); // NOI18N
         lblPassword.setText("Mensaje");
 
-        txtFieldDocumento.setEditable(false);
-        txtFieldDocumento.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtFieldDocumentoActionPerformed(evt);
-            }
-        });
+        txtFieldTipo.setEditable(false);
 
-        Fecha.setEditable(true);
-        Fecha.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                FechaActionPerformed(evt);
-            }
-        });
+
+        txtFieldDocumento.setEditable(false);
+
 
         btnCrear.setBackground(new java.awt.Color(205, 181, 255));
         btnCrear.setFont(new java.awt.Font("Liberation Sans", 1, 24)); // NOI18N
@@ -164,30 +148,18 @@ public class CrearAnotacion extends javax.swing.JFrame {
 
         btnHouse.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/casa.png"))); // NOI18N
         btnHouse.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        btnHouse.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnHouseActionPerformed(evt);
-            }
-        });
+
 
         btnLogout.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/logout.png"))); // NOI18N
         btnLogout.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
 
-        Mensaje.setColumns(20);
-        Mensaje.setRows(5);
-        jScrollPane1.setViewportView(Mensaje);
+        txtAreaRegistros.setColumns(20);
+        txtAreaRegistros.setRows(5);
+        jScrollPane1.setViewportView(txtAreaRegistros);
 
-        registros.setEditable(false);
-        registros.setColumns(20);
-        registros.setRows(5);
-        jScrollPane2.setViewportView(registros);
-
-        txtFieldDocumento1.setEditable(false);
-        txtFieldDocumento1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtFieldDocumento1ActionPerformed(evt);
-            }
-        });
+        txtAreaMessage.setColumns(20);
+        txtAreaMessage.setRows(5);
+        jScrollPane2.setViewportView(txtAreaMessage);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -196,122 +168,94 @@ public class CrearAnotacion extends javax.swing.JFrame {
                         .addComponent(superiorBackground, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createSequentialGroup()
                                 .addComponent(lblImgSide, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup(layout.createSequentialGroup()
+                                                .addGap(92, 92, 92)
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                         .addGroup(layout.createSequentialGroup()
-                                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                                                .addComponent(DocLabel)
-                                                                                .addComponent(nombreLabel)
-                                                                                .addComponent(txtFieldDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                                .addComponent(lblPassword)
-                                                                                .addComponent(Fecha, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                                .addComponent(lblCrearSupervisor))
-                                                                        .addGroup(layout.createSequentialGroup()
-                                                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                                                        .addComponent(lblEmpresa)
-                                                                                        .addComponent(btnCrear, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                                                .addGap(0, 0, Short.MAX_VALUE)))
-                                                                .addGap(6, 6, 6))
+                                                                .addGap(60, 60, 60)
+                                                                .addComponent(DocLabel))
                                                         .addGroup(layout.createSequentialGroup()
-                                                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                                                .addGap(73, 73, 73)
-                                                .addComponent(btnHouse))
+                                                                .addGap(8, 8, 8)
+                                                                .addComponent(lblCrearSupervisor))
+                                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                                                .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 260, Short.MAX_VALUE)
+                                                                .addComponent(txtFieldTipo, javax.swing.GroupLayout.Alignment.LEADING)
+                                                                .addComponent(txtFieldDocumento, javax.swing.GroupLayout.Alignment.LEADING))))
                                         .addGroup(layout.createSequentialGroup()
-                                                .addGap(0, 0, Short.MAX_VALUE)
-                                                .addComponent(btnLogout))
+                                                .addGap(146, 146, 146)
+                                                .addComponent(btnCrear, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addGroup(layout.createSequentialGroup()
-                                                .addComponent(txtFieldDocumento1, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(0, 0, Short.MAX_VALUE)))
+                                                .addGap(191, 191, 191)
+                                                .addComponent(nombreLabel))
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addGap(173, 173, 173)
+                                                .addComponent(lblPassword)))
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(btnLogout, javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(btnHouse))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(25, 25, 25))
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
                                 .addComponent(superiorBackground, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(lblImgSide, javax.swing.GroupLayout.PREFERRED_SIZE, 595, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addGroup(layout.createSequentialGroup()
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(btnHouse)
+                                                .addGap(28, 28, 28)
+                                                .addComponent(btnLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addContainerGap())
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                        .addGroup(layout.createSequentialGroup()
-                                                                .addGap(34, 34, 34)
+                                                        .addComponent(jScrollPane1)
+                                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                                                .addGap(0, 33, Short.MAX_VALUE)
                                                                 .addComponent(lblCrearSupervisor)
-                                                                .addGap(18, 18, 18)
-                                                                .addComponent(DocLabel)
-                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                                .addComponent(txtFieldDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                                .addComponent(DocLabel)
+                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                                .addComponent(txtFieldDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                .addGap(18, 18, 18)
                                                                 .addComponent(nombreLabel)
                                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                                .addComponent(txtFieldDocumento1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                                .addComponent(lblEmpresa)
-                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                                .addComponent(Fecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                .addGap(18, 18, 18)
+                                                                .addComponent(txtFieldTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                                                 .addComponent(lblPassword)
                                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                .addGap(29, 29, 29)
-                                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                                        .addComponent(btnCrear, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                        .addGroup(layout.createSequentialGroup()
-                                                                                .addComponent(btnHouse)
-                                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                                                .addComponent(btnLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                                        .addGroup(layout.createSequentialGroup()
-                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 562, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                                .addContainerGap())))
+                                                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                .addGap(42, 42, 42)
+                                                                .addComponent(btnCrear, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                .addGap(112, 112, 112))
+                                                        .addComponent(lblImgSide, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))))
         );
 
         pack();
     }// </editor-fold>
 
-    private void txtFieldDocumentoActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
-    }
-
-    private void btnHouseActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
-    }
-
-    private void FechaActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
-    }
-
-    private void txtFieldDocumento1ActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
-    }
-
 
     // Variables declaration - do not modify
     private javax.swing.JLabel DocLabel;
-    private javax.swing.JTextField Fecha;
-    private javax.swing.JTextArea Mensaje;
     private javax.swing.JButton btnCrear;
     private javax.swing.JButton btnHouse;
     private javax.swing.JButton btnLogout;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblCrearSupervisor;
-    private javax.swing.JLabel lblEmpresa;
     private javax.swing.JLabel lblImgSide;
     private javax.swing.JLabel lblLogo;
     private javax.swing.JLabel lblNombreUsuario;
     private javax.swing.JLabel lblPassword;
     private javax.swing.JLabel lblTipoUsuario;
     private javax.swing.JLabel nombreLabel;
-    private javax.swing.JTextArea registros;
     private javax.swing.JPanel superiorBackground;
+    private javax.swing.JTextArea txtAreaMessage;
+    private javax.swing.JTextArea txtAreaRegistros;
     private javax.swing.JTextField txtFieldDocumento;
-    private javax.swing.JTextField txtFieldDocumento1;
+    private javax.swing.JTextField txtFieldTipo;
     // End of variables declaration
 }

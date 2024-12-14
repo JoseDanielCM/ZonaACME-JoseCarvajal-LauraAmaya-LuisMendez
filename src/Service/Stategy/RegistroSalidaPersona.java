@@ -32,7 +32,7 @@ public class RegistroSalidaPersona implements RegistroStrategy {
             return "La persona no está registrada por favor comúniquese con el funcionario de la empresa.";
         } else {
             guardaImpl.crearRegistroSalidaPersona(persona, guarda, vehiculo);
-            return "¡Registro de salida realizado con éxito!";
+            return "¡Registro de salida de "+persona.getNombre()+" realizado con éxito!";
         }
     }
 }

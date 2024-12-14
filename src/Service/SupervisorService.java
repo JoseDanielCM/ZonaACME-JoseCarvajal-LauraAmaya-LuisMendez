@@ -67,11 +67,10 @@ public class SupervisorService {
         return supervisorImpl.mostrarGuarda(Integer.parseInt(documentoGuar));
     }
 
-    public void crearAnotaciones(String documento, String docUser, String tipoAnotacion, String mensajeAnot, String fecha){
+    public void crearAnotaciones(String documento, String docUser, String tipoAnotacion, String mensajeAnot){
         Persona persona = supervisorImpl.getPersonaById(Integer.parseInt(documento));
         try {
-           Timestamp fechaFormato = Timestamp.valueOf(fecha);
-           Anotacion anotacion = new Anotacion(persona, docUser, tipoAnotacion,mensajeAnot,fechaFormato);
+           Anotacion anotacion = new Anotacion(persona, docUser, tipoAnotacion,mensajeAnot);
             System.out.println(anotacion);
            supervisorImpl.crearAnotaciones(anotacion);
         } catch (Exception e){
@@ -88,13 +87,12 @@ public class SupervisorService {
         return supervisorImpl.getPersonaById(Integer.parseInt(documentoPersona));
     }
 
-    public void RegistrarSalida(String Documento, String fecha, String documentoUser) {
+    public void RegistrarSalida(String Documento, String documentoUser) {
         int DocumentoPersona, documentoUInt;
         try {
             DocumentoPersona = Integer.parseInt(Documento);
             documentoUInt = Integer.parseInt(documentoUser);
-            Timestamp fechaFormato = Timestamp.valueOf(fecha);
-            supervisorImpl.RegistrarSalida(DocumentoPersona,fechaFormato,documentoUInt);
+            supervisorImpl.RegistrarSalida(DocumentoPersona,documentoUInt);
         } catch (Exception e){
             System.out.println("Valores invalidos");
             throw new IllegalArgumentException("Invalido");
