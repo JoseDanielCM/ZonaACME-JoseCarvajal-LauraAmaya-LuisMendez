@@ -1,10 +1,10 @@
 package Repository.Impl;
 
-import Model.Empresa;
-import Model.Supervisor;
+import Model.*;
 import Repository.DAO.SuperUsuarioDAO;
 import Util.DataBaseConnection;
 
+import javax.swing.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -82,12 +82,13 @@ public class SuperUsuarioImpl implements SuperUsuarioDAO {
     @Override
     public List<Supervisor> getAllSupervisors() {
         String sql = """
-                SELECT * FROM Usuarios WHERE Usuarios.IdTipoUsuario = 2;
+                SELECT `Usuarios`.*, empresa.`Nombre` as NombreEmpresa FROM Usuarios
+                JOIN empresa ON empresa.`IdEmpresa` = `Usuarios`.`IdEmpresa`
+                WHERE Usuarios.IdTipoUsuario = 2;
                 """;
         List<Supervisor> listSupervisors = new ArrayList<Supervisor>();
         try (Connection conn = DataBaseConnection.getConnection()){
             PreparedStatement ps = conn.prepareStatement(sql);
-            ps.executeUpdate();
             ResultSet resultSet = ps.executeQuery();
             while (resultSet.next()){
                 int id = resultSet.getInt(1);
@@ -95,13 +96,13 @@ public class SuperUsuarioImpl implements SuperUsuarioDAO {
                 String contrasenia = resultSet.getString(3);
                 boolean activo = resultSet.getBoolean(4);
                 int idTipoUsuario = resultSet.getInt(5);
-                int idEmpresa = resultSet.getInt(6);
-                Empresa empresa = getEmpresaById(idEmpresa);
+                String idEmpresa = resultSet.getString(6);
+                String nombreEmpresa = resultSet.getString(7);
+
+                Empresa empresa = new Empresa(idEmpresa,nombreEmpresa);
                 Supervisor supervisor = new Supervisor(id,nombre, contrasenia, activo, empresa);
                 listSupervisors.add(supervisor);
             }
-
-            System.out.println("Supervisor traido correctamente");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -117,18 +118,17 @@ public class SuperUsuarioImpl implements SuperUsuarioDAO {
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1, idEmpresa);
             ResultSet resultSet = ps.executeQuery();
-            while (resultSet.next()){
+            if (resultSet.next()){
                 String id = resultSet.getString(1);
                 String nombre = resultSet.getString(2);
                 Empresa empresa = new Empresa(id,nombre);
                 return empresa;
             }
-
-            System.out.println("Empresa obtenida correctamente");
+            JOptionPane.showMessageDialog(null,"Empresa no encontrada");
+            throw new IllegalArgumentException  ("Empresa no encontrada");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return null;
     }
 
     @Override
@@ -139,6 +139,7 @@ public class SuperUsuarioImpl implements SuperUsuarioDAO {
         try (Connection conn = DataBaseConnection.getConnection()){
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, name);
+            System.out.println(ps);
             ResultSet resultSet = ps.executeQuery();
             if (resultSet.next()){
                 String id = resultSet.getString(1);
@@ -147,6 +148,7 @@ public class SuperUsuarioImpl implements SuperUsuarioDAO {
                 System.out.println("Empresa obtenida correctamente");
                 return empresa;
             }
+            JOptionPane.showMessageDialog(null,"Empresa no encontrada");
             throw new IllegalArgumentException  ("Empresa no encontrada");
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -156,7 +158,7 @@ public class SuperUsuarioImpl implements SuperUsuarioDAO {
     @Override
     public void desactivarSupervisor(Supervisor supervisor) {
         String sql = """
-                UPDATE `Usuarios` SET `Activo` = FALSE WHERE `IdUsuario`= ?;
+                UPDATE `Usuarios` SET `Activo` = FALSE WHERE `Documento`= ?;
                 """;
         try (Connection conn = DataBaseConnection.getConnection()){
             PreparedStatement ps = conn.prepareStatement(sql);
@@ -194,5 +196,89 @@ public class SuperUsuarioImpl implements SuperUsuarioDAO {
     @Override
     public String getIp() {
         return DataBaseConnection.getIp();
+    }
+
+    @Override
+    public List<Persona> getAllPersonasEmpresa(int nit) {
+        String sql = """
+                SELECT persona.*, Empresa.`Nombre` as NombreEmpresa FROM persona
+                JOIN empresa ON empresa.`IdEmpresa` = persona.`IdEmpresa`
+                WHERE persona.`IdEmpresa`= ?;
+                """;
+        List<Persona> listPersonas = new ArrayList<Persona>();
+        try (Connection conn = DataBaseConnection.getConnection()){
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, nit);
+            ResultSet resultSet = ps.executeQuery();
+            while (resultSet.next()){
+                int id = resultSet.getInt("Documento");
+                String nombre = resultSet.getString("Nombre");
+                String tipo = resultSet.getString("Tipo");
+                String idEmpresa = resultSet.getString("IdEmpresa");
+                String nombreEmpresa = resultSet.getString("NombreEmpresa");
+
+                Empresa empresa = new Empresa(idEmpresa,nombreEmpresa);
+                if (tipo.equals("Trabajador")){
+                    Trabajador persona = new Trabajador(id,nombre,true,tipo,empresa,false,null) ;
+                    listPersonas.add(persona);
+                }else{
+                    Invitado persona = new Invitado(id,nombre,true,tipo,empresa,false,null) ;
+                    listPersonas.add(persona);
+                }
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null,"No se encontró Empresa con ese nit");
+            throw new RuntimeException(e);
+        }
+        return listPersonas;
+    }
+
+    @Override
+    public List<Registro> getListaRegistros(String inicial, String finalDate) {
+        String sql = """
+                SELECT * FROM Registro
+                WHERE Fecha BETWEEN ? AND ?;
+                """;
+        List<Registro> listRegistros = new ArrayList<Registro>();
+        try (Connection conn = DataBaseConnection.getConnection()){
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, inicial);
+            ps.setString(2, finalDate);
+            ResultSet resultSet = ps.executeQuery();
+            while (resultSet.next()){
+                int id = resultSet.getInt("Documento");
+                String fecha = resultSet.getString("Fecha");
+                int documentoUser = resultSet.getInt("DocUser");
+                String tipo = resultSet.getString("TipoRegistro");
+
+                Registro registro = new Registro(id,fecha,documentoUser,tipo);
+                listRegistros.add(registro);
+            }
+            return listRegistros;
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null,"Ingresar fechas con el formato dado");
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public String getNombreFuncionarioEmpresa(Empresa empresa) {
+        String sql = """
+                SELECT usuarios.`Nombre` FROM usuarios
+                JOIN empresa ON empresa.`IdEmpresa` = usuarios.`IdEmpresa`
+                WHERE usuarios.`IdTipoUsuario` = 4 AND empresa.`Nombre` = ?;
+                """;
+        try (Connection conn = DataBaseConnection.getConnection()){
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, empresa.getNombre());
+            ResultSet resultSet = ps.executeQuery();
+            if (resultSet.next()){
+                return resultSet.getString("Nombre");
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null,"Ingresar fechas con el formato dado");
+            throw new RuntimeException(e);
+        }
+        return null;
     }
 }

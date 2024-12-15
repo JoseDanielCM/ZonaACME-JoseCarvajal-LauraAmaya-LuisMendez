@@ -76,8 +76,9 @@ public class GuardaImpl implements GuardaDAO {
 
             ps.setInt(1, persona.getDocumento());
             ResultSet resultSet = ps.executeQuery();
-
-            if (resultSet.next()) {
+            boolean tieneAnotaciones = false;
+            while (resultSet.next()) {
+                tieneAnotaciones = true;
                 anotaciones.append("Anotaciones de la persona:\n")
                         .append("Documento: ").append(resultSet.getInt("Documento")).append("\n")
                         .append("Nombre: ").append(resultSet.getString("Nombre")).append("\n")
@@ -86,8 +87,12 @@ public class GuardaImpl implements GuardaDAO {
                         .append("Id Anotacion: ").append(resultSet.getInt("IdAnotacion")).append("\n")
                         .append("Tipo: ").append(resultSet.getString("Tipo")).append("\n")
                         .append("Mensaje: ").append(resultSet.getString("Mensaje")).append("\n")
-                        .append("Fecha: ").append(resultSet.getDate("Fecha")).append("\n");
-            } else {
+                        .append("Fecha: ").append(resultSet.getDate("Fecha")).append("\n")
+                        .append("------------------------------------------------\n")
+                ;
+            }
+
+            if (!tieneAnotaciones){
                 anotaciones.append("No se encontraron anotaciones para la persona.");
             }
         } catch (SQLException e) {

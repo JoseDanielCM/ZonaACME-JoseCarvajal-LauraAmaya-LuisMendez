@@ -25,7 +25,11 @@ public class FuncionarioImpl implements FuncionarioDAO {
             ps.setInt(1, trabajador.getDocumento());
             ps.setString(2, trabajador.getNombre());
             ps.setString(3, trabajador.getEmpresa().getIdEmpresa());
-            ps.setString(4, trabajador.getVehiculo().getPlaca());
+            if (trabajador.getVehiculo()==null){
+                ps.setString(4, null);
+            } else{
+                ps.setString(4, trabajador.getVehiculo().getPlaca());
+            }
             ps.executeUpdate();
 
             System.out.println("Trabajador creado correctamente");
@@ -45,7 +49,11 @@ public class FuncionarioImpl implements FuncionarioDAO {
             ps.setInt(1, invitado.getDocumento());
             ps.setString(2, invitado.getNombre());
             ps.setString(3, invitado.getEmpresa().getIdEmpresa());
-            ps.setString(4, invitado.getVehiculo().getPlaca());
+            if (invitado.getVehiculo()==null){
+                ps.setString(4, null);
+            }else{
+                ps.setString(4, invitado.getVehiculo().getPlaca());
+            }
             System.out.println(ps);
             ps.executeUpdate();
 
@@ -109,6 +117,43 @@ public class FuncionarioImpl implements FuncionarioDAO {
             throw new RuntimeException(e);
         }
     }
+
+    @Override
+    public List<Persona> mostrarTodos() {
+        String sql = """
+                    SELECT `Persona`.*, e.`Nombre` FROM `Persona`
+                    JOIN Empresa e ON e.`IdEmpresa` = `Persona`.`IdEmpresa`;
+                """;
+        List<Persona> persons = new ArrayList<Persona>();
+        try (Connection conn = DataBaseConnection.getConnection()){
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ResultSet resultSet= ps.executeQuery();
+            while (resultSet.next()) {
+
+                int id = resultSet.getInt(1);
+                String nombre = resultSet.getString(2);
+                boolean activo = resultSet.getBoolean(3);
+                String tipo = resultSet.getString(4);
+                String estado = resultSet.getString(5);
+                String idEmpresa = resultSet.getString(6);
+                boolean haSalido = resultSet.getBoolean(7);
+                String placaVehiculo = resultSet.getString(8);
+                String nombreEmpresa = resultSet.getString(9);
+                Empresa empresa = new Empresa(idEmpresa,nombreEmpresa);
+                Vehiculo vehiculo = new Vehiculo(placaVehiculo);
+                if (tipo.equals("Invitado")){
+                    Invitado invitado = new Invitado(id, nombre, activo, estado, empresa, haSalido, vehiculo);
+                    persons.add(invitado);
+                }else{
+                    Trabajador trabajador = new Trabajador(id, nombre, activo, estado, empresa, haSalido, vehiculo);
+                    persons.add(trabajador);
+                }
+            }
+            System.out.println("Lista seleccionados automaticamente");
+            return persons;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }    }
 
     @Override
     public String estadoActualPersona(Persona persona) {

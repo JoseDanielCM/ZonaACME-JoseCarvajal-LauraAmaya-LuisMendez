@@ -8,6 +8,7 @@ public class Empresa {
     private String nombre;
 
     private boolean activo;
+    private int idFuncionario;
 
     private List<Persona> listaInvitados = new ArrayList<Persona>();
     private List<Persona> listaTrabajadores = new ArrayList<Persona>();

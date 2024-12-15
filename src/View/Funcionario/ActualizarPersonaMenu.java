@@ -169,7 +169,7 @@ public class ActualizarPersonaMenu extends JFrame {
         btnActualizar.setText("Actualizar");
         btnActualizar.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
 
-        btnLupa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/casa.png"))); // NOI18N
+        btnLupa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/Lupa.png"))); // NOI18N
         btnLupa.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         btnLupa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

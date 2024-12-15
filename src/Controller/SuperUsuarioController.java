@@ -1,6 +1,8 @@
 package Controller;
 
 import Model.Empresa;
+import Model.Persona;
+import Model.Registro;
 import Model.Supervisor;
 import Service.SuperUsuarioService;
 
@@ -55,4 +57,11 @@ public class SuperUsuarioController {
         return superUsuarioService.getIp();
     }
 
+    public List<Persona> getAllPersonasEmpresa(String nit) {
+        return superUsuarioService.getAllPersonasEmpresa(nit);
+    }
+
+    public List<Registro> getListaRegistros(String inicial, String finalDate) {
+        return superUsuarioService.getListaRegistros(inicial,finalDate);
+    }
 }

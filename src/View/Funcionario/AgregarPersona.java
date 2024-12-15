@@ -12,11 +12,13 @@ import java.awt.event.ActionListener;
 public class AgregarPersona extends javax.swing.JFrame {
     private Usuario funcionario;
 
-    public AgregarPersona(Usuario funcionario) {
+    public AgregarPersona(Usuario funcionario,String documento, String nombre) {
         this.funcionario = funcionario;
         initComponents();
         this.setLocationRelativeTo(null);
         lblNombreUsuario.setText(funcionario.getNombre());
+        txtFieldNombre.setText(nombre);
+        txtFieldDocumento.setText(documento);
         ConcurrenciaRegistros.manejoRegistros(jTextArea1, funcionario);
         jTextArea1.setEditable(false);
 
@@ -47,6 +49,9 @@ public class AgregarPersona extends javax.swing.JFrame {
                 String placa = txtFieldPlaca.getText();
                 String tipo = txtFieldPlaca1.getText();
                 FuncionarioController funcionarioController = new FuncionarioController();
+                if (placa.equals("")){
+                    placa = null;
+                }
                 if (tipo.equalsIgnoreCase("Trabajador")) {
                     funcionarioController.crearTrabajador(doc, nombre, placa, String.valueOf(funcionario.getDocumento()));
                 } else if (tipo.equalsIgnoreCase("Invitado")) {
@@ -56,7 +61,7 @@ public class AgregarPersona extends javax.swing.JFrame {
                 txtFieldNombre.setText("");
                 txtFieldEmpresa.setText("");
                 txtFieldPlaca.setText("");
-                txtFieldPlaca1.setText("");
+                txtFieldPlaca1.setText("Trabajador / Invitado");
                 JOptionPane.showMessageDialog(null, "Persona creada exitosamente");
 
 

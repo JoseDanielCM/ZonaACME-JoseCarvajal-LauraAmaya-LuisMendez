@@ -110,8 +110,8 @@ INSERT INTO `Vehiculo`(`Placa`, `Estado`,`haSalido`) VALUES
 
 INSERT INTO `Persona` VALUES
 (1102359291,"Lili",TRUE,"Trabajador","Permitido",1122112211,TRUE,"GPR895"),
-(1515151515,"Marco",TRUE,"Trabajador","Permitido",1122112211,TRUE,"GPR895"),
-(1231231231,"Lucas",TRUE,"Invitado","Permitido",1112223331,TRUE,"GPR895"),
+(1515151515,"Marco",TRUE,"Trabajador","Permitido",1122112211,TRUE,"JLO777"),
+(1231231231,"Lucas",TRUE,"Invitado","Permitido",1112223331,TRUE,"ABA555"),
 (1112223334,"Pepe",TRUE,"Invitado","Permitido",1112223331,TRUE,NULL);
 
 
@@ -177,12 +177,25 @@ ALTER TABLE Persona
 ADD CONSTRAINT Persona_ibfk_2
 FOREIGN KEY (PlacaVehiculo) REFERENCES Vehiculo(Placa)
 ON UPDATE CASCADE;
+
+ALTER TABLE Registro DROP FOREIGN KEY registro_ibfk_4; 
+
+ALTER TABLE `Registro`
+ADD CONSTRAINT `registro_ibfk_4` FOREIGN KEY (`PlacaVehiculo`) REFERENCES `Vehiculo` (`Placa`) ON UPDATE CASCADE;
 /* ------------------------------------------------------------------------------- */
 
 /*
 INSERT INTO `Registro`(`Documento`,`Fecha`,`DocUser`,`IdAnotacion`,`TipoRegistro`,`PlacaVehiculo`) VALUES
-(1102359291, "2024-12-13 08:55:46.00", 1102359888, NULL, "Salida", NULL),
-(1102359291, "2024-12-13 10:55:46.00", 1102359888, NULL, "Entrada", NULL),
-(1112223334, "2024-12-13 10:55:46.02", 1102359888, NULL, "Salida", NULL),
-(1231231231, "2024-12-13 11:55:46.00", 1102359888, NULL, "Salida", NULL);
+(1102359291, "2024-12-16 08:55:46.00", 1102359888, NULL, "Salida", NULL),
+(1102359291, "2024-12-16 10:55:46.00", 1102359888, NULL, "Entrada", NULL),
+(1112223334, "2024-12-16 10:55:46.02", 1102359888, NULL, "Salida", NULL),
+(1231231231, "2024-12-16 11:55:46.00", 1102359888, NULL, "Salida", NULL);
 */
+
+/* SHOW CREATE TABLE Registro; */
+
+/* 2024-12-14 11:00:00 */
+
+SELECT usuarios.`Nombre` FROM usuarios
+JOIN empresa ON empresa.`IdEmpresa` = usuarios.`IdEmpresa`
+WHERE usuarios.`IdTipoUsuario` = 4 AND empresa.`Nombre` = "Campus";

@@ -30,18 +30,27 @@ public class RegistroEntradaPersona implements RegistroStrategy {
         }
         Persona persona = guardaImpl.getPersonaById(docInt);
         Guarda guarda = guardaImpl.mostrarGuarda(docGuardaInt);
-        String txt = guardaImpl.mostrarAnotacionesPersonas(persona);
-        MostrarAnotaciones mostrar = new MostrarAnotaciones(txt);
-        mostrar.setVisible(true);
+
         if (placa != null && !placa.isEmpty()) {
             vehiculo = new Vehiculo(placa);
         }
+        String txt = guardaImpl.mostrarAnotacionesPersonas(persona);
+
         if (persona == null) {
             return "La persona "+docInt+" no está registrada por favor comúniquese con el funcionario de la empresa.";
         } else if (guardaImpl.validarEstadoPersona(persona)) {
-            guardaImpl.crearRegistroEntradaPersona(persona, guarda, vehiculo);
-            return "¡Registro de salida de "+persona.getNombre()+" realizado con éxito!";
+            MostrarAnotaciones mostrar = new MostrarAnotaciones(txt,false);
+            mostrar.setVisible(true);
+            if (persona.isHaSalido()) {
+                guardaImpl.crearRegistroEntradaPersona(persona, guarda, vehiculo);
+                return "¡Registro de salida de "+persona.getNombre()+" realizado con éxito!";
+            }else {
+                return "!La persona: "+persona.getNombre()+" Está intentando ingresar sin registro previo de salida";
+            }
+
         } else {
+            MostrarAnotaciones mostrar = new MostrarAnotaciones(txt,true);
+            mostrar.setVisible(true);
             return "La persona: "+persona.getNombre()+" tiene el acceso restringido, por favor comúniquese con el funcionario de la empresa.";
         }
     }

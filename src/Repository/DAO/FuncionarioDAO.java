@@ -11,6 +11,7 @@ public interface FuncionarioDAO {
     void crearTrabajador(Trabajador trabajador);
     void crearInvitado(Invitado invitado);
     List<Persona> mostrarActivos();
+    List<Persona> mostrarTodos();
     String estadoActualPersona(Persona persona);
     Persona getPersonaById(int id);
     void desactivarPersona(Persona persona);

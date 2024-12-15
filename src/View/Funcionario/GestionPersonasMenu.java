@@ -52,7 +52,9 @@ public class GestionPersonasMenu extends JFrame {
         btnCrearEmpresa.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                AgregarPersona agregarPersona = new AgregarPersona(funcionario);
+                String docStr = txtFieldNit.getText();
+                String name = txtFieldNombre.getText();
+                AgregarPersona agregarPersona = new AgregarPersona(funcionario,docStr,name);
                 agregarPersona.setVisible(true);
                 dispose();
             }

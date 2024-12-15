@@ -4,6 +4,8 @@ import Model.*;
 import Repository.DAO.SupervisorDAO;
 import Util.DataBaseConnection;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SupervisorImpl implements SupervisorDAO {
 
@@ -276,6 +278,42 @@ public class SupervisorImpl implements SupervisorDAO {
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
+        }
+    }
+
+    @Override
+    public List<Usuario> mostrarTodosFuncionariosoGuarda(int tipo) {
+        String sql = """
+                SELECT U.`Documento`, U.Nombre as Nombre, U.`Contrasena`, U.`Activo`, Documento, E.Nombre as NombreEmpresa, E.IdEmpresa FROM `Usuarios` U
+                JOIN `Empresa` E
+                ON `E`.`IdEmpresa` = `U`.`IdEmpresa`
+                WHERE U.IdTipoUsuario = ? ;
+                """; // 3 guarda 4 funcionario
+        List<Usuario> usuarios = new ArrayList<Usuario>();
+        try (Connection conn = DataBaseConnection.getConnection()){
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, tipo);
+            System.out.println(ps);
+            ResultSet resultSet = ps.executeQuery();
+            while (resultSet.next()){
+                int documento = resultSet.getInt("Documento");
+                String nombre = resultSet.getString("Nombre");
+                String contrasenia = resultSet.getString("Contrasena");
+                boolean activo = resultSet.getBoolean("Activo");
+                String  idEmpresa = resultSet.getString("IdEmpresa");
+                String  nombreEmpresa = resultSet.getString("NombreEmpresa");
+                Empresa empresa = new Empresa(idEmpresa, nombreEmpresa);
+                if (tipo==3){
+                    Guarda guarda = new Guarda(documento, nombre,contrasenia,activo,empresa);
+                    usuarios.add(guarda);
+                }else {
+                    Funcionario funcionario = new Funcionario(documento, nombre,contrasenia,activo,empresa);
+                    usuarios.add(funcionario);
+                }
+            }
+            return usuarios;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 

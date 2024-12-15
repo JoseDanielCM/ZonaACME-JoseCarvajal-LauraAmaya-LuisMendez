@@ -81,6 +81,10 @@ public class FuncionarioService {
         return funcionarioImpl.getPersonaById(id);
     }
 
+    public List<Persona> mostrarTodos() {
+        return funcionarioImpl.mostrarTodos();
+    }
+
     private int validarDocumento(String documento) {
         try {
             return Integer.parseInt(documento);
@@ -89,6 +93,8 @@ public class FuncionarioService {
             throw new IllegalArgumentException("Documento no válido.");
         }
     }
+
+
 
 
 }

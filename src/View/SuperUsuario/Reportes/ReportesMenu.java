@@ -1,21 +1,29 @@
-package View.SuperUsuario;
+package View.SuperUsuario.Reportes;
 
 import Model.Usuario;
-import View.SuperUsuario.Empresa.GestionEmpresaMenu;
-import View.SuperUsuario.Reportes.ReportesMenu;
+import View.SuperUsuario.InicioSesion;
+import View.SuperUsuario.SuperUsuarioMainMenu;
 
 import javax.swing.*;
 import java.awt.event.ActionListener;
 
-public class SuperUsuarioMainMenu extends JFrame {
+public class ReportesMenu extends JFrame {
     private Usuario superUsuario;
-    public SuperUsuarioMainMenu(Usuario superUsuario) {
+    public ReportesMenu(Usuario superUsuario) {
         this.superUsuario = superUsuario;
         initComponents();
         this.setLocationRelativeTo(null);
         lblBienvenida.setText(superUsuario.getNombre());
 
-        // ---------------------------------------------------------------- SALIR --------------------------------
+        btnHouse.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SuperUsuarioMainMenu superUsuarioMainMenu = new SuperUsuarioMainMenu(superUsuario);
+                superUsuarioMainMenu.setVisible(true);
+                dispose();
+            }
+        });
+
         btnLogout.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -24,52 +32,40 @@ public class SuperUsuarioMainMenu extends JFrame {
                 dispose();
             }
         });
-        // ---------------------------------------------------------------- SALIR --------------------------------
-        brnCrearSupervisor.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CrearSupervisorMenu crearSupervisorMenu = new CrearSupervisorMenu(superUsuario);
-                crearSupervisorMenu.setVisible(true);
-                dispose();
-            }
-        });
 
-        btnDesactivarSupervisor.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                DesactivarSupervisorMenu desactivarSupervisorMenu = new DesactivarSupervisorMenu(superUsuario);
-                desactivarSupervisorMenu.setVisible(true);
-                dispose();
-            }
-        });
-
+        // registrosfecha btnConfigurarDB
         btnConfigurarDB.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ConfigurarIPMenu cfgMenu = new ConfigurarIPMenu(superUsuario);
-                cfgMenu.setVisible(true);
+                ReporteRegistroFecha reporteRegistroFecha = new ReporteRegistroFecha(superUsuario);
+                reporteRegistroFecha.setVisible(true);
                 dispose();
             }
         });
 
-        btnEmpresa.addActionListener(new ActionListener() {
+        // activos btnActivos
+        brnActivos.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                GestionEmpresaMenu gestionEmpresaMenu = new GestionEmpresaMenu(superUsuario);
-                gestionEmpresaMenu.setVisible(true);
+                ReporteActivos reporteActivos = new ReporteActivos(superUsuario);
+                reporteActivos.setVisible(true);
                 dispose();
             }
         });
 
-        btnReportes.addActionListener(new ActionListener() {
+        // empresa desactivarsupervisor
+        btnDesactivarSupervisor.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ReportesMenu reportesMenu = new ReportesMenu(superUsuario);
-                reportesMenu.setVisible(true);
+                ReporteEmpresa reporteEmpresa = new ReporteEmpresa(superUsuario);
+                reporteEmpresa.setVisible(true);
                 dispose();
             }
         });
+
+
     }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">
     private void initComponents() {
@@ -79,12 +75,11 @@ public class SuperUsuarioMainMenu extends JFrame {
         lblBienvenida = new javax.swing.JLabel();
         lblBienvenida2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        brnCrearSupervisor = new javax.swing.JButton();
-        btnEmpresa = new javax.swing.JButton();
+        brnActivos = new javax.swing.JButton();
         btnDesactivarSupervisor = new javax.swing.JButton();
         btnConfigurarDB = new javax.swing.JButton();
         btnLogout = new javax.swing.JButton();
-        btnReportes = new javax.swing.JButton();
+        btnHouse = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(52, 33, 91));
@@ -131,43 +126,49 @@ public class SuperUsuarioMainMenu extends JFrame {
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/imgSuperUsuario.jpeg"))); // NOI18N
         jLabel1.setText("jLabel1");
 
-        brnCrearSupervisor.setBackground(new java.awt.Color(52, 33, 91));
-        brnCrearSupervisor.setFont(new java.awt.Font("Liberation Sans", 1, 24)); // NOI18N
-        brnCrearSupervisor.setForeground(new java.awt.Color(255, 255, 255));
-        brnCrearSupervisor.setText("Crear Supervisor");
-        brnCrearSupervisor.setToolTipText("");
-
-
-        btnEmpresa.setBackground(new java.awt.Color(52, 33, 91));
-        btnEmpresa.setFont(new java.awt.Font("Liberation Sans", 1, 24)); // NOI18N
-        btnEmpresa.setForeground(new java.awt.Color(255, 255, 255));
-        btnEmpresa.setText("Gestion Empresa");
-        btnEmpresa.setToolTipText("");
-
+        brnActivos.setBackground(new java.awt.Color(52, 33, 91));
+        brnActivos.setFont(new java.awt.Font("Liberation Sans", 1, 24)); // NOI18N
+        brnActivos.setForeground(new java.awt.Color(255, 255, 255));
+        brnActivos.setText("Usuarios Activos");
+        brnActivos.setToolTipText("");
+        brnActivos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                brnActivosActionPerformed(evt);
+            }
+        });
 
         btnDesactivarSupervisor.setBackground(new java.awt.Color(52, 33, 91));
         btnDesactivarSupervisor.setFont(new java.awt.Font("Liberation Sans", 1, 24)); // NOI18N
         btnDesactivarSupervisor.setForeground(new java.awt.Color(255, 255, 255));
-        btnDesactivarSupervisor.setText("desactivar supervisor");
+        btnDesactivarSupervisor.setText("Usuarios por Empresa");
         btnDesactivarSupervisor.setToolTipText("");
-
+        btnDesactivarSupervisor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDesactivarSupervisorActionPerformed(evt);
+            }
+        });
 
         btnConfigurarDB.setBackground(new java.awt.Color(52, 33, 91));
         btnConfigurarDB.setFont(new java.awt.Font("Liberation Sans", 1, 24)); // NOI18N
         btnConfigurarDB.setForeground(new java.awt.Color(255, 255, 255));
-        btnConfigurarDB.setText("Configurar BD");
+        btnConfigurarDB.setText("Registros por fecha");
         btnConfigurarDB.setToolTipText("");
-
+        btnConfigurarDB.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConfigurarDBActionPerformed(evt);
+            }
+        });
 
         btnLogout.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/logout.png"))); // NOI18N
         btnLogout.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
 
-        btnReportes.setBackground(new java.awt.Color(52, 33, 91));
-        btnReportes.setFont(new java.awt.Font("Liberation Sans", 1, 24)); // NOI18N
-        btnReportes.setForeground(new java.awt.Color(255, 255, 255));
-        btnReportes.setText("Reportes");
-        btnReportes.setToolTipText("");
-
+        btnHouse.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/casa.png"))); // NOI18N
+        btnHouse.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        btnHouse.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHouseActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -178,25 +179,23 @@ public class SuperUsuarioMainMenu extends JFrame {
                                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup(layout.createSequentialGroup()
-                                                .addGap(108, 108, 108)
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                        .addGroup(layout.createSequentialGroup()
-                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 1, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                .addComponent(btnConfigurarDB, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                        .addComponent(brnCrearSupervisor))
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                        .addComponent(btnDesactivarSupervisor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                        .addComponent(btnEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, 276, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                .addGap(79, 79, 79))
-                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 684, Short.MAX_VALUE)
-                                                .addComponent(btnLogout)
-                                                .addGap(22, 22, 22))
+                                                .addGap(18, 18, 18)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                                                .addComponent(btnHouse)
+                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                                .addComponent(btnLogout)
+                                                                .addGap(22, 22, 22))
+                                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                                                .addGap(0, 43, Short.MAX_VALUE)
+                                                                .addComponent(btnConfigurarDB, javax.swing.GroupLayout.PREFERRED_SIZE, 276, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                .addGap(62, 62, 62)
+                                                                .addComponent(btnDesactivarSupervisor)
+                                                                .addGap(66, 66, 66))))
                                         .addGroup(layout.createSequentialGroup()
-                                                .addGap(254, 254, 254)
-                                                .addComponent(btnReportes, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                                .addGap(259, 259, 259)
+                                                .addComponent(brnActivos)
+                                                .addGap(0, 0, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -206,32 +205,48 @@ public class SuperUsuarioMainMenu extends JFrame {
                                         .addGroup(layout.createSequentialGroup()
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 548, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGroup(layout.createSequentialGroup()
-                                                .addGap(125, 125, 125)
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                                        .addComponent(brnCrearSupervisor, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addComponent(btnDesactivarSupervisor, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                .addGap(54, 54, 54)
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                                        .addComponent(btnEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addComponent(btnConfigurarDB, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(btnReportes, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(5, 5, 5)
-                                                .addComponent(btnLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                        .addGroup(layout.createSequentialGroup()
+                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                                .addComponent(btnHouse))
+                                                        .addGroup(layout.createSequentialGroup()
+                                                                .addGap(125, 125, 125)
+                                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                                        .addComponent(btnDesactivarSupervisor, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                        .addComponent(btnConfigurarDB, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                                .addGap(75, 75, 75)
+                                                                .addComponent(brnActivos, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                                .addComponent(btnLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                                 .addGap(30, 30, 30))))
         );
 
         pack();
     }// </editor-fold>
 
+    private void brnActivosActionPerformed(java.awt.event.ActionEvent evt) {
+        // TODO add your handling code here:
+    }
+
+    private void btnDesactivarSupervisorActionPerformed(java.awt.event.ActionEvent evt) {
+        // TODO add your handling code here:
+    }
+
+    private void btnConfigurarDBActionPerformed(java.awt.event.ActionEvent evt) {
+        // TODO add your handling code here:
+    }
+
+    private void btnHouseActionPerformed(java.awt.event.ActionEvent evt) {
+        // TODO add your handling code here:
+    }
+
     // Variables declaration - do not modify
-    private javax.swing.JButton brnCrearSupervisor;
+    private javax.swing.JButton brnActivos;
     private javax.swing.JButton btnConfigurarDB;
     private javax.swing.JButton btnDesactivarSupervisor;
-    private javax.swing.JButton btnEmpresa;
+    private javax.swing.JButton btnHouse;
     private javax.swing.JButton btnLogout;
-    private javax.swing.JButton btnReportes;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel lblBienvenida;

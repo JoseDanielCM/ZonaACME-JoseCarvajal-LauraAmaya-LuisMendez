@@ -4,6 +4,7 @@ import Model.*;
 import Repository.Impl.SupervisorImpl;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 public class SupervisorService {
     private final SupervisorImpl supervisorImpl;
@@ -97,6 +98,10 @@ public class SupervisorService {
             System.out.println("Valores invalidos");
             throw new IllegalArgumentException("Invalido");
         }
+    }
+
+    public List<Usuario> mostrarTodosFuncionariosoGuarda(int tipo){
+        return supervisorImpl.mostrarTodosFuncionariosoGuarda(tipo);
     }
 
 

@@ -1,15 +1,19 @@
 package View.Extras;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class MostrarAnotaciones extends JFrame {
 
     private String texto;
 
-    public MostrarAnotaciones(String texto) {
+    public MostrarAnotaciones(String texto, boolean restringido) {
         this.texto = texto;
         initComponents();
         jTextArea1.setText(texto);
+        if (restringido) {
+            jTextArea1.setBackground(Color.RED);
+        };
     }
 
     /**

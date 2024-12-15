@@ -42,6 +42,8 @@ public class FuncionarioController {
         return funcionarioService.getPersonaById(idStr);
     }
 
-
+    public List<Persona> mostrarTodos() {
+        return funcionarioService.mostrarTodos();
+    }
 
 }

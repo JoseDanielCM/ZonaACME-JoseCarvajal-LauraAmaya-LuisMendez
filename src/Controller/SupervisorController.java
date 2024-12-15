@@ -3,7 +3,10 @@ package Controller;
 import Model.Funcionario;
 import Model.Guarda;
 import Model.Persona;
+import Model.Usuario;
 import Service.SupervisorService;
+
+import java.util.List;
 
 public class SupervisorController {
     private SupervisorService supervisorService;
@@ -50,6 +53,10 @@ public class SupervisorController {
 
     public void registrarSalida(String documentoPer, String docUs){
         supervisorService.RegistrarSalida(documentoPer,docUs);
+    }
+
+    public List<Usuario> mostrarTodosFuncionariosoGuarda(int tipo){
+        return supervisorService.mostrarTodosFuncionariosoGuarda(tipo);
     }
 
 }

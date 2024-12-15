@@ -3,6 +3,7 @@ package Repository.DAO;
 import Model.*;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 public interface SupervisorDAO extends SalidaDAO {
     void crearFuncionario(Funcionario funcionario);
@@ -18,4 +19,5 @@ public interface SupervisorDAO extends SalidaDAO {
     Empresa getEmpresaByName(String name);
     @Override
     void RegistrarSalida(int Documento, int documentoUser);
+    List<Usuario> mostrarTodosFuncionariosoGuarda(int tipo);
 }

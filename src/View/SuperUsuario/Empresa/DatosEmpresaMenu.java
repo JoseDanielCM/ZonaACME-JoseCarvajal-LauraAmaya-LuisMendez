@@ -3,7 +3,10 @@ package View.SuperUsuario.Empresa;
 import Controller.SuperUsuarioController;
 import Model.Empresa;
 import Model.Usuario;
+import Repository.Impl.SuperUsuarioImpl;
 import View.SuperUsuario.InicioSesion;
+import View.SuperUsuario.Reportes.ReporteActivos;
+import View.SuperUsuario.Reportes.ReporteEmpresa;
 import View.SuperUsuario.SuperUsuarioMainMenu;
 
 import javax.swing.*;
@@ -16,10 +19,11 @@ public class DatosEmpresaMenu extends JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         lblNombreUsuario.setText(superUsuario.getNombre());
+        SuperUsuarioImpl superImpl = new SuperUsuarioImpl();
 
         txtFieldDocumento.setText(empresa.getIdEmpresa());
         txtFieldNombre.setText(empresa.getNombre());
-
+        txtFieldFuncionario.setText(superImpl.getNombreFuncionarioEmpresa(empresa));
 
         btnHouse.addActionListener(new ActionListener() {
             @Override
@@ -49,6 +53,15 @@ public class DatosEmpresaMenu extends JFrame {
                 SuperUsuarioController superUsuarioController = new SuperUsuarioController();
                 superUsuarioController.desactivarEmpresa(nombreEmpresa);
                 JOptionPane.showMessageDialog(null, "Empresa desactivada: "+nombreEmpresa);
+            }
+        });
+
+        btnVerPersonas.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ReporteEmpresa reporteEmpresa = new ReporteEmpresa(superUsuario,empresa);
+                reporteEmpresa.setVisible(true);
+                dispose();
             }
         });
     }
