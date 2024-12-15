@@ -2,6 +2,7 @@
 <p align="center">
   <img src="src/Img/logoZona.png" alt="Imagen referencial" width="500" />
 </p>
+
 Bienvenido a **Zona ACME**, un sistema desarrollado en Java con una interfaz visual amigable y diseñado para gestionar de manera sencilla las entradas y salidas de trabajadores e invitados de la zona empresarial, permitiendo almacenar toda la trazabilidad en una base de datos.
 
 ---
