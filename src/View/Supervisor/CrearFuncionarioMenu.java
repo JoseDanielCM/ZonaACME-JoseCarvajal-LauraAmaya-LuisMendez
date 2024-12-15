@@ -3,6 +3,8 @@ package View.Supervisor;
 import Controller.SupervisorController;
 import Model.Usuario;
 import Repository.Impl.ConcurrenciaRegistros;
+import Repository.Impl.SuperUsuarioImpl;
+import Repository.Impl.SupervisorImpl;
 import View.SuperUsuario.InicioSesion;
 
 import javax.swing.*;
@@ -45,9 +47,12 @@ public class CrearFuncionarioMenu extends javax.swing.JFrame {
                 txtFieldPassword.setText("");
                 String empresa = txtFieldEmpresa.getText();
                 txtFieldEmpresa.setText("");
-                SupervisorController supervisorController = new SupervisorController();
-                supervisorController.crearFuncionario(documento,nombre,password,empresa);
-                JOptionPane.showMessageDialog(null, "Funcionario creado exitosamente");
+                SupervisorImpl supervisorImpl = new SupervisorImpl();
+                boolean funcionarioOcupado = supervisorImpl.funcionarioOcupado(empresa);
+                if (!funcionarioOcupado){
+                    SupervisorController supervisorController = new SupervisorController();
+                    supervisorController.crearFuncionario(documento,nombre,password,empresa);
+                }
             }
         });
     }
@@ -102,7 +107,7 @@ public class CrearFuncionarioMenu extends javax.swing.JFrame {
 
         lblTipoUsuario.setFont(new java.awt.Font("FreeSans", 1, 36)); // NOI18N
         lblTipoUsuario.setForeground(new java.awt.Color(255, 255, 255));
-        lblTipoUsuario.setText("SUPERUSUARIO");
+        lblTipoUsuario.setText("SUPERVISOR");
 
         javax.swing.GroupLayout superiorBackgroundLayout = new javax.swing.GroupLayout(superiorBackground);
         superiorBackground.setLayout(superiorBackgroundLayout);

@@ -53,6 +53,7 @@ public class GuardaImpl implements GuardaDAO {
 
             System.out.println("Registro ingresado correctamente");
         } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null,"Revisar datos ingresados");
             throw new RuntimeException(e);
         }
     }

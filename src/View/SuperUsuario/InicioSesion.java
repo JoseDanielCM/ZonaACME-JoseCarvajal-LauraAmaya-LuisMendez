@@ -32,6 +32,12 @@ public class InicioSesion extends JFrame {
                 }
 
                 Usuario usuario = sesion.getUsuario();
+                if (!usuario.isActivo()){
+                    JOptionPane.showMessageDialog(null, "No es posible ingresar sesion con un usuario inactivo");
+                    txtFieldUser.setText("");
+                    txtfieldPassword.setText("");
+                    return;
+                }
                 System.out.println(usuario.getClass());
                 String tipo = String.valueOf(usuario.getClass());
                 tipo= tipo.replace("class Model.","");

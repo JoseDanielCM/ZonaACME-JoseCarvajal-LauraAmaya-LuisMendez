@@ -3,6 +3,8 @@ package Repository.Impl;
 import Model.*;
 import Repository.DAO.SupervisorDAO;
 import Util.DataBaseConnection;
+
+import javax.swing.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,9 +24,10 @@ public class SupervisorImpl implements SupervisorDAO {
             ps.setString(3, funcionario.getContrasenia());
             ps.setString(4, funcionario.getEmpresa().getIdEmpresa());
             ps.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Funcionario creado exitosamente");
 
-            System.out.println("Funcionario agregado correctamente");
         } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Creacion fallida revisa nombre de Empresa o campos vacios");
             throw new RuntimeException(e);
         }
 
@@ -217,8 +220,28 @@ public class SupervisorImpl implements SupervisorDAO {
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1, documentoPersona);
             ps.executeUpdate();
+            JOptionPane.showMessageDialog(null,"Restriccion levantada correctamente");
             System.out.println("Restriccion levantada correctamente");
         } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null,"No fue posible levantar la restriccion");
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void registrarLevantamiento(int dodcPersona, int docUsuario) {
+        String sql = """
+            INSERT INTO `Anotaciones`(`Documento`,`DocUser`,`Tipo`,`Mensaje`,`Fecha`) VALUES
+            (?,?,"Levantamiento","Remover restriccion a la persona",NOW());
+                """;
+        try (Connection conn = DataBaseConnection.getConnection()){
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, dodcPersona);
+            ps.setInt(2, docUsuario);
+            ps.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Anotacion completada de levantamiento de restriccion");
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al realizar la anotacion revisar los datos");
             throw new RuntimeException(e);
         }
     }
@@ -318,6 +341,37 @@ public class SupervisorImpl implements SupervisorDAO {
     }
 
     @Override
+    public boolean funcionarioOcupado(String nombreEmpresa) {
+        String sql = """
+                SELECT usuarios.*, Empresa.`Nombre` as NombreEmpresa FROM usuarios
+                JOIN empresa ON empresa.`IdEmpresa` = usuarios.`IdEmpresa`
+                WHERE empresa.`Nombre`= ? and usuarios.`IdTipoUsuario`=4;
+                """; // 3 guarda 4 funcionario
+        try (Connection conn = DataBaseConnection.getConnection()){
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, nombreEmpresa);
+            System.out.println(ps);
+            ResultSet resultSet = ps.executeQuery();
+            if (resultSet.next()){
+                String comprobar = resultSet.getString(1);
+                if (comprobar == null || comprobar.isEmpty()) {
+                    return false;
+
+                }
+                else {
+                    // bien
+                    JOptionPane.showMessageDialog(null, "Ya existe un funcionario para esa Empresa, solo uno por empresa");
+                    return true;
+                }
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return false;
+    }
+
+    @Override
     public Empresa getEmpresaByName(String name) {
         String sql = """
                 SELECT * FROM Empresa WHERE Empresa.Nombre = ?;
@@ -333,6 +387,7 @@ public class SupervisorImpl implements SupervisorDAO {
                 System.out.println("Empresa obtenida correctamente");
                 return empresa;
             }
+            JOptionPane.showMessageDialog(null, "No se encontró empresa con ese nombre");
             throw new IllegalArgumentException  ("Empresa no encontrada");
         } catch (SQLException e) {
             throw new RuntimeException(e);

@@ -5,7 +5,18 @@ CREATE TRIGGER inactivacionEmpresa
 AFTER UPDATE ON Empresa
 FOR EACH ROW
 BEGIN
-    UPDATE Persona SET Activo = FALSE WHERE IdEmpresa = OLD.IdEmpresa;
+    UPDATE Persona SET Activo = FALSE WHERE `IdEmpresa` = NEW.`IdEmpresa`;
+END $$
+
+DELIMITER ;
+
+DELIMITER $$
+
+CREATE TRIGGER inactivacionUsuariosEmpresa
+AFTER UPDATE ON Empresa
+FOR EACH ROW
+BEGIN
+    UPDATE usuarios SET `Activo` = FALSE WHERE `IdEmpresa` = NEW.`IdEmpresa`;
 END $$
 
 DELIMITER ;
@@ -75,3 +86,10 @@ DELIMITER ;
 
 /* DROP TRIGGER cambiarEstancia; */
 
+INSERT INTO registro() VALUES()
+
+INSERT INTO Registro(`Documento`,`Fecha`,`DocUser`,`IdAnotacion`,`TipoRegistro`,`PlacaVehiculo`) VALUES
+(1102359291, "2024-12-15 06:35:00", 1112221121, NULL, "Salida", "ABA555"),
+(1102359291, "2024-12-15 6:35:30", 1212121232, NULL, "Entrada", "ABA555"),
+(1112223334, "2024-12-15 6:30:00", 1112221121, NULL, "Salida", "ABA555"),
+(1515151515, "2024-12-15 5:55:46", 1212121232, NULL, "Salida", "ABA555");

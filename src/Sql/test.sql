@@ -22,3 +22,6 @@ JOIN empresa ON empresa.`IdEmpresa` = `Usuarios`.`IdEmpresa`
 WHERE Usuarios.IdTipoUsuario = 2;
 
 SELECT Usuarios.`Activo` FROM Usuarios
+
+INSERT INTO `Anotaciones`(`Documento`,`DocUser`,`Tipo`,`Mensaje`,`Fecha`) VALUES
+(?,?,"Levantamiento","Remover restriccion a la persona",NOW());

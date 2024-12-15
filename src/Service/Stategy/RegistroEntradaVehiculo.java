@@ -16,7 +16,7 @@ public class RegistroEntradaVehiculo implements RegistroStrategy {
     public String crearRegistro(String documento, String docGuarda, String placa) {
 
         List<String> documentosList = List.of(documento.split(","));
-        String msg = "¡Registro de salida de vehículo realizado con éxito!";
+        String msg = "¡Registro de entrada de vehículo realizado con éxito!";
 
         for (String doc : documentosList) {
             RegistroEntradaPersona entradaPersona = new RegistroEntradaPersona(guardaImpl);

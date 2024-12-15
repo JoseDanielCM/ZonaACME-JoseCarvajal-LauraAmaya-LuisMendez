@@ -199,3 +199,15 @@ INSERT INTO `Registro`(`Documento`,`Fecha`,`DocUser`,`IdAnotacion`,`TipoRegistro
 SELECT usuarios.`Nombre` FROM usuarios
 JOIN empresa ON empresa.`IdEmpresa` = usuarios.`IdEmpresa`
 WHERE usuarios.`IdTipoUsuario` = 4 AND empresa.`Nombre` = "Campus";
+
+SELECT usuarios.*, Empresa.`Nombre` as NombreEmpresa FROM usuarios
+JOIN empresa ON empresa.`IdEmpresa` = usuarios.`IdEmpresa`
+WHERE empresa.`Nombre`= "Cocacola" and usuarios.`IdTipoUsuario`=4;
+
+SELECT usuarios.*, Empresa.`Nombre` as NombreEmpresa FROM usuarios
+JOIN empresa ON empresa.`IdEmpresa` = usuarios.`IdEmpresa`
+WHERE empresa.`Nombre`= 'Campus' and usuarios.`IdTipoUsuario`=4;
+
+SELECT usuarios.*, Empresa.`Nombre` as NombreEmpresa FROM usuarios
+JOIN empresa ON empresa.`IdEmpresa` = usuarios.`IdEmpresa`
+WHERE empresa.`Nombre`= 'CocaCola' and usuarios.`IdTipoUsuario`=4;

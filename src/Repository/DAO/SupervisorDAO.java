@@ -15,9 +15,11 @@ public interface SupervisorDAO extends SalidaDAO {
     Guarda mostrarGuarda(int documentoGuarda);
     void crearAnotaciones(Anotacion anotacion);
     void levantarRestriccion(int documentoPersona);
+    void registrarLevantamiento(int dodcPersona, int docUsuario);
     Persona getPersonaById(int id);
     Empresa getEmpresaByName(String name);
     @Override
     void RegistrarSalida(int Documento, int documentoUser);
     List<Usuario> mostrarTodosFuncionariosoGuarda(int tipo);
+    boolean funcionarioOcupado(String nombreEmpresa);
 }

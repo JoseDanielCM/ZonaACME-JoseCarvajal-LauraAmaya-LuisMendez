@@ -29,7 +29,7 @@ public class ReporteEmpresa extends JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         lblNombreUsuario.setText(superUsuario.getNombre());
-        if (empresaRecibe[0]!=null){
+        if (empresaRecibe.length>0){
             txtNit.setText(empresaRecibe[0].getIdEmpresa());
             txtNit1.setText(empresaRecibe[0].getNombre());
         }

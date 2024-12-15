@@ -31,8 +31,12 @@ public class RegistroSalidaPersona implements RegistroStrategy {
         if (persona == null) {
             return "La persona no está registrada por favor comúniquese con el funcionario de la empresa.";
         } else {
-            guardaImpl.crearRegistroSalidaPersona(persona, guarda, vehiculo);
-            return "¡Registro de salida de "+persona.getNombre()+" realizado con éxito!";
+            if (!persona.isHaSalido()) {
+                guardaImpl.crearRegistroSalidaPersona(persona, guarda, vehiculo);
+                return "¡Registro de salida de "+persona.getNombre()+" realizado con éxito!";
+            }else {
+                return "!La persona: "+persona.getNombre()+" Está intentando salir sin registro previo de ingreso, llamar a supervisor para realizar salida manual";
+            }
         }
     }
 }

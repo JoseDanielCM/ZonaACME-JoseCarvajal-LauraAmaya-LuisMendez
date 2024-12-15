@@ -43,7 +43,7 @@ public class RegistroEntradaPersona implements RegistroStrategy {
             mostrar.setVisible(true);
             if (persona.isHaSalido()) {
                 guardaImpl.crearRegistroEntradaPersona(persona, guarda, vehiculo);
-                return "¡Registro de salida de "+persona.getNombre()+" realizado con éxito!";
+                return "¡Registro de entrada de "+persona.getNombre()+" realizado con éxito!";
             }else {
                 return "!La persona: "+persona.getNombre()+" Está intentando ingresar sin registro previo de salida";
             }

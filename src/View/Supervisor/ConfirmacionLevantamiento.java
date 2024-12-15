@@ -4,6 +4,7 @@ import Controller.SupervisorController;
 import Model.Persona;
 import Model.Usuario;
 import Repository.Impl.ConcurrenciaRegistros;
+import Repository.Impl.SupervisorImpl;
 import View.SuperUsuario.InicioSesion;
 
 import javax.swing.*;
@@ -28,8 +29,9 @@ public class ConfirmacionLevantamiento extends javax.swing.JFrame {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 String documento = String.valueOf(persona.getDocumento());
                 SupervisorController supervisorController = new SupervisorController();
+                SupervisorImpl supervisorImpl = new SupervisorImpl();
                 supervisorController.levantarRestriccion(documento);
-                JOptionPane.showMessageDialog(null, "Restriccion levantada correctamente");
+                supervisorImpl.registrarLevantamiento(Integer.parseInt(documento),supervisor.getDocumento());
                 dispose();
             }
         });

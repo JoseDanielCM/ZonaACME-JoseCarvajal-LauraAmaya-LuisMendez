@@ -49,17 +49,33 @@ public class GestionEmpresaMenu extends JFrame {
         btnAccederEmpresa.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
+                // nombre
                 String nombreEmpresa = txtFieldNit.getText();
-
+                JOptionPane.showMessageDialog(null,nombreEmpresa);
+                // nit
                 String nitEmpresa = txtFieldNombre.getText();
 
-
                 SuperUsuarioController superUsuarioController = new SuperUsuarioController();
-                Empresa empresa = superUsuarioController.getEmpresaById(nitEmpresa);
+                // empresa NIt
+                // empresa NOMBRE
 
-                DatosEmpresaMenu datosEmpresaMenu = new DatosEmpresaMenu(superUsuario,empresa);
-                datosEmpresaMenu.setVisible(true);
-                dispose();
+                try {
+                    Empresa empresa = superUsuarioController.getEmpresaById(nitEmpresa);
+                    DatosEmpresaMenu datosEmpresaMenu = new DatosEmpresaMenu(superUsuario,empresa);
+                    datosEmpresaMenu.setVisible(true);
+                    dispose();
+                }catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, "Error al buscar la empresa por NIt");
+                }
+                try {
+                    Empresa empresaXNombre = superUsuarioController.getEmpresaByName(nombreEmpresa);
+                    DatosEmpresaMenu datosEmpresaMenu = new DatosEmpresaMenu(superUsuario,empresaXNombre);
+                    datosEmpresaMenu.setVisible(true);
+                    dispose();
+                }catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, "Error al buscar la empresa por Nombre");
+                }
+
             }
         });
     }
